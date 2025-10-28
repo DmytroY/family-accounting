@@ -25,8 +25,10 @@ SECRET_KEY = secrets.SECRET_K
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
+
+# DEBUG = False
+# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
 
 
 # Application definition
