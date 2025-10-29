@@ -1,5 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
+    <!-- <link rel="stylesheet" href="{% static 'members/styles.css' %}" /> -->
+    <link rel="stylesheet" href="{% static 'global.css' %}" />
 <head>
     <title>
         {% block title %}
@@ -7,7 +10,11 @@
     </title>
 </head>
 <body>
-    <p><a href="/">Home</a></p>
+    <div class="topnav">
+        <a href="/">HOME</a>
+        <a href="/members">MEMBERS</a>
+    </div>
+
     {% block content %}
     {% endblock %}
 </body>

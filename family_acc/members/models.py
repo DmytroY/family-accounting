@@ -8,4 +8,4 @@ class Member(models.Model):
     email =models.EmailField(null=True)
 
     def __str__(self):
-        return f"{self.firstname} {self.lastname}"
+        return f"{self.firstname} {self.lastname} {self.phone}"

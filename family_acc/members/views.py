@@ -2,10 +2,12 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import Member
+from django.db.models import Q
 
 def testing(request):
     template = loader.get_template("test_template.html")
-    context = {'fruits': ['Mango', 'Pineaple', 'Apple'],}
+    mydata = Member.objects.order_by('-firstname', 'phone')
+    context = {'members': mydata,}
     return HttpResponse(template.render(context, request))
 
 def main(request):

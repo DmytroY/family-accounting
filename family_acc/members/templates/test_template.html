@@ -6,9 +6,25 @@
     
 {% block content %}
     <h1>Test page</h1>
+
+    <p>The queryset object:</p>
+    {{ members }}
+
+    <p>doted list</p>
     <ul>
-        {% for item in fruits %}
+        {% for item in members %}
             <li>{{item}}</li>
         {% endfor %}
     </ul>
+
+    <p>table</p>
+    <table border='1'>
+        {% for item in members %}
+            <tr>
+                <td>{{item}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
 {% endblock %}
