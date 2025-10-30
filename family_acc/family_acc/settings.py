@@ -28,8 +28,12 @@ SECRET_KEY = secrets.SECRET_K
 # ALLOWED_HOSTS = []
 
 DEBUG = False
-ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
-
+# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+ALLOWED_HOSTS = [
+    'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 # Application definition
 
