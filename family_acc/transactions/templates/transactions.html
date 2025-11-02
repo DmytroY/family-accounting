@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    Transactions
+</head>
+<br>
+<body>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Account</th>
+            <th>Amount</th>
+        </tr>
+        {% for item in data%}
+            <tr>
+                <td>{{item.date|date:"d-m-Y"}}</td>
+                <td>{{item.account}}</td>
+                <td>{{item.amount}}</td>
+            </tr>
+        {% endfor %}
+    </table>  
+
+</body>
+</html>

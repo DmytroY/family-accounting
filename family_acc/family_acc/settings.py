@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'members',
+    'transactions',
 ]
 
 MIDDLEWARE = [
@@ -83,14 +84,14 @@ WSGI_APPLICATION = 'family_acc.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': secrets.USER,
-        'PASSWORD': secrets.PASSWORD,
-        'HOST': 'db-instance4django.ck1yimasulhp.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'postgres',
+        # 'USER': secrets.USER,
+        # 'PASSWORD': secrets.PASSWORD,
+        # 'HOST': 'db-instance4django.ck1yimasulhp.us-east-1.rds.amazonaws.com',
+        # 'PORT': '5432',
     }
 }
 

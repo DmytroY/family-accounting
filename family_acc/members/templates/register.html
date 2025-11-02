@@ -1,0 +1,21 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Registration
+{% endblock %}
+    
+{% block content %}
+<div class="registration">
+    <h1>Registration</h1>
+
+    <form action="/register/" method="post">
+        {{form}}
+        {% csrf_token %}
+        <button class="button">Submit</button>
+    </form>
+    
+    {% comment %}
+    {% endcomment %}
+</div>
+
+{% endblock %}
