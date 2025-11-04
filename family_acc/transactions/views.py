@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Transaction
+from django.contrib.auth.decorators import login_required
 
-def transactions(request):
+@login_required(login_url="/members/login/")
+def list(request):
     transaction_data = Transaction.objects.all()
-    return render(request, "transactions.html", {"data": transaction_data})
+    return render(request, "list.html", {"data": transaction_data})

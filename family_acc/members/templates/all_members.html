@@ -1,4 +1,4 @@
-{% extends "master.html" %}
+{% extends "layout.html" %}
 
 {% block title %}
     List of all members
@@ -9,7 +9,7 @@
     <h1>Members</h1>
     <ul>
         {% for x in mymembers %}
-            <li><a href="details/{{x.slug}}">{{x.firstname}} {{x.lastname}}</a></li>
+            <li><a href="{{x.slug}}">{{x.firstname}} {{x.lastname}}</a></li>
         {% endfor %}
     </ul>
 </div>

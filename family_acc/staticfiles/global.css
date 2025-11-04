@@ -35,6 +35,10 @@ body {
     content: 'Ups... ';
 }
 
+.logout {
+    display: inline-block;
+}
+
 a:link, a:visited {
   color: #375BDC; 
 }

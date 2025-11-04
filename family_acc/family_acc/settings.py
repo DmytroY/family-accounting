@@ -27,13 +27,13 @@ SECRET_KEY = secrets.SECRET_K
 # DEBUG = True
 # ALLOWED_HOSTS = []
 
-DEBUG = False
-# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
-ALLOWED_HOSTS = [
-    'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
-    'localhost',
-    '127.0.0.1',
-]
+DEBUG = True
+ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+# ALLOWED_HOSTS = [
+#     'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
+#     'localhost',
+#     '127.0.0.1',
+# ]
 
 # Application definition
 
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'family_acc.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['family_acc/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

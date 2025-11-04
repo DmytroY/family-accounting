@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <link rel="stylesheet" href="{% static 'global.css' %}" />
+<head>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="/">HOME</a> | 
+        <a href="/transactions">TRANSACTIONS</a> |
+        <a href="/members">MEMBERS</a> |
+        {% if user.is_authenticated %}
+            <form class="logout" action="{% url 'members:logout' %}" method="post">
+                {% csrf_token %}
+                You authorized as {{ user.username }}, you can 
+                <button title="Logout" aria-label="User Logout">LOGOUT</button>
+            </form>
+        {% else  %}
+            <a href="{% url 'members:register' %}">REGISTRATION</a> |
+            <a href="{% url 'members:login' %}">LOGIN</a> 
+        {% endif %}     
+    </div>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+<footer>
+    <br>
+    2025. Dmytro Yakovenko.
+</footer>
+</html>

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
+{% block title %}
     Transactions
-</head>
-<br>
-<body>
+{% endblock %}
+
+{% block content %}
+<div>
     <table>
         <tr>
             <th>Date</th>
@@ -20,6 +20,5 @@
             </tr>
         {% endfor %}
     </table>  
-
-</body>
-</html>
+</div>
+{% endblock %}
