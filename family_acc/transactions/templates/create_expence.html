@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Expence
+{% endblock %}
+
+{% block content %}
+    <h1> Add new expence </h1>
+    <section>
+        <form class="form-with-validation" action="{% url 'transactions:create_expence' %}" method="post" >
+            {% csrf_token %}
+            {{form}}
+            <button class="form-submit">Add Expence</button>
+        </form>        
+    </section>
+
+{% endblock %}

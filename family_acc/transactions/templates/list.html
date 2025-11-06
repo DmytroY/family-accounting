@@ -8,15 +8,23 @@
 <div>
     <table>
         <tr>
-            <th>Date</th>
-            <th>Account</th>
-            <th>Amount</th>
+            <th> Date </th>
+            <th> Account </th>
+            <th> Amount </th>
+            <th> Currency </th>
+            <th> Category </th>
+            <th> Remark </th>
+            <th> Created by </th>
         </tr>
         {% for item in data%}
             <tr>
-                <td>{{item.date|date:"d-m-Y"}}</td>
-                <td>{{item.account}}</td>
-                <td>{{item.amount}}</td>
+                <td> {{item.date|date:"d-m-Y"}} </td>
+                <td> {{item.account}} </td>
+                <td> {{item.amount}} </td>
+                <td> {{item.currency}} </td>
+                <td> {{item.category}} </td>
+                <td> {{item.remark}} </td>
+                <td> {{item.created_by}} </td>
             </tr>
         {% endfor %}
     </table>  

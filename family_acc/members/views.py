@@ -41,12 +41,10 @@ def login_view(request):
         form = AuthenticationForm(data=request.POST)
         if(form.is_valid()):
             login(request, form.get_user())
-            print("--DY-- successfull login")
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
                 return redirect("transactions:list")
-        print("--DY-- login problem")
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})
