@@ -31,6 +31,7 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     remark = models.CharField(max_length=255, null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    family = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f"{self.date}  {self.account}  {self.amount}  {self.currency}  {self.category}"
