@@ -8,7 +8,7 @@ from django.utils import timezone
 @login_required(login_url="/members/login/")
 def list(request):
     user = request.user
-    attr = getattr(user.profile, 'family', None)
+    # attr = getattr(user.profile, 'family', None)
     if(getattr(user.profile, 'family', None) == "test"):
         transaction_data = Transaction.objects.order_by('-date')[:5]
     else:

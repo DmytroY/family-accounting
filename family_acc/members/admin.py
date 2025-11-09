@@ -3,18 +3,21 @@ from .models import Member, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-class MemberAdmin(admin.ModelAdmin):
-    list_display = ("firstname", "lastname", "email",)
 
-admin.site.register(Member, MemberAdmin)
+admin.site.register(Member)
 
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
 
 class CustomUserAdmin(UserAdmin):
+    list_display = ("username", "first_name", "last_name", "email", "is_staff", "get_family")
     inlines = [ProfileInline]
+
+    def get_family(self, obj):
+        return obj.profile.family if hasattr(obj, 'profile') else ""
+    
+    get_family.short_description = "Family"
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
