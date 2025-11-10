@@ -19,11 +19,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    #path('', include('members.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
-    path('test/', views.test, name='test'),
     path('members/', include(('members.urls', 'members'), namespace='members')),
     path('transactions/', include(('transactions.urls', 'transactions'), namespace='transactions')), 
 ]

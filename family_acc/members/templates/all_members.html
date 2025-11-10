@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    List of all members
+    Members
 {% endblock %}
 
 {% block content %}
 <div>
-    <h1>Members</h1>
+    <h1>List of family members</h1>
     <ul>
         {% for x in mymembers %}
-            <li><a href="{{x.slug}}">{{x.firstname}} {{x.lastname}}</a></li>
+            <li><a href="{{x.id}}">{{x.username}}</a></li>
         {% endfor %}
     </ul>
 </div>

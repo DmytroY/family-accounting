@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Details about a memeber {{mymember.firstname}} {{mymember.lastname}}
+    Details about a memeber {{mymember.username}}
 {% endblock %}
 
 {% block content %}
 <div class="mycard">
-    <h1>{{mymember.firstname}} {{mymember.lastname}}</h1>
-    <p>Phone: {{mymember.phone}}</p>
+    <h1>{{mymember.username}}</h1>
+    <p>Name: {{mymember.first_name}}</p>
+    <p>Last Name: {{mymember.last_name}}</p>
     <p>Email: {{mymember.email}}</p>
-    <p>Joined_date: {{mymember.joined_date}}</p>    
+    <p>Joined_date: {{mymember.date_joined}}</p>    
 </div>
 
 {% endblock %}
