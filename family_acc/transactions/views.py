@@ -12,7 +12,7 @@ def list(request):
     if(getattr(user.profile, 'family', None) == "test"):
         transaction_data = Transaction.objects.order_by('-date')[:5]
     else:
-        transaction_data = Transaction.objects.order_by('-date')[:3]
+        transaction_data = Transaction.objects.order_by('-date')[:20]
     return render(request, "list.html", {"data": transaction_data})
 
 @login_required(login_url="/members/login/")
@@ -23,6 +23,8 @@ def create_expence(request):
             # save
             new_expence = form.save(commit=False)
             new_expence.created_by = request.user
+            # expenses always shoud be saved as negative amount transaction
+            new_expence.amount = -abs(new_expence.amount)
             new_expence.save()
             return redirect('transactions:list')
     else:

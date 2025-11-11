@@ -5,6 +5,11 @@ body {
   letter-spacing: 0.64px;
   color: #000000;
 }
+
+form > div {
+  margin: 30px;
+}
+
 /* Header */
 .topnav {
   background-color:#1a1d2b;
@@ -22,6 +27,7 @@ body {
 }
 
 .helptext {
+  font-size: 10px;
   font-weight: 100;
 }
 
