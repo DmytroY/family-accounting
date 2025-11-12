@@ -9,7 +9,7 @@
     <h1>List of family members</h1>
     <ul>
         {% for x in mymembers %}
-            <li><a href="{{x.id}}">{{x.username}}</a></li>
+            <li><a href="{{x.id}}" title="push to see details">{{x.username}} </a></li>
         {% endfor %}
     </ul>
 </div>
