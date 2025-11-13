@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Expence
+{% endblock %}
+
+{% block content %}
+    <h1> Add new expence </h1>
+    <section>
+        <form class="form-with-validation" action="{% url 'transactions:create_expense' %}" method="post" >
+            {% csrf_token %}
+            <div> <label for="id_date">Date:</label> {{ form.date }} </div>
+
+            <div>
+                <label for="id_account">Account:</label>
+                <select id="id_account" name="account" onchange="if(this.value=='_add_new') window.location='{% url 'transactions:create_account' %}'">
+                    {% for account in form.fields.account.queryset %}
+                    {% if account.name == '_Add new account' %}
+                        <option value="_add_new">+ Add new account</option>
+                    {% else %}
+                        <option value="{{ account.id }}">{{ account.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div>{{ form.amount.label_tag }}   {{ form.amount }}</div>
+            <div>{{ form.currency.label_tag }} {{ form.currency }}</div>
+            <div>{{ form.category.label_tag }} {{ form.category }}</div>
+            <div>{{ form.remark.label_tag }}   {{ form.remark }}</div>
+            <button class="form-submit">Add Expense</button>
+        </form>        
+    </section>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Income
+{% endblock %}
+
+{% block content %}
+    <h1> Add new income </h1>
+    <section>
+        <form class="form-with-validation" action="{% url 'transactions:create_income' %}" method="post" >
+            {% csrf_token %}
+            {{form}}
+            <button class="form-submit">Add Income</button>
+        </form>        
+    </section>
+
+{% endblock %}

@@ -13,7 +13,9 @@
     <div class="topnav">
         <a href="/">HOME</a> | 
         <a href="/transactions">TRANSACTIONS</a> |
-        <a href="/members">MEMBERS</a> |
+        <a href="/transactions/create_expense">ADD EXPENSE</a> |
+        <a href="/transactions/create_income">ADD INCOME</a> |
+        <a href="/members">MY FAMILY</a> |
         {% if user.is_authenticated %}
             <form class="logout" action="{% url 'members:logout' %}" method="post">
                 {% csrf_token %}

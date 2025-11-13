@@ -18,7 +18,7 @@ class Account(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=255)
     income_flag = models.BooleanField(null=True)
-    expence_flag = models.BooleanField(null=True)
+    expense_flag = models.BooleanField(null=True)
 
     def __str__(self):
         return self.name

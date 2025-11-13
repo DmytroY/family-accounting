@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction details {{transaction.id}}
+{% endblock %}
+
+{% block content %}
+<div class="mycard">
+  <h1>Edit transaction</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="form-submit" name="action" value="save">Save</button>
+    <button type="form-submit" name="action" value="delete">Delete</button>
+    <button type="form-submit" name="action" value="cancel">Cancel</button>
+  </form>
+</div>
+{% endblock %}

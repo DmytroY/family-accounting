@@ -19,7 +19,7 @@
         </tr>
         {% for item in data%}
             <tr>
-                <td> {{item.date|date:"d-m-Y"}} </td>
+                <td> <a href="edit/{{item.id}}" title="push to edit"> {{item.date|date:"d-m-Y"}} </a></td>
                 <td> {{item.account}} </td>
                 <td> {{item.amount}} </td>
                 <td> {{item.currency}} </td>
