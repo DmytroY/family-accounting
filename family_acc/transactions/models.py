@@ -4,13 +4,15 @@ from django.contrib.auth.models import User
 class Currency(models.Model):
     code = models.CharField(max_length=3)
     descr = models.CharField(max_length=255)
+    family = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.code
 
 class Account(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    family = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -19,6 +21,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     income_flag = models.BooleanField(null=True)
     expense_flag = models.BooleanField(null=True)
+    family = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name

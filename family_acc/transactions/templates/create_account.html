@@ -6,14 +6,14 @@
 
 {% block content %}
     <h1> Create new account </h1>
-{% comment "" %}
+
     <section>
-        <form class="form-with-validation" action="{% url 'transactions:create_income' %}" method="post" >
+        <form class="form-with-validation" action="{% url 'transactions:create_account' %}" method="post" >
             {% csrf_token %}
             {{form}}
-            <button class="form-submit">Add Income</button>
+            <button class="form-submit">Save</button>
         </form>        
     </section>
-{% endcomment %}
+
 
 {% endblock %}

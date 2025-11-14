@@ -1,6 +1,12 @@
 from django import forms
 from . import models
 
+class CreateAccount(forms.ModelForm):
+    class Meta:
+        model = models.Account
+        fields = ['name','balance']
+
+
 class CreateExpense(forms.ModelForm):
     class Meta:
         model = models.Transaction
@@ -8,12 +14,13 @@ class CreateExpense(forms.ModelForm):
         widgets = {
             'remark': forms.Textarea(attrs={'rows': 3}),
         }
-
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['account'].queryset = models.Account.objects.order_by('name')
+        self.fields['account'].queryset = models.Account.objects.filter(family=user.profile.family).order_by('name')
         self.fields['currency'].queryset = models.Currency.objects.order_by('code')
         self.fields['category'].queryset = models.Category.objects.filter(expense_flag=True).order_by('name')
+
 
 class CreateIncome(forms.ModelForm):
     class Meta:
@@ -22,7 +29,6 @@ class CreateIncome(forms.ModelForm):
         widgets = {
             'remark': forms.Textarea(attrs={'rows': 3}),
         }
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['account'].queryset = models.Account.objects.order_by('name')

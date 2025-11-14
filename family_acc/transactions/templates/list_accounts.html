@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transactions
+{% endblock %}
+
+{% block content %}
+<div>
+   <h1>Accounts of family {{item.family}}</h1>    
+    <table>
+        <tr>
+            <th> Account </th>
+            <th> Balance </th>
+        </tr>
+        {% for item in data%}
+            <tr>
+                <td> <a href="edit/{{item.name}}" title="push to edit"> {{item.name}} </a></td>
+                <td> {{item.balance}} </td>
+            </tr>
+        {% endfor %}
+    </table>  
+</div>
+{% endblock %}
