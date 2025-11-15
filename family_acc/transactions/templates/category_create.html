@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Category create
+{% endblock %}
+
+{% block content %}
+    <h1> Create new category record </h1>
+
+    <section>
+        <form class="form-with-validation" action="{% url 'transactions:category_create' %}" method="post" >
+            {% csrf_token %}
+            <div>Category name: {{ form.name }}</div>
+            <div>Use it for income?: {{ form.income_flag }}</div>
+            <div>Use it for expense?:{{ form.expense_flag }}</div>
+            <button class="form-submit">Save</button>
+        </form>        
+    </section>
+
+{% endblock %}

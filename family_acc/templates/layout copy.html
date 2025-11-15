@@ -3,7 +3,6 @@
 <html lang="en">
     <link rel="stylesheet" href="{% static 'global.css' %}" />
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'favicon.gif' %}" type="image/gif">
     <title>
         {% block title %}
@@ -11,9 +10,12 @@
     </title>
 </head>
 <body>
-<div class="grid-container">
-
-    <div class="header">
+    <div class="topnav">
+        <a href="/">HOME</a> | 
+        <a href="/transactions">TRANSACTIONS</a> |
+        <a href="/transactions/transaction_create_expense">ADD EXPENSE</a> |
+        <a href="/transactions/transaction_create_income">ADD INCOME</a> |
+        <a href="/members">MY FAMILY</a> |
         {% if user.is_authenticated %}
             <form class="logout" action="{% url 'members:logout' %}" method="post">
                 {% csrf_token %}
@@ -23,36 +25,17 @@
         {% else  %}
             <a href="{% url 'members:register' %}">REGISTRATION</a> |
             <a href="{% url 'members:login' %}">LOGIN</a> 
-        {% endif %}   
+        {% endif %}     
     </div>
-
-    <div class="menu">
-            <a href="/">HOME</a><br>
-            TRANSACTIONS<br>
-            <ul>
-                <li><a href="/transactions">List</a></li>
-                <li><a href="/transactions/transaction_create_expense">Add expence</a></li>
-                <li><a href="/transactions/transaction_create_income">Add income</a></li>
-            </ul>
-
-            
-            <a href="/members">MY FAMILY</a><br>
-    </div>
-
-    <div class="content">
+    <main>
         {% block content %}
         {% endblock %}
-    </div>
-
-    <div class="details">
-        <h2>More:</h2>
-        Some details about
-    </div>
-
-    <div class="footer">
-        Dmytro Yakovenko. 2025.
-    </div>
-
-</div>
+    </main>
 </body>
+<footer>
+    <br>
+    <hr>
+    <address> Dmytro Yakovenko. 2025. </address>
+    <a href="mailto:dmitry.yakovenko@gmail.com">Send email</a>
+</footer>
 </html>

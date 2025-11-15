@@ -1,26 +1,23 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Expense
+    Income
 {% endblock %}
 
 {% block content %}
-    <h1> Add new expense </h1>
+    <h1> Add new income </h1>
     <section>
-        <form class="form-with-validation" action="{% url 'transactions:create_expense' %}" method="post" >
+        <form class="form-with-validation" action="{% url 'transactions:transaction_create_income' %}" method="post" >
             {% csrf_token %}
-            {% comment %}
-            <div> <label for="id_date">Date:</label> {{ form.date }} </div>
-            {% endcomment %}
             <div>{{ form.date.label_tag }} {{ form.date }} </div>
             <div>{{ form.account.label_tag }} {{ form.account }} 
-                 <a href="{% url 'transactions:create_account' %}">add account</a>
+                 <a href="{% url 'transactions:account_create' %}">add account</a>
             </div>
             <div>{{ form.amount.label_tag }}   {{ form.amount }}</div>
             <div>{{ form.currency.label_tag }} {{ form.currency }}</div>
             <div>{{ form.category.label_tag }} {{ form.category }}</div>
             <div>{{ form.remark.label_tag }}   {{ form.remark }}</div>
-            <button class="form-submit">Add Expense</button>
+            <button class="form-submit">Save</button>
         </form>        
     </section>
 

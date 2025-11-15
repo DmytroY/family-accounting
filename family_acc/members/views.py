@@ -58,7 +58,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect("transactions:list")
+                return redirect("transactions:transaction_list")
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})

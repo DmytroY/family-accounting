@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Currency, Account, Category, Transaction
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ("code", "descr", 'family')
+    list_display = ("code", "description", 'family')
 
 class AccountAdmin(admin.ModelAdmin):
     list_display = ("name", "balance", 'family')

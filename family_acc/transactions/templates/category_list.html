@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    List of used categories
+{% endblock %}
+
+{% block content %}
+<div>
+   <h1>Categories of income/expenses used by family {{request.user.profile.family}}</h1>    
+    <table>
+        <tr>
+            <th> Name </th>
+            <th> Used for income? </th>
+            <th> Used for expense? </th>
+        </tr>
+        {% for item in data%}
+            <tr>
+                <td> <a href="category_edit/{{item.id}}" title="push to edit"> {{item.name}} </a></td>
+                <td> {{item.income_flag}} </td>
+                <td> {{item.expense_flag}} </td>
+            </tr>
+        {% endfor %}
+    </table>  
+</div>
+{% endblock %}

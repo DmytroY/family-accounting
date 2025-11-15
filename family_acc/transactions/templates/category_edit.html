@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Transaction details {{transaction.id}}
+    Category edit {{account.id}}
 {% endblock %}
 
 {% block content %}
 <div class="mycard">
-  <h1>Edit transaction</h1>
+  <h1>Edit category of income/expenses</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

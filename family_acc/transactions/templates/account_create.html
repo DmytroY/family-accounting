@@ -1,16 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Income
+    Account create
 {% endblock %}
 
 {% block content %}
     <h1> Create new account </h1>
 
     <section>
-        <form class="form-with-validation" action="{% url 'transactions:create_account' %}" method="post" >
+        <form class="form-with-validation" action="{% url 'transactions:account_create' %}" method="post" >
             {% csrf_token %}
-            {{form}}
+            <div>Account name: {{ form.name }}</div>
+            <div>Initial balance: {{ form.balance }}</div>
+
             <button class="form-submit">Save</button>
         </form>        
     </section>

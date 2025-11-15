@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    List of used currency
+{% endblock %}
+
+{% block content %}
+<div>
+   <h1>Currency used by family {{request.user.profile.family}}</h1>    
+    <table>
+        <tr>
+            <th> Code </th>
+            <th> Description </th>
+        </tr>
+        {% for item in data%}
+            <tr>
+                <td> <a href="currency_edit/{{item.id}}" title="push to edit"> {{item.code}} </a></td>
+                <td> {{item.description}} </td>
+            </tr>
+        {% endfor %}
+    </table>  
+</div>
+{% endblock %}
