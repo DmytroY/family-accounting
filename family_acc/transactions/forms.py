@@ -4,7 +4,12 @@ from . import models
 class CreateAccount(forms.ModelForm):
     class Meta:
         model = models.Account
-        fields = ['name','balance']
+        fields = ['name','balance','currency']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.fields['currency'].queryset =  models.Currency.objects.filter(family=user.profile.family).order_by('code')
 
 class CreateCurrency(forms.ModelForm):
     class Meta:
@@ -19,7 +24,7 @@ class CreateCategory(forms.ModelForm):
 class CreateExpense(forms.ModelForm):
     class Meta:
         model = models.Transaction
-        fields = ['date', 'account', 'amount', 'currency', 'category', 'remark']
+        fields = ['date', 'account', 'amount', 'category', 'remark']
         widgets = {
             'remark': forms.Textarea(attrs={'rows': 2, 'required': False}),
         }
@@ -28,14 +33,13 @@ class CreateExpense(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['account'].queryset = models.Account.objects.filter(family=user.profile.family).order_by('name')
-        self.fields['currency'].queryset = models.Currency.objects.order_by('code')
-        self.fields['category'].queryset = models.Category.objects.filter(expense_flag=True).order_by('name')
+        self.fields['category'].queryset = models.Category.objects.filter(family=user.profile.family, expense_flag=True).order_by('name')
 
 
 class CreateIncome(forms.ModelForm):
     class Meta:
         model = models.Transaction
-        fields = ['date', 'account', 'amount', 'currency', 'category', 'remark']
+        fields = ['date', 'account', 'amount', 'category', 'remark']
         widgets = {
             'remark': forms.Textarea(attrs={'rows': 2, 'required': False}),
         }
@@ -43,5 +47,4 @@ class CreateIncome(forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['account'].queryset =  models.Account.objects.filter(family=user.profile.family).order_by('name')
-        self.fields['currency'].queryset = models.Currency.objects.order_by('code')
-        self.fields['category'].queryset = models.Category.objects.filter(income_flag=True).order_by('name')
+        self.fields['category'].queryset = models.Category.objects.filter(family=user.profile.family, income_flag=True).order_by('name')

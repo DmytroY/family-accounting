@@ -10,9 +10,15 @@ class Currency(models.Model):
         return self.code
 
 class Account(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     family = models.CharField(max_length=100)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'currency'], name='unique_name_currency')
+        ]
 
     def __str__(self):
         return self.name

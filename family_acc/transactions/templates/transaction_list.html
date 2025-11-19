@@ -9,14 +9,14 @@
    <h1>Last transactions</h1>    
     <table>
         <tr>
-            <th> Date </th>
-            <th> Account </th>
-            <th> Amount </th>
-            <th> Currency </th>
+            <th> Date  </th>
+            <th> Account  </th>
+            <th> Amount  </th>
+            <th> Currency  </th>
             <th> Category </th>
         </tr>
         {% for item in data%}
-            <tr>
+            <tr class="{% if item.amount > 0 %}income{% else %}expense{% endif %}">
                 <td> <a href="transaction_edit/{{item.id}}" title="push to edit"> {{item.date|date:"d-m-Y"}} </a></td>
                 <td> {{item.account}} </td>
                 <td> {{item.amount}} </td>

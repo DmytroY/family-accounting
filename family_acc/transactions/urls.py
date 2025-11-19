@@ -19,4 +19,6 @@ urlpatterns = [
     path('category_list', views.category_list, name='category_list'),
     path('category_create', views.category_create, name='category_create'),
     path('category_edit/<id>', views.category_edit, name='category_edit'),
+
+    path("ajax/account/<int:account_id>/currency/", views.get_account_currency, name="ajax_account_currency")
 ]

@@ -3,6 +3,11 @@ from .models import Transaction, Account, Currency, Category
 from django.contrib.auth.decorators import login_required
 from . import forms
 from django.utils import timezone
+from django.db.models import F
+from django.http import JsonResponse
+from django.db.models.deletion import ProtectedError
+from django.contrib import messages
+
 
 @login_required(login_url="/members/login/")
 def transaction_list(request):
@@ -13,39 +18,49 @@ def transaction_list(request):
 @login_required(login_url="/members/login/")
 def transaction_edit(request, id):
     transaction = Transaction.objects.get(id=id)
-    if request.POST.get("action") == "delete":
-        transaction.delete()
-        return redirect('transactions:transaction_list')
-    
-    if request.POST.get("action") == "cansel":
-        return redirect('transactions:transaction_list')
-    
-    if transaction.amount >= 0:
-        # treat it as income
-        if request.method == "POST":
-            form = forms.CreateIncome(request.POST, instance=transaction, user=request.user)
-            if form.is_valid():
-                income = form.save(commit=False)
-                income.created_by = request.user
-                income.amount = abs(income.amount)
-                income.save()
-                return redirect('transactions:transaction_list')
-        else:
-            form = forms.CreateIncome(instance=transaction, user=request.user)
-        
-    else:
-        # treat it as expense
-        if request.method == "POST":
-            form = forms.CreateExpense(request.POST, instance=transaction, user=request.user)
-            if form.is_valid():
-                expense = form.save(commit=False)
-                expense.created_by = request.user
-                expense.amount = -abs(expense.amount)
-                expense.save()
-                return redirect('transactions:transaction_list')
-        else:
-            form = forms.CreateExpense(instance=transaction, user=request.user)
 
+    # POST
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "delete":
+            # adjust account balance
+            Account.objects.filter(id=transaction.account_id).update(balance=F('balance') - transaction.amount)
+            #delete transaction
+            transaction.delete()
+            messages.success(request, f"Success. Transaction deleted.")
+            return redirect('transactions:transaction_list')
+        
+        if action == "cancel":
+            return redirect('transactions:transaction_list')
+        
+        if action == "save":
+            amt_old = transaction.amount
+            if transaction.amount >= 0:         
+                # treat it as income
+                form = forms.CreateIncome(request.POST, instance=transaction, user=request.user)
+                sign = 1
+            else:
+                #treat as expence
+                form = forms.CreateExpense(request.POST, instance=transaction, user=request.user)
+                sign = -1
+            
+            if form.is_valid():
+                tr = form.save(commit=False)
+                tr.amount = sign * abs(tr.amount)
+                tr.created_by = request.user
+                # adjust account balance
+                Account.objects.filter(id=transaction.account_id).update(balance=F('balance') + (tr.amount - amt_old))
+           
+                tr.save()
+                messages.success(request, f"Success. Transaction edited.")
+                return redirect('transactions:transaction_list')
+            
+    # GET
+    if transaction.amount >= 0:
+        form = forms.CreateIncome(instance=transaction, user=request.user)
+    else:
+        form = forms.CreateExpense(instance=transaction, user=request.user)
     return render(request, "transaction_edit.html", {'form': form, 'transaction': transaction})
 
 @login_required(login_url="/members/login/")
@@ -53,12 +68,15 @@ def transaction_create_expense(request):
     if(request.method == "POST"):
         form = forms.CreateExpense(request.POST, user=request.user)
         if form.is_valid():
-            # save
-            new_expense = form.save(commit=False)
-            new_expense.created_by = request.user
+            expense = form.save(commit=False)
+            expense.created_by = request.user
             # expenses always shoud be saved as negative amount transaction
-            new_expense.amount = -abs(new_expense.amount)
-            new_expense.save()
+            expense.amount = -abs(expense.amount)
+            expense.currency = Currency.objects.get(id=expense.account.currency_id)
+            # adjust acount balance accordingly
+            Account.objects.filter(id=expense.account_id).update(balance=F('balance') + expense.amount)
+            #commit changes
+            expense.save()
             return redirect('transactions:transaction_list')
     else:
         form = forms.CreateExpense(initial={'date': timezone.now().date()}, user=request.user)
@@ -70,11 +88,14 @@ def transaction_create_income(request):
         form = forms.CreateIncome(request.POST, user=request.user)
         if form.is_valid():
             # save
-            new_income = form.save(commit=False)
-            new_income.created_by = request.user
+            income = form.save(commit=False)
+            income.created_by = request.user
             # income always shoud be saved as positive amount transaction
-            new_income.amount = abs(new_income.amount)
-            new_income.save()
+            income.amount = abs(income.amount)
+            income.currency = Currency.objects.get(id=income.account.currency_id)
+            # adjust acount balance accordingly
+            Account.objects.filter(id=income.account_id).update(balance=F('balance') + income.amount)
+            income.save()
             return redirect('transactions:transaction_list')
     else:
         form = forms.CreateIncome(initial={'date': timezone.now().date()}, user=request.user)
@@ -82,16 +103,21 @@ def transaction_create_income(request):
 
 
 @login_required(login_url="/members/login/")
+def get_account_currency(request, account_id):
+    account = Account.objects.get(id=account_id)
+    return JsonResponse({"currency": account.currency.code})
+
+@login_required(login_url="/members/login/")
 def account_create(request):
     if request.method == "POST":
-        form = forms.CreateAccount(request.POST)
+        form = forms.CreateAccount(request.POST, user=request.user)
         if form.is_valid():
             new_account = form.save(commit=False)
             new_account.family = request.user.profile.family
             new_account.save()
             return redirect('transactions:account_list')
     else:
-        form = forms.CreateAccount()
+        form = forms.CreateAccount(user=request.user)
     return render(request, 'account_create.html',  {'form': form})
 
 @login_required(login_url="/members/login/")
@@ -104,19 +130,25 @@ def account_list(request):
 def account_edit(request, id):
     account = Account.objects.get(id=id)
     if request.POST.get("action") == "delete":
-        account.delete()
-        return redirect('transactions:account_list')
+        try:
+            account.delete()
+            messages.success(request, f"Success. Account {account.name} deleted.")
+
+            return redirect('transactions:account_list')
+        except ProtectedError:
+            messages.error(request, f"Error. Cannot delete account {account.name}. It is used by existing transaction records.")
+            return redirect('transactions:account_edit',  id=id)
     
     if request.POST.get("action") == "cansel":
         return redirect('transactions:account_list')
     
     if request.method == "POST":
-        form = forms.CreateAccount(request.POST, instance=account)
+        form = forms.CreateAccount(request.POST, instance=account, user=request.user)
         if form.is_valid():
             form.save()
             return redirect('transactions:account_list')
     
-    form = forms.CreateAccount(instance=account)
+    form = forms.CreateAccount(instance=account, user=request.user)
     return render(request, 'account_edit.html',  {'form': form, 'account': account})
 
 

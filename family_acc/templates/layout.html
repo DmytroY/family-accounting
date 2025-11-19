@@ -2,6 +2,7 @@
 {% load static %}
 <html lang="en">
     <link rel="stylesheet" href="{% static 'global.css' %}" />
+    <script src="{% static 'get_currency.js' %}"></script>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'favicon.gif' %}" type="image/gif">
@@ -17,7 +18,9 @@
         {% if user.is_authenticated %}
             <form class="logout" action="{% url 'members:logout' %}" method="post">
                 {% csrf_token %}
-                You authorized as {{ user.username }}, you can 
+                You authorized as
+                <a href="/members/{{user.id}}" title="push to see details">{{user.username}} </a>
+                , you can 
                 <button title="Logout" aria-label="User Logout">LOGOUT</button>
             </form>
         {% else  %}
@@ -27,26 +30,54 @@
     </div>
 
     <div class="menu">
-            <a href="/">HOME</a><br>
-            TRANSACTIONS<br>
+        </details>
+            <summary>TRANSACTIONS</summary>
             <ul>
-                <li><a href="/transactions">List</a></li>
+                <li><a href="/transactions/transaction_list">List transactions</a></li>
                 <li><a href="/transactions/transaction_create_expense">Add expence</a></li>
                 <li><a href="/transactions/transaction_create_income">Add income</a></li>
             </ul>
+        </details>
+        </details>
+            <summary>ACCOUNTS</summary>
+            <ul>
+                <li><a href="/transactions/account_list">List accounts</a></li>
+                <li><a href="/transactions/account_create">Create account</a></li>
+            </ul>
+        </details>
+                </details>
+            <summary>CATEGORIES</summary>
+            <ul>
+                <li><a href="/transactions/category_list">List categories</a></li>
+                <li><a href="/transactions/category_create">Create category</a></li>
+            </ul>
+        </details>
+                </details>
+            <summary>CURRENCY</summary>
+            <ul>
+                <li><a href="/transactions/currency_list">List currencies</a></li>
+                <li><a href="/transactions/currency_create">Create currency</a></li>
+            </ul>
+        </details>
 
-            
-            <a href="/members">MY FAMILY</a><br>
+
+        <a href="/members">MY FAMILY</a><br>
     </div>
 
     <div class="content">
         {% block content %}
         {% endblock %}
+
     </div>
 
     <div class="details">
-        <h2>More:</h2>
-        Some details about
+        {% if messages %}
+            {% for m in messages %}
+                <div class="{{ m.tags }}">{{ m }}</div>
+            {% endfor %}
+        {% else %}
+            All running smooth
+        {% endif %}
     </div>
 
     <div class="footer">

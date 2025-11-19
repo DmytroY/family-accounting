@@ -10,12 +10,10 @@
         <form class="form-with-validation" action="{% url 'transactions:transaction_create_income' %}" method="post" >
             {% csrf_token %}
             <div>{{ form.date.label_tag }} {{ form.date }} </div>
-            <div>{{ form.account.label_tag }} {{ form.account }} 
-                 <a href="{% url 'transactions:account_create' %}">add account</a>
-            </div>
-            <div>{{ form.amount.label_tag }}   {{ form.amount }}</div>
-            <div>{{ form.currency.label_tag }} {{ form.currency }}</div>
-            <div>{{ form.category.label_tag }} {{ form.category }}</div>
+            <div>{{ form.account.label_tag }} {{ form.account }} <a href="{% url 'transactions:account_create' %}">add account</a></div>
+            <div>{{ form.amount.label_tag }}   {{ form.amount }} <span id="currency-info"></span></div>
+
+            <div>{{ form.category.label_tag }} {{ form.category }} <a href="{% url 'transactions:category_create' %}">add category</a></div>
             <div>{{ form.remark.label_tag }}   {{ form.remark }}</div>
             <button class="form-submit">Save</button>
         </form>        

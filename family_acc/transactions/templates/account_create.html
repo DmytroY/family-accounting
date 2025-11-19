@@ -12,7 +12,7 @@
             {% csrf_token %}
             <div>Account name: {{ form.name }}</div>
             <div>Initial balance: {{ form.balance }}</div>
-
+            <div>Currency: {{ form.currency }}</div>
             <button class="form-submit">Save</button>
         </form>        
     </section>

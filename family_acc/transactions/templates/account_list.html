@@ -10,12 +10,14 @@
     <table>
         <tr>
             <th> Account </th>
-            <th> balance </th>
+            <th> Balance </th>
+            <th> Currency </th>
         </tr>
         {% for item in data%}
             <tr>
                 <td> <a href="account_edit/{{item.id}}" title="push to edit"> {{item.name}} </a></td>
                 <td> {{item.balance}} </td>
+                <td> {{item.currency}} </td>
             </tr>
         {% endfor %}
     </table>  
