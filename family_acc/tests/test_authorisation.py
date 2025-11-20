@@ -113,7 +113,8 @@ class UserHasAccessOnlyOwnFamilyRecords(TestCase):
             category=self.category,
             remark='test remark',
             created_by=self.user1,
-            family=self.user1.profile.family)
+            # family=self.user1.profile.family   # no need, because family will be updated by signals.py
+            )
 
         #log in as user1
         self.client.login(username='testuser1', password="testuserpass1")
