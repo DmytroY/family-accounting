@@ -25,13 +25,13 @@ class TestTransactionsPage(TestCase):
         self.user.profile.save()
         
         # creating transaction record
-        self.currency = Currency.objects.create(code='CZK', descr='Czech koruna')
-        self.account = Account.objects.create(name='Cash', balance=555)
-        self.category = Category.objects.create(name='Other imcomes', income_flag=True, expence_flag=False)
+        self.currency = Currency.objects.create(code='CZK', description='Czech koruna')
+        self.account = Account.objects.create(name='Cash', balance=555, currency=self.currency)
+        self.category = Category.objects.create(name='Other imcomes', income_flag=True, expense_flag=False)
         self.transaction = Transaction.objects.create(
             date='2025-06-30',
             account=self.account,
-            amount='1000',
+            amount='1001.99',
             currency=self.currency,
             category=self.category,
             remark='test remark',
@@ -39,14 +39,19 @@ class TestTransactionsPage(TestCase):
             family=self.profile.family)
 
     def test_transactions_uses_template(self):
-        response = self.client.get(reverse('transactions:list'))
-        self.assertTemplateUsed(response, 'list.html')
+        response = self.client.get(reverse('transactions:transaction_list'))
+        self.assertTemplateUsed(response, 'transaction_list.html')
 
     def test_transactions_uses_authorised_user(self):
-        response = self.client.get(reverse('transactions:list'))
-        self.assertContains(response, 'You authorized as testuser', status_code=200)
+        response = self.client.get(reverse('transactions:transaction_list'))
+        self.assertContains(response, 'You authorized as', status_code=200)
+        self.assertContains(response, 'testuser', status_code=200)
 
     def test_transactions_shows_record(self):
-        response = self.client.get(reverse('transactions:list'))
-        self.assertContains(response, 'test remark')
+        response = self.client.get(reverse('transactions:transaction_list'))
+        self.assertContains(response, 'Last transactions')
+        self.assertContains(response, '30-06-2025')
+        self.assertContains(response, '1001.99')
+        self.assertContains(response, 'CZK')
+        self.assertContains(response, 'Other imcomes')
 

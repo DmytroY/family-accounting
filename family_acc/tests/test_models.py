@@ -7,34 +7,37 @@ class MembersModelsTest(TestCase):
     
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password="testuserpass123")
+        self.profile = self.user.profile
+        self.user.profile.family = "testuserfamily"
+        self.user.profile.save()
         self.client.login(username='testuser', password="testuserpass123")
 
     def test_user_created(self):
         self.assertEqual(self.user.username, 'testuser')
 
     def test_userprofile_reated(self):
-        self.profile = Profile(user=self.user, family="testuserfamily")
         self.assertEqual(self.profile.user, self.user)
         self.assertEqual(self.profile.family, "testuserfamily")
     
 class TransactionsModelsTest(TestCase):
 
     def setUp(self):
-        self.currency = Currency(code='CZK', descr='Czech koruna')
-        self.account = Account(name='Cash', balance=555)
-        self.category = Category(name='Other imcomes', income_flag=True, expence_flag=False)
+        self.currency = Currency(code='CZK', description='Czech koruna')
+        self.account = Account(name='Cash', balance=555, currency=self.currency)
+        self.category = Category(name='Other imcomes', income_flag=True, expense_flag=False)
 
     def test_currency(self):
-        self.assertEqual(self.currency.descr, 'Czech koruna')
+        self.assertEqual(self.currency.description, 'Czech koruna')
         self.assertEqual(str(self.currency), 'CZK')
 
     def test_account(self):
         self.assertEqual(self.account.balance, 555)
         self.assertEqual(str(self.account), 'Cash')
+        self.assertEqual(self.account.currency, self.currency)
 
     def test_category(self):
         self.assertTrue(self.category.income_flag)
-        self.assertFalse(self.category.expence_flag)
+        self.assertFalse(self.category.expense_flag)
         self.assertEqual(str(self.category), 'Other imcomes')
     
     def test_transaction(self):
