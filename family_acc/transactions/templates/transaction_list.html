@@ -6,7 +6,13 @@
 
 {% block content %}
 <div>
-   <h1>Last transactions</h1>    
+    <h1>Transactions</h1>
+
+    <form method="get">
+        <label>From: <input type="date" name="start" value={{request.GET.start}}></label>
+        <label>To: <input type="date" name="end" value={{request.GET.end}}></label>
+        <button type="form-submit">Filter</button>
+    </form>
     <table>
         <tr>
             <th> Date  </th>

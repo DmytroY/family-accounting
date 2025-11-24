@@ -7,7 +7,7 @@ class Currency(models.Model):
     family = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.code
+        return f"{self.code}"
 
 class Account(models.Model):
     name = models.CharField(max_length=255)
@@ -21,7 +21,7 @@ class Account(models.Model):
         ]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.currency})"
     
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -30,7 +30,7 @@ class Category(models.Model):
     family = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
     
 class Transaction(models.Model):
     date = models.DateField()

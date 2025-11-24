@@ -120,9 +120,13 @@ form > div {
 .success { color: var(--color-background-dark); }
 .error { color: var(--color-error); }
 
-.errorlist {
+.errorlist{
     color: var(--color-error);
     margin-left: 5rem;
+}
+
+.errorlist li {
+    color: var(--color-error);
 }
 
 .errorlist li::marker {

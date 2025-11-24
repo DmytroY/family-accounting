@@ -29,6 +29,12 @@ class CreateExpense(forms.ModelForm):
             'remark': forms.Textarea(attrs={'rows': 2, 'required': False}),
         }
 
+    def clean_amount(self):
+        value = self.cleaned_data['amount']
+        if value == 0:
+            raise forms.ValidationError("Amount cannot be 0")
+        return value
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
@@ -43,6 +49,13 @@ class CreateIncome(forms.ModelForm):
         widgets = {
             'remark': forms.Textarea(attrs={'rows': 2, 'required': False}),
         }
+
+    def clean_amount(self):
+        value = self.cleaned_data['amount']
+        if value == 0:
+            raise forms.ValidationError("Amount cannot be 0")
+        return value
+    
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)

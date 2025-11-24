@@ -10,9 +10,36 @@ from django.contrib import messages
 
 
 @login_required(login_url="/members/login/")
+def get_account_currency(request, account_id):
+    """ helper function used in get_currency.js"""
+    account = Account.objects.get(id=account_id)
+    return JsonResponse({"currency": account.currency.code})
+
+@login_required(login_url="/members/login/")
 def transaction_list(request):
     user = request.user
-    transaction_data = Transaction.objects.filter(family= getattr(user.profile, 'family', None)).order_by('-id').order_by('-date', '-id')[:20]
+    family = getattr(user.profile, 'family', None)
+
+    # get date range from GET params
+    start = request.GET.get("start")
+    end = request.GET.get("end")
+
+    # default = current month
+    today = timezone.now().date()
+    cur_month_start = today.replace(day=1)
+
+    if start and end:
+        transaction_data = Transaction.objects.filter(
+            family=family,
+            date__range=[start, end]
+        ).order_by('-date', '-id')
+        print(f"--DY-- start:{start}")
+    else:
+        transaction_data = Transaction.objects.filter(
+            family=family,
+            date__gte=cur_month_start
+        ).order_by('-date', '-id')
+
     return render(request, "transaction_list.html", {"data": transaction_data})
 
 @login_required(login_url="/members/login/")
@@ -28,7 +55,7 @@ def transaction_edit(request, id):
             Account.objects.filter(id=transaction.account_id).update(balance=F('balance') - transaction.amount)
             #delete transaction
             transaction.delete()
-            messages.success(request, f"Success. Transaction deleted.")
+            messages.success(request, f"Transaction deleted.")
             return redirect('transactions:transaction_list')
         
         if action == "cancel":
@@ -53,7 +80,7 @@ def transaction_edit(request, id):
                 Account.objects.filter(id=transaction.account_id).update(balance=F('balance') + (tr.amount - amt_old))
            
                 tr.save()
-                messages.success(request, f"Success. Transaction edited.")
+                messages.success(request, f"Transaction edited.")
                 return redirect('transactions:transaction_list')
             
     # GET
@@ -77,6 +104,7 @@ def transaction_create_expense(request):
             Account.objects.filter(id=expense.account_id).update(balance=F('balance') + expense.amount)
             #commit changes
             expense.save()
+            messages.success(request, "Expence transaction created")
             return redirect('transactions:transaction_list')
     else:
         form = forms.CreateExpense(initial={'date': timezone.now().date()}, user=request.user)
@@ -96,16 +124,12 @@ def transaction_create_income(request):
             # adjust acount balance accordingly
             Account.objects.filter(id=income.account_id).update(balance=F('balance') + income.amount)
             income.save()
+            messages.success(request, "Income transaction created")
             return redirect('transactions:transaction_list')
     else:
         form = forms.CreateIncome(initial={'date': timezone.now().date()}, user=request.user)
     return render(request, 'transaction_create_income.html', {'form': form})
 
-
-@login_required(login_url="/members/login/")
-def get_account_currency(request, account_id):
-    account = Account.objects.get(id=account_id)
-    return JsonResponse({"currency": account.currency.code})
 
 @login_required(login_url="/members/login/")
 def account_create(request):
@@ -115,7 +139,11 @@ def account_create(request):
             new_account = form.save(commit=False)
             new_account.family = request.user.profile.family
             new_account.save()
+            messages.success(request, f"Account {new_account.name} created")
             return redirect('transactions:account_list')
+        else:
+            messages.error(request, "Cannot create account. Account with such name and currency already exists")
+            return render(request, 'account_create.html',  {'form': form})
     else:
         form = forms.CreateAccount(user=request.user)
     return render(request, 'account_create.html',  {'form': form})
@@ -132,11 +160,11 @@ def account_edit(request, id):
     if request.POST.get("action") == "delete":
         try:
             account.delete()
-            messages.success(request, f"Success. Account {account.name} deleted.")
+            messages.success(request, f"Account {account.name} deleted.")
 
             return redirect('transactions:account_list')
         except ProtectedError:
-            messages.error(request, f"Error. Cannot delete account {account.name}. It is used by existing transaction records.")
+            messages.error(request, 'Cannot delete account. It is used by existing transaction records.')
             return redirect('transactions:account_edit',  id=id)
     
     if request.POST.get("action") == "cansel":
@@ -150,7 +178,6 @@ def account_edit(request, id):
     
     form = forms.CreateAccount(instance=account, user=request.user)
     return render(request, 'account_edit.html',  {'form': form, 'account': account})
-
 
 
 @login_required(login_url="/members/login/")
@@ -167,6 +194,7 @@ def currency_create(request):
             new = form.save(commit=False)
             new.family = request.user.profile.family
             new.save()
+            messages.success(request, f"New currency {new.code} created")
             return redirect('transactions:currency_list')
     else:
         form = forms.CreateCurrency()
@@ -175,10 +203,16 @@ def currency_create(request):
 @login_required(login_url="/members/login/")
 def currency_edit(request, id):
     currency = Currency.objects.get(id=id)
+
     if request.POST.get("action") == "delete":
-        currency.delete()
-        return redirect('transactions:currency_list')
-    
+        try:
+            currency.delete()
+            messages.success(request, f"Currency {currency.code} deleted.")
+            return redirect('transactions:currency_list')
+        except ProtectedError:
+            messages.error(request, "Cannot delete. Currency is used in existing transactions.")
+            return redirect('transactions:currency_edit', id=id)
+            
     if request.POST.get("action") == "cansel":
         return redirect('transactions:currency_list')
     
@@ -206,6 +240,7 @@ def category_create(request):
             new = form.save(commit=False)
             new.family = request.user.profile.family
             new.save()
+            messages.success(request, f"New categoty {new.name} created")
             return redirect('transactions:category_list')
     else:
         form = forms.CreateCategory()
@@ -214,9 +249,15 @@ def category_create(request):
 @login_required(login_url="/members/login/")
 def category_edit(request, id):
     category = Category.objects.get(id=id)
+
     if request.POST.get("action") == "delete":
-        category.delete()
-        return redirect('transactions:category_list')
+        try:
+            category.delete()
+            messages.success(request, f"Category {category.name} deleted.")
+            return redirect('transactions:category_list')
+        except ProtectedError:
+            messages.error(request, "Cannot delete. Category is used in existing transactions.")
+            return redirect('transactions:category_edit', id=id)
     
     if request.POST.get("action") == "cansel":
         return redirect('transactions:category_list')
