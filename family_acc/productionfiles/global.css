@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+:root {
+  --color-text-dark: #333333;
+  --color-text-light: #FFFFFF;
+  --color-background-light: #FFFFFF; /* brigth background */
+  --color-background-dark: #3366CC; /* dark background */
+  --color-background-alt: #f2f2f2; /* Світло-сірий для чергування рядків */
+  --colof-hoover: #DDDDDD;
+
+  --color-income: #006100; /* income records */
+  --color-expense: #892321; /* expense records or error message*/
+  --color-error: #c00000; /* expense records or error message*/
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  color: var(--color-text-dark);
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+body {
+  font: 600 18px 'Source Sans Pro', sans-serif;
+  letter-spacing: 0.64px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "menu"
+    "content"
+    "details"
+    "footer";
+  background-color: var(--color-background-light);
+  gap: 10px;
+}
+
+.header {
+  grid-area: header;
+  background-color: var(--color-background-dark);
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+.header form,
+.header a
+{
+  color: var(--color-text-light);
+}
+
+.menu {
+  grid-area: menu;
+}
+
+.content {
+  grid-area: content;
+}
+
+.content > h1 {
+  font-size: 30px;
+  margin-bottom: 7px;
+}
+
+.content > p {
+  margin-bottom: 7px;
+}
+
+.details {
+  grid-area: details;
+  border: 1px solid var(--color-background-dark);
+  background-color: var(--color-background-alt);
+  padding: 10px;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: var(--color-background-dark);
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+/* style the summary to look like a nav heading */
+.menu .menu-section > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 10px;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* Mobile first - horisontal menu for with < 680 */
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+
+@media (min-width: 680px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {
+    grid-area: 2 / span 1;
+    /* usual veertical menu for */
+    display: inline;
+}
+  .content {grid-area: 2 / span 4;}
+  .details {grid-area: 3 / span 6;}
+  .footer {grid-area: 4 / span 6;}
+}
+
+
+@media (min-width: 900px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {
+    grid-area: 2 / span 1;
+    /* usual veertical menu for */
+    display: inline;
+  }
+  .content {grid-area: 2 / span 4;}
+  .details {
+    grid-area: 2 / span 1;
+    max-width: 250px;
+    width: 100%;
+    justify-self: end;
+  }
+  .footer {grid-area: 3 / span 6;}
+}
+
+
+form > div {
+  margin: 30px;
+}
+
+.helptext {
+  font-size: 10px;
+  font-weight: 100;
+}
+
+.success { color: var(--color-background-dark); }
+.error { color: var(--color-error); }
+
+.errorlist{
+    color: var(--color-error);
+    margin-left: 5rem;
+}
+
+.errorlist li {
+    color: var(--color-error);
+}
+
+.errorlist li::marker {
+    color: var(--color-error);
+    content: 'Ups... ';
+}
+
+.logout {
+    display: inline-block;
+}
+
+.header  a:visited {
+  color: var(--color-text-light);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: var(--color-background-alt);}
+
+tr:hover {background-color: var(--colof-hoover);}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--color-background-dark);
+  color: var(--color-text-light);
+}
+
+.income td{color: var(--color-income);}
+.expense td{color: var(--color-expense);}

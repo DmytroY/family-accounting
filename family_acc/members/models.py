@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import uuid
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     family = models.CharField(max_length=100, blank=True, null=True)
 
 #automaticaly create user profile on user creation or update if username is changed
