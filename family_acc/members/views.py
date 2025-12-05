@@ -20,15 +20,19 @@ def list(request):
 @login_required(login_url="/members/login/")
 def details(request, uuid):
     # mymember = User.objects.get(id=id)
-    try:
-        mymember = User.objects.get(profile__uuid=uuid)
-        if mymember and mymember.profile.family == request.user.profile.family:
-            template = loader.get_template("details.html")
-            context ={'mymember':mymember, }
-            return HttpResponse(template.render(context, request))
-        raise Http404()
-    except:
-        raise Http404()
+    
+    mymember = User.objects.get(profile__uuid=uuid)
+    return render(request, "details.html", {"mymember": mymember})
+
+    # try:
+    #     mymember = User.objects.get(profile__uuid=uuid)
+    #     if mymember and mymember.profile.family == request.user.profile.family:
+    #         template = loader.get_template("details.html")
+    #         context ={'mymember':mymember, }
+    #         return HttpResponse(template.render(context, request))
+    #     raise Http404()
+    # except:
+    #     raise Http404()
 
 @login_required(login_url="/members/login/")
 def member_create(request):
@@ -83,3 +87,6 @@ def logout_view(request):
     if(request.method == "POST"):
         logout(request)
         return redirect("members:list")
+    
+def password_reset(request):
+    return render(request, "password_reset.html")

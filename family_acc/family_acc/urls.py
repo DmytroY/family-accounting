@@ -26,4 +26,6 @@ urlpatterns = [
 
     path('members/', include(('members.urls', 'members'), namespace='members')),
     path('transactions/', include(('transactions.urls', 'transactions'), namespace='transactions')), 
+
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

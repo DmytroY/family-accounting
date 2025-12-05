@@ -24,10 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = secrets.SECRET_K
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-# ALLOWED_HOSTS = []
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
 # ALLOWED_HOSTS = [
 #     'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
@@ -141,3 +139,15 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# we need send emails (for example for password reset)
+# next will forward email output to console during debug/development
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# for real email back end needed for production see: https://docs.djangoproject.com/en/5.1/topics/email/#defining-a-custom-email-backend
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = "your@gmail.com"
+# EMAIL_HOST_PASSWORD = "app_password"
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

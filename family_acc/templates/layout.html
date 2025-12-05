@@ -16,16 +16,17 @@
 
     <div class="header">
         {% if user.is_authenticated %}
-            <form class="logout" action="{% url 'members:logout' %}" method="post">
+            <form class="logout" action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
                 You authorized as
-                <a href="/members/{{user.id}}" title="push to see details">{{user.username}} </a>
+                {% comment %}<a href="/members/{{user.profile.uuid}}" title="push to see details">{{user.username}}</a>{% endcomment %}
+                <a href="{% url 'members:details' user.profile.uuid %}" title="push to see details">{{user.username}} </a>
                 , you can 
                 <button title="Logout" aria-label="User Logout">LOGOUT</button>
             </form>
         {% else  %}
             <a href="{% url 'members:register' %}">REGISTRATION</a> |
-            <a href="{% url 'members:login' %}">LOGIN</a> 
+            <a href="{% url 'login' %}">LOGIN</a> 
         {% endif %}   
     </div>
 

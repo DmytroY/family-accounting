@@ -1,6 +1,26 @@
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+    
+{% block content %}
+<div class="login">
+    <h1>Login</h1>
+    <form class="form-with-validation" action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        {% else  %}
+            <input type="hidden" name="next" value="{% url 'transactions:transaction_list' %}" />
+        {% endif %}
+        <button class="form-submit">Submit</button>
+    </form>
+    <p>
+        <a href="{% url 'password_reset' %}">Reset password</a>
+    </p>
+        
+
+</div>
+{% endblock %}
