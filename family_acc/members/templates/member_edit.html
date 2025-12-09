@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit memeber
+{% endblock %}
+
+{% block content %}
+<div class="mycard">
+    <h1>Edit member {{mymember.username}}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div>{{form.first_name.label_tag}} {{form.first_name}}</div>
+        <div>{{form.last_name.label_tag}} {{form.last_name}}</div>
+        <div>{{form.email.label_tag}} {{form.email}}</div>
+        <button class="form-submit">Save</button>
+    </form>
+    {% if mymember.username == user.get_username %}
+        <a href="{% url 'password_change' %}">Change password</a>
+    {% endif %}
+</div>
+
+{% endblock %}

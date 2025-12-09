@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.template import loader
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm
+from .forms import RegisterForm, EditUserForm
 import secrets
 
 @login_required(login_url="/members/login/")
@@ -18,21 +19,30 @@ def list(request):
     return render(request, "all_members.html", {'mymembers':mymembers})
 
 @login_required(login_url="/members/login/")
-def details(request, uuid):
-    # mymember = User.objects.get(id=id)
-    
-    mymember = User.objects.get(profile__uuid=uuid)
-    return render(request, "details.html", {"mymember": mymember})
+def member_edit(request, uuid):
+    try:
+        mymember = User.objects.get(profile__uuid=uuid)
+        if mymember and mymember.profile.family == request.user.profile.family:
+            if request.method == "POST":
+                print(f"--DY-- saving user data")
+                form = EditUserForm(request.POST, instance=mymember)
+                if form.is_valid():
+                    print(f"--DY-- form is valid")
+                    form.save()
+                    messages.success(request, "User data saved")
+                    return redirect('members:list')
+                else:
+                    print(f"--DY-- form errors: {form.errors}")
+                    messages.error(request, f"error: {form.errors}")
+                    # Re-render with form errors so user can correct them
+                    return render(request, 'member_edit.html', {'form': form})
 
-    # try:
-    #     mymember = User.objects.get(profile__uuid=uuid)
-    #     if mymember and mymember.profile.family == request.user.profile.family:
-    #         template = loader.get_template("details.html")
-    #         context ={'mymember':mymember, }
-    #         return HttpResponse(template.render(context, request))
-    #     raise Http404()
-    # except:
-    #     raise Http404()
+            form = EditUserForm(instance=mymember)
+            return render(request, 'member_edit.html',  {'form': form, 'mymember': mymember})
+
+        raise Http404()
+    except:
+        raise Http404()
 
 @login_required(login_url="/members/login/")
 def member_create(request):
@@ -49,11 +59,9 @@ def member_create(request):
         form = RegisterForm(family_token=family_token)
     return render(request, "register.html", {"form": form})
 
-
 def main(request):
     template = loader.get_template("main.html")
     return HttpResponse(template.render())
-
 
 def register_view(request):
     family_token = secrets.token_urlsafe(16)
@@ -68,7 +76,6 @@ def register_view(request):
     else:
         form = RegisterForm(family_token=family_token)
     return render(request, "register.html", {"form": form})
-
 
 def login_view(request):
     if(request.method == "POST"):

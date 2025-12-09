@@ -7,11 +7,22 @@
 {% block content %}
 <div>
     <h1>Members of my family</h1>
-    <ul>
-        {% for x in mymembers %}
-            <li><a href="{{x.profile.uuid}}" title="push to see details">{{x.username}} </a></li>
+    <table>
+        <tr>
+            <th> Username </th>
+            <th> First Name </th>
+            <th> Last Name </th>
+            <th> email </th>
+        </tr>
+        {% for item in mymembers%}
+            <tr>
+                <td> <a href="{{item.profile.uuid}}" title="push to see details">{{item.username}} </a></td>
+                <td> {{item.first_name}} </td>
+                <td> {{item.last_name}} </td>
+                <td> {{item.email}} </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>  
 </div>
     
 {% endblock %}

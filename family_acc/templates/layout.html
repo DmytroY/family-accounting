@@ -20,7 +20,7 @@
                 {% csrf_token %}
                 You authorized as
                 {% comment %}<a href="/members/{{user.profile.uuid}}" title="push to see details">{{user.username}}</a>{% endcomment %}
-                <a href="{% url 'members:details' user.profile.uuid %}" title="push to see details">{{user.username}} </a>
+                <a href="{% url 'members:member_edit' user.profile.uuid %}" title="push to see details">{{user.username}} </a>
                 , you can 
                 <button title="Logout" aria-label="User Logout">LOGOUT</button>
             </form>
