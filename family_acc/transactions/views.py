@@ -9,13 +9,13 @@ from django.db.models.deletion import ProtectedError
 from django.contrib import messages
 
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def get_account_currency(request, account_id):
     """ helper function used in get_currency.js"""
     account = Account.objects.get(id=account_id)
     return JsonResponse({"currency": account.currency.code})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def transaction_list(request):
     user = request.user
     family = getattr(user.profile, 'family', None)
@@ -42,7 +42,7 @@ def transaction_list(request):
 
     return render(request, "transaction_list.html", {"data": transaction_data})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def transaction_edit(request, id):
     transaction = Transaction.objects.get(id=id)
 
@@ -90,7 +90,7 @@ def transaction_edit(request, id):
         form = forms.CreateExpense(instance=transaction, user=request.user)
     return render(request, "transaction_edit.html", {'form': form, 'transaction': transaction})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def transaction_create_expense(request):
     if(request.method == "POST"):
         form = forms.CreateExpense(request.POST, user=request.user)
@@ -110,7 +110,7 @@ def transaction_create_expense(request):
         form = forms.CreateExpense(initial={'date': timezone.now().date()}, user=request.user)
     return render(request, 'transaction_create_expense.html', {'form': form})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def transaction_create_income(request):
     if(request.method == "POST"):
         form = forms.CreateIncome(request.POST, user=request.user)
@@ -131,7 +131,7 @@ def transaction_create_income(request):
     return render(request, 'transaction_create_income.html', {'form': form})
 
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def account_create(request):
     if request.method == "POST":
         form = forms.CreateAccount(request.POST, user=request.user)
@@ -148,13 +148,13 @@ def account_create(request):
         form = forms.CreateAccount(user=request.user)
     return render(request, 'account_create.html',  {'form': form})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def account_list(request):
     user = request.user
     accounts_data = Account.objects.filter(family= getattr(user.profile, 'family', None)).order_by('name')
     return render(request, "account_list.html", {"data": accounts_data})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def account_edit(request, id):
     account = Account.objects.get(id=id)
     if request.POST.get("action") == "delete":
@@ -180,13 +180,13 @@ def account_edit(request, id):
     return render(request, 'account_edit.html',  {'form': form, 'account': account})
 
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def currency_list(request):
     user = request.user
     data = Currency.objects.filter(family= getattr(user.profile, 'family', None)).order_by('code')
     return render(request, "currency_list.html", {"data": data})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def currency_create(request):
     if request.method == "POST":
         form = forms.CreateCurrency(request.POST)
@@ -200,7 +200,7 @@ def currency_create(request):
         form = forms.CreateCurrency()
     return render(request, 'currency_create.html',  {'form': form})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def currency_edit(request, id):
     currency = Currency.objects.get(id=id)
 
@@ -226,13 +226,13 @@ def currency_edit(request, id):
     return render(request, 'currency_edit.html',  {'form': form, 'currency': currency})
 
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def category_list(request):
     user = request.user
     data = Category.objects.filter(family= getattr(user.profile, 'family', None)).order_by('name')
     return render(request, "category_list.html", {"data": data})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def category_create(request):
     if request.method == "POST":
         form = forms.CreateCategory(request.POST)
@@ -246,7 +246,7 @@ def category_create(request):
         form = forms.CreateCategory()
     return render(request, 'category_create.html',  {'form': form})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def category_edit(request, id):
     category = Category.objects.get(id=id)
 

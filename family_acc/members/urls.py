@@ -1,9 +1,11 @@
 from django.urls import path, include, reverse_lazy
-from . import views
+from . import views, api_views
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
 urlpatterns = [
+    path("api/members/", api_views.MemberList.as_view(), name="api_members"),
+
     path('', views.list, name='list'),
     path('member_create/', views.member_create, name='member_create'),
     path('<uuid:uuid>/', views.member_edit, name='member_edit'),

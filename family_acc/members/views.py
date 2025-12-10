@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, EditUserForm
 import secrets
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def list(request):
     """
     render list of user with family field same as current logged user one
@@ -18,7 +18,7 @@ def list(request):
     mymembers = User.objects.filter(profile__family=current_family)
     return render(request, "all_members.html", {'mymembers':mymembers})
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def member_edit(request, uuid):
     try:
         mymember = User.objects.get(profile__uuid=uuid)
@@ -44,7 +44,7 @@ def member_edit(request, uuid):
     except:
         raise Http404()
 
-@login_required(login_url="/members/login/")
+@login_required(login_url="/accounts/login/")
 def member_create(request):
     family_token = request.user.profile.family
     if request.method == "POST":
