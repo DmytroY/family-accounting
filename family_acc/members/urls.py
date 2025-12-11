@@ -3,6 +3,7 @@ from . import views, api_views
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
+
 urlpatterns = [
     path("api/members/", api_views.MemberList.as_view(), name="api_members"),
 
