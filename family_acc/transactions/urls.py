@@ -1,7 +1,9 @@
 from django.urls import path
-from . import views
+from . import views, api_views
 
 urlpatterns = [
+    path('api/currency/', api_views.CurrencyList.as_view()),
+
     path('', views.transaction_list, name='transaction_list'),
     path('transaction_list', views.transaction_list, name='transaction_list'),
     path('transaction_edit/<id>', views.transaction_edit, name='transaction_edit'),

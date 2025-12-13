@@ -26,6 +26,9 @@ SECRET_KEY = secrets.SECRET_K
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.ngrok-free.app",
+]
 ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
 # ALLOWED_HOSTS = [
 #     'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
