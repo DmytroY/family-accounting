@@ -1,11 +1,11 @@
 ## Family accounting API documentation
-### 1. Overview
+
 API is RESTful JSON-based API. All requests are made to the endpoint beginning .../api/. All requests must be secure, i.e. https, not http.
 
 In the examples below all requests have http://localhost:8000 or http://127.0.0.1:8000 which is related to the test development server. Note that in the production proper host shoud be used.
 
-### 2. Obtaining API token
-use next format of request for obtaining authentication token:
+### 1. Obtaining and regenerating API token
+Only requests of authorized users will be processed by API. As first step username and password should be used to obtain user's API token authentication token:
 
 `curl -X POST -d "username=<your_username>&password=<your_password>" "<site_URL>/api/token/"`
 
@@ -26,10 +26,23 @@ Note, that repeating those commands do not recreate token. If you need regenerat
 curl -X POST -H "Authorization: Token <OLD_TOKEN>" http://localhost:8000/api/token/regenerate/
 ```
 
+As soon as you have valid token you can use it for authentication of youw API requests.
 
 
---------------
-after this you can use the token for you API requests authentication:
+
+### 2. Users and Family
+User can register itself, in this case new family identity will be created and this user willbe first member of the family:
+```
+>curl.exe -X POST http://127.0.0.1:8000/members/api/register/ -H "Content-Type: application/json" --data-raw "{\"first_name\":\"API_user_fname\",\"last_name\":\"API_user_lname\",\"email\":\"apiu@u.com\",\"username\":\"api_user\",\"password1\":\"somepass\",\"password2\":\"somepass\"}"
+
+{"success":"user created"}
+```
+
+By using existing user authentication we can create oter users assigned to the same family.
+
+
+
+
 ```
 curl -H "Authorization: Token ************" http://127.0.0.1:8000/members/api/members/
 

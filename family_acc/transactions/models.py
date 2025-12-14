@@ -39,7 +39,7 @@ class Transaction(models.Model):
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     remark = models.CharField(max_length=255, null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, default=None)
     family = models.CharField(max_length=100)
 
     def __str__(self):

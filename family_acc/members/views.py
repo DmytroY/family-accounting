@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, EditUserForm
 import secrets
+from django.db.models.deletion import ProtectedError
 
 @login_required(login_url="/accounts/login/")
 def list(request):
@@ -23,6 +24,15 @@ def member_edit(request, uuid):
     try:
         mymember = User.objects.get(profile__uuid=uuid)
         if mymember and mymember.profile.family == request.user.profile.family:
+            if request.POST.get("action") == "delete":
+                try:
+                    mymember.delete()
+                    messages.success(request, f"user {mymember.username} deleted.")
+                    return redirect("members:list")
+                except ProtectedError:
+                    messages.error(request, "Can't delete user It is used by existing transaction records.")
+                    return redirect("members:member_edit", uuid=uuid)
+            
             if request.method == "POST":
                 print(f"--DY-- saving user data")
                 form = EditUserForm(request.POST, instance=mymember)
