@@ -21,8 +21,6 @@ class RegisterAPIView(APIView):
 
     def post(self, request):
         family_token = secrets.token_urlsafe(16)
-        print(f"--DY-- family_token:{family_token}")
-
         form = RegisterForm(request.data, family_token=family_token)
         if form.is_valid():
             user = form.save()

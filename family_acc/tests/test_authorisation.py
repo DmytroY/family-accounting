@@ -2,40 +2,41 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from transactions.models import Currency, Account, Category, Transaction
+from datetime import date
 
 
 class LoginRequiredForAnyNotHomePage(TestCase):
     def test_redirect_to_login(self):
 
         response = self.client.post(reverse('members:list'))
-        self.assertRedirects(response, '/members/login/?next=/members/', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/members/', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_list'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/transaction_list', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_list', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_create_expense'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/transaction_create_expense', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create_expense', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_create_income'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/transaction_create_income', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create_income', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:account_list'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/account_list', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/account_list', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:account_create'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/account_create', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/account_create', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:category_list'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/category_list', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/category_list', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:category_create'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/category_create', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/category_create', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:currency_list'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/currency_list', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/currency_list', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:currency_create'))
-        self.assertRedirects(response, '/members/login/?next=/transactions/currency_create', status_code=302, target_status_code=200)
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/currency_create', status_code=302, target_status_code=200)
 
 class AnyPageAccessibleForAuthorisedUser(TestCase):
     def setUp(self):
@@ -50,11 +51,11 @@ class AnyPageAccessibleForAuthorisedUser(TestCase):
     def test_access_after_login(self):
         response = self.client.post(reverse('members:list'))
         self.assertTemplateUsed(response, 'all_members.html')
-        self.assertContains(response, f'List of family {self.user.profile.family} members', status_code=200)
+        self.assertContains(response, '<h1>Members of my family</h1>', status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_list'))
         self.assertTemplateUsed(response, 'transaction_list.html')
-        self.assertContains(response, f'Last transactions', status_code=200)
+        self.assertContains(response, f'<h1>Transactions</h1>', status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_create_expense'))
         self.assertTemplateUsed(response, 'transaction_create_expense.html')
@@ -106,7 +107,7 @@ class UserHasAccessOnlyOwnFamilyRecords(TestCase):
         self.account = Account.objects.create(name='Test Account, XYZ currency', balance=555, currency=self.currency, family=self.user1.profile.family)
         self.category = Category.objects.create(name='Test imcome categoryXYZ', income_flag=True, expense_flag=False, family=self.user1.profile.family)
         self.transaction = Transaction.objects.create(
-            date='2025-06-30',
+            date=date.today().strftime("%Y-%m-%d"),
             account=self.account,
             amount='1001.99',
             currency=self.currency,

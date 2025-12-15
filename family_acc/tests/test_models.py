@@ -32,7 +32,7 @@ class TransactionsModelsTest(TestCase):
 
     def test_account(self):
         self.assertEqual(self.account.balance, 555)
-        self.assertEqual(str(self.account), 'Cash')
+        self.assertEqual(str(self.account), 'Cash (CZK)')
         self.assertEqual(self.account.currency, self.currency)
 
     def test_category(self):

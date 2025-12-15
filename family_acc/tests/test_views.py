@@ -2,6 +2,7 @@ from django.test import TestCase, SimpleTestCase
 from django.contrib.auth.models import User
 from transactions.models import Currency, Account, Category, Transaction
 from django.urls import reverse
+from datetime import date
 
 class TestHomePage(SimpleTestCase):
 
@@ -29,7 +30,7 @@ class TestTransactionsPage(TestCase):
         self.account = Account.objects.create(name='Cash', balance=555, currency=self.currency)
         self.category = Category.objects.create(name='Other imcomes', income_flag=True, expense_flag=False)
         self.transaction = Transaction.objects.create(
-            date='2025-06-30',
+            date=date.today().strftime("%Y-%m-%d"),
             account=self.account,
             amount='1001.99',
             currency=self.currency,
@@ -49,8 +50,8 @@ class TestTransactionsPage(TestCase):
 
     def test_transactions_shows_record(self):
         response = self.client.get(reverse('transactions:transaction_list'))
-        self.assertContains(response, 'Last transactions')
-        self.assertContains(response, '30-06-2025')
+        self.assertContains(response, '<h1>Transactions</h1>')
+        self.assertContains(response, date.today().strftime("%d-%m-%Y"))
         self.assertContains(response, '1001.99')
         self.assertContains(response, 'CZK')
         self.assertContains(response, 'Other imcomes')
