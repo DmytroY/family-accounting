@@ -42,6 +42,16 @@ class ObtainTokenAPITest(APITestCase):
         response = self.client.post(self.url, data)
         self.assertContains(response, "error", status_code=400)
 
+class RegenerateTokenAPITest(APITestCase):
+    def test_regenerate_token(self):
+        user = User.objects.create_user(username="u0", password="s8am3n")
+        old_token = Token.objects.create(user=user)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {old_token.key}")
+        response = self.client.post("/api/token/regenerate/")
+        new_token = Token.objects.get(user=user)
+        self.assertContains(response, new_token, status_code=200)
+        self.assertNotEqual(new_token, old_token)
+
 
 class MemberListAPI(APITestCase):
     def setUp(self):
@@ -79,6 +89,3 @@ class MemberListAPI(APITestCase):
         response = self.client.get(self.url)
         # print(f"--DY-- response.data: {response.data}")
         self.assertContains(response, "Invalid token", status_code=403)
-
-
-
