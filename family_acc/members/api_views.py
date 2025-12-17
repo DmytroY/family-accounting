@@ -28,3 +28,16 @@ class RegisterAPIView(APIView):
             user.profile.save()
             return Response({"success": "user created"}, status=status.HTTP_201_CREATED)
         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class CreateMemberAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        family_token = request.user.profile.family
+        form = RegisterForm(request.data, family_token=family_token)
+        if form.is_valid():
+            user = form.save()
+            user.profile.family = family_token
+            user.profile.save()
+            return Response({"success": "user created"}, status=status.HTTP_201_CREATED)
+        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)

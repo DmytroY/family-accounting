@@ -7,6 +7,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("api/members/", api_views.MemberList.as_view(), name="api_members"),
     path("api/register/", api_views.RegisterAPIView.as_view(), name="api_register"),
+    path("api/create/", api_views.CreateMemberAPIView.as_view(), name="api_member_create"),
 
     path('', views.list, name='list'),
     path('member_create/', views.member_create, name='member_create'),

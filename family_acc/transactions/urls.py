@@ -3,6 +3,7 @@ from . import views, api_views
 
 urlpatterns = [
     path('api/currency/', api_views.CurrencyList.as_view()),
+    path('api/currency_create/', api_views.CurrencyCreateAPIView.as_view(), name="api_currency_create"),
 
     path('', views.transaction_list, name='transaction_list'),
     path('transaction_list', views.transaction_list, name='transaction_list'),
