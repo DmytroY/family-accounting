@@ -9,7 +9,12 @@ class CreateAccount(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['currency'].queryset =  models.Currency.objects.filter(family=user.profile.family).order_by('code')
+        if user:
+            self.fields['currency'].queryset = (
+                models.Currency.objects
+                .filter(family=user.profile.family)
+                .order_by('code')
+            )
 
 class CreateCurrency(forms.ModelForm):
     class Meta:

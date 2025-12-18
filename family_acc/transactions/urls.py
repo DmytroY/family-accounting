@@ -2,8 +2,12 @@ from django.urls import path
 from . import views, api_views
 
 urlpatterns = [
-    path('api/currency/', api_views.CurrencyList.as_view()),
-    path('api/currency_create/', api_views.CurrencyCreateAPIView.as_view(), name="api_currency_create"),
+    
+    path('api/currency_create/', api_views.CurrencyCreate.as_view(), name="api_currency_create"),
+    path('api/currency/', api_views.CurrencyList.as_view(), name="api_currency_list"),
+
+    path('api/account_create/', api_views.AccountCreate.as_view(), name="api_account_create"),
+    path('api/accounts/', api_views.AccountList.as_view(), name="api_account_list"),
 
     path('', views.transaction_list, name='transaction_list'),
     path('transaction_list', views.transaction_list, name='transaction_list'),
