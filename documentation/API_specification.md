@@ -100,3 +100,21 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 ```
 
 ### 3.2. Accounts
+Currency should be created before Account creating.
+Creating account example:
+```
+curl -X POST \
+  -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"cash", "currency":"USD", "balance":0}' \
+  http://127.0.0.1:8000/transactions/api/account_create/
+
+  {success":"account created"}
+  ```
+
+Last of accounts:
+```
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/accounts/
+
+[{"name":"cash","balance":"0.00","currency":"USD"}]
+```
