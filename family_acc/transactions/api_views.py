@@ -1,10 +1,10 @@
-from . models import Currency, Account
-from . forms import CreateCurrency, CreateAccount
+from . models import Currency, Account, Category
+from . forms import CreateCurrency, CreateAccount, CreateCategory
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CurrencySerializer, AccountSerializer
+from . serializers import CurrencySerializer, AccountSerializer, CategorySerializer
 
    
 class CurrencyCreate(APIView):
@@ -43,6 +43,18 @@ class AccountCreate(APIView):
             return Response({"success": "account created"}, status=status.HTTP_201_CREATED)
         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class CategoryCreate(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        form = CreateCategory(request.data)
+        if form.is_valid():
+            new_cat = form.save(commit=False)
+            new_cat.family = request.user.profile.family
+            new_cat.save()
+            return Response({"success": "category created"}, status=status.HTTP_201_CREATED)
+        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class AccountList(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -50,3 +62,12 @@ class AccountList(APIView):
         family = request.user.profile.family
         qs = Account.objects.filter(family=family)
         return Response(AccountSerializer(qs, many=True).data)
+    
+
+class CategoryList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        family = request.user.profile.family
+        qs = Category.objects.filter(family=family)
+        return Response(CategorySerializer(qs, many=True).data)

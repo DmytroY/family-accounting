@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import Currency, Account
+from . models import Currency, Account, Category
 
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +13,8 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ["name", "balance", "currency"]
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["name", "income_flag", "expense_flag"]

@@ -118,3 +118,32 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 
 [{"name":"cash","balance":"0.00","currency":"USD"}]
 ```
+
+### 3.3. Category
+Creating income category:
+```
+curl -X POST \
+  -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"api_test_income_categ", "income_flag":1, "expense_flag":0}' \
+  http://127.0.0.1:8000/transactions/api/category_create/
+
+  {"success":"category created"}
+```
+Creating expence category:
+```
+curl -X POST \
+  -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"api_test_income_categ", "income_flag":1, "expense_flag":0}' \
+  http://127.0.0.1:8000/transactions/api/category_create/
+
+  {"success":"category created"}
+```
+
+list of categories:
+```
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/category/
+
+[{"name":"api_test_income_categ","income_flag":true,"expense_flag":false},{"name":"api_test_income_categ","income_flag":true,"expense_flag":false}]
+```

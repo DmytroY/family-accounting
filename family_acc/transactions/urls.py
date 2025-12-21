@@ -9,6 +9,11 @@ urlpatterns = [
     path('api/account_create/', api_views.AccountCreate.as_view(), name="api_account_create"),
     path('api/accounts/', api_views.AccountList.as_view(), name="api_account_list"),
 
+    path('api/category_create/', api_views.CategoryCreate.as_view(), name="api_category_create"),
+    path('api/category/', api_views.CategoryList.as_view(), name="api_category_list"),
+
+
+
     path('', views.transaction_list, name='transaction_list'),
     path('transaction_list', views.transaction_list, name='transaction_list'),
     path('transaction_edit/<id>', views.transaction_edit, name='transaction_edit'),
