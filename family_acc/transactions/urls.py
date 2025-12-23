@@ -12,7 +12,9 @@ urlpatterns = [
     path('api/category_create/', api_views.CategoryCreate.as_view(), name="api_category_create"),
     path('api/category/', api_views.CategoryList.as_view(), name="api_category_list"),
 
-
+    path('api/transactions/', api_views.TransactionList.as_view(), name="api_transaction_list"),
+    path('api/income_create/', api_views.IncomeCreate.as_view(), name="api_income_create"),
+    path('api/expense_create/', api_views.ExpenseCreate.as_view(), name="api_expense_create"),
 
     path('', views.transaction_list, name='transaction_list'),
     path('transaction_list', views.transaction_list, name='transaction_list'),

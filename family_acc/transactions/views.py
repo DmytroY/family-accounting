@@ -68,7 +68,7 @@ def transaction_edit(request, id):
                 form = forms.CreateIncome(request.POST, instance=transaction, user=request.user)
                 sign = 1
             else:
-                #treat as expence
+                #treat as expense
                 form = forms.CreateExpense(request.POST, instance=transaction, user=request.user)
                 sign = -1
             
@@ -104,7 +104,7 @@ def transaction_create_expense(request):
             Account.objects.filter(id=expense.account_id).update(balance=F('balance') + expense.amount)
             #commit changes
             expense.save()
-            messages.success(request, "Expence transaction created")
+            messages.success(request, "expense transaction created")
             return redirect('transactions:transaction_list')
     else:
         form = forms.CreateExpense(initial={'date': timezone.now().date()}, user=request.user)

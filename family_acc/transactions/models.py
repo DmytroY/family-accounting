@@ -6,6 +6,11 @@ class Currency(models.Model):
     description = models.CharField(max_length=255)
     family = models.CharField(max_length=100)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['code',], name='unique_code')
+        ]
+
     def __str__(self):
         return f"{self.code}"
 
@@ -28,6 +33,11 @@ class Category(models.Model):
     income_flag = models.BooleanField(default=False)
     expense_flag = models.BooleanField(default=False)
     family = models.CharField(max_length=100)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name',], name='unique_name')
+        ]
 
     def __str__(self):
         return f"{self.name}"
