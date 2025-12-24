@@ -192,3 +192,11 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 [{"id":7,"date":"2025-12-23","account":"cash","amount":"23.12","currency":"USD","category":"api_test_income_categ","remark":"some remark to income transaction","created_by":"api_user"},{"id":8,"date":"2025-12-23","account":"cash","amount":"-12.01","currency":"USD","category":"api_test_expense_categ","remark":"some remark to income transaction","created_by":"api_user"}]
 
 ```
+
+To filter transactions next parameters could be applied:
+from - report period start date(inclusive)
+to - report period end date(inclusive)
+
+```
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/transactions/?from=2025-12-01&to=2025-12-31"
+```

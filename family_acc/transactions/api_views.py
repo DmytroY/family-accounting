@@ -122,4 +122,13 @@ class TransactionList(APIView):
     def get(self, request):
         family = request.user.profile.family
         qs = Transaction.objects.filter(family=family)
+        date_from = request.query_params.get("from")
+        print(f"--DY-- date_from:{date_from}")
+        date_to = request.query_params.get("to")
+        print(f"--DY-- date_to:{date_to}")
+        if date_from:
+            qs = qs.filter(date__gte=date_from)
+        if date_to:
+            qs = qs.filter(date__lte=date_to)
+
         return Response(TransactionSerializer(qs, many=True).data)
