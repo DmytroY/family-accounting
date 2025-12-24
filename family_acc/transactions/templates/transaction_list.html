@@ -7,6 +7,7 @@
 {% block content %}
 <div>
     <h1>Transactions</h1>
+    by default only current month transaction shown. Choose some filters to see more
 
     <form method="get">
         <label>From: <input type="date" name="start" value={{request.GET.start}}></label>

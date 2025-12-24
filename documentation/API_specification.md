@@ -185,7 +185,7 @@ curl -X POST \
 ```
 
 #### 3.4.3. List of transactions
-To get list of transactions:
+To get list of all transactions:
 ```
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/transactions/
 
@@ -194,9 +194,21 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 ```
 
 To filter transactions next parameters could be applied:
-from - report period start date(inclusive)
-to - report period end date(inclusive)
+- **from** - report period start date(inclusive)
+- **to** - report period end date(inclusive)
+- **account** - name of income or expence account, note that there can be several accounts with same name but different currencies.
+- **currency** - 3-letter code of currency
+- **account_id** - account id. See more about account_id in [3.2. Accounts](###3.2.-accounts). Note, that by using account_id filtered reults will be limited only to account connected to relevant currency. The result will be same as when you use **account** & **currency** filters.
+- **category** - name of income or expence category
 
+
+Examples:
 ```
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/transactions/?from=2025-12-01&to=2025-12-31"
+
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/transactions/?account=9
+
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/transactions/?account=Card&currency=USD"
+
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/transactions/?category=api_test_expense_categ
 ```

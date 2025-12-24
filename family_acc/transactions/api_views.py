@@ -105,6 +105,7 @@ class AccountList(APIView):
     def get(self, request):
         family = request.user.profile.family
         qs = Account.objects.filter(family=family)
+        print(f"--DY-- family : {family}")
         return Response(AccountSerializer(qs, many=True).data)
     
 
@@ -123,12 +124,25 @@ class TransactionList(APIView):
         family = request.user.profile.family
         qs = Transaction.objects.filter(family=family)
         date_from = request.query_params.get("from")
-        print(f"--DY-- date_from:{date_from}")
         date_to = request.query_params.get("to")
-        print(f"--DY-- date_to:{date_to}")
+        account_id = request.query_params.get("account_id")
+        account_name = request.query_params.get("account")
+        category_name = request.query_params.get("category")
+        currency_code = request.query_params.get("currency")
+
         if date_from:
             qs = qs.filter(date__gte=date_from)
         if date_to:
             qs = qs.filter(date__lte=date_to)
+        if account_id:
+            qs = qs.filter(account=account_id)
+        if account_name:
+            qs = qs.filter(account__name=account_name, category__family=family)
+        if category_name:
+            qs = qs.filter(category__name=category_name, category__family=family)
+        if currency_code:
+             qs = qs.filter(currency__code=currency_code, currency__family=family)
 
+        
         return Response(TransactionSerializer(qs, many=True).data)
+
