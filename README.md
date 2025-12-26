@@ -48,3 +48,9 @@ USER = '.....'
 PASSWORD = '...........'
 ```
 Proper secret storage (env vars or secret management system) should be used for production.
+
+## To-Do list
+* Tests for transactions api
+* Translation
+* import from Excel
+* reports

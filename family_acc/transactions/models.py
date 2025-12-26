@@ -8,7 +8,7 @@ class Currency(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['code',], name='unique_code')
+            models.UniqueConstraint(fields=['code', 'family'], name='unique_code_per_family')
         ]
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Account(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name', 'currency'], name='unique_name_currency')
+            models.UniqueConstraint(fields=['name', 'currency', 'family'], name='unique_name_currency_per_family')
         ]
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Category(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['name',], name='unique_name')
+            models.UniqueConstraint(fields=['name', 'family'], name='unique_name_per_family')
         ]
 
     def __str__(self):

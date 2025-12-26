@@ -72,7 +72,7 @@ class ExpenseCreate(APIView):
             new_exp.created_by = request.user
             new_exp.amount = -abs(new_exp.amount)
             new_exp.currency = Currency.objects.get(id=new_exp.account.currency_id)
-            Account.objects.filter(id=new_exp.account_id).update(balance=F('balance') - new_exp.amount)
+            Account.objects.filter(id=new_exp.account_id).update(balance=F('balance') + new_exp.amount)
             new_exp.save()
             return Response({"success": "expense created"}, status=status.HTTP_201_CREATED)
         return Response(form.error, status=status.HTTP_400_BAD_REQUEST)
