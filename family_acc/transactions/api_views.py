@@ -28,7 +28,6 @@ class AccountCreate(APIView):
         data = request.data.copy()
         # currency is foreign key for account, to procees we need currency id in form instead of currency name(curency code)
         data["currency"] = Currency.objects.get(code=data["currency"], family=request.user.profile.family).id
-        # print(f"--DY-- data:{data}")
         form = CreateAccount(data, user=request.user)
         if form.is_valid():
             new_acc = form.save(commit=False)
@@ -105,7 +104,6 @@ class AccountList(APIView):
     def get(self, request):
         family = request.user.profile.family
         qs = Account.objects.filter(family=family)
-        print(f"--DY-- family : {family}")
         return Response(AccountSerializer(qs, many=True).data)
     
 

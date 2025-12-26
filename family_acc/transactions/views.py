@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 from django.utils import timezone
 from django.db.models import F
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models.deletion import ProtectedError
 from django.contrib import messages
+import csv
+from django.utils.dateparse import parse_date
+from datetime import date
 
 
 @login_required(login_url="/accounts/login/")
@@ -20,27 +23,34 @@ def transaction_list(request):
     user = request.user
     family = getattr(user.profile, 'family', None)
 
+    today = timezone.now().date()
+    cur_month_start = today.replace(day=1)
     # get date range from GET params
     start = request.GET.get("start")
     end = request.GET.get("end")
+    export = request.GET.get("export")
 
-    # default = current month
-    today = timezone.now().date()
-    cur_month_start = today.replace(day=1)
+    #use GET parameters or use defaults
+    start_date = parse_date(start) if start else cur_month_start
+    end_date = parse_date(end) if end else today
 
-    if start and end:
-        transaction_data = Transaction.objects.filter(
-            family=family,
-            date__range=[start, end]
-        ).order_by('-date', '-id')
-        print(f"--DY-- start:{start}")
-    else:
-        transaction_data = Transaction.objects.filter(
-            family=family,
-            date__gte=cur_month_start
-        ).order_by('-date', '-id')
+    qs = Transaction.objects.filter(family=family, date__range=[start_date, end_date]).order_by('-date', '-id')
 
-    return render(request, "transaction_list.html", {"data": transaction_data})
+    if export == "csv":
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Deposition"] = 'attachment; filename="transactions.csv"'
+        writer = csv.writer(response)
+        writer.writerow(["Date", "Account", "Amount", "Currency", "Category", "Remark"])
+        for t in qs:
+            writer.writerow([t.date, t.account, t.amount, t.currency, t.category, t.remark])
+        return response
+    
+    context = {
+        "data": qs,
+        "start": start_date.strftime("%Y-%m-%d"),
+        "end": end_date.strftime("%Y-%m-%d"),
+    }
+    return render(request, "transaction_list.html", context)
 
 @login_required(login_url="/accounts/login/")
 def transaction_edit(request, id):

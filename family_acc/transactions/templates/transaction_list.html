@@ -7,13 +7,14 @@
 {% block content %}
 <div>
     <h1>Transactions</h1>
-    by default only current month transaction shown. Choose some filters to see more
-
     <form method="get">
-        <label>From: <input type="date" name="start" value={{request.GET.start}}></label>
-        <label>To: <input type="date" name="end" value={{request.GET.end}}></label>
+        <label>From: <input type="date" name="start" value="{{request.GET.start}}"></label>
+        <label>To: <input type="date" name="end" value="{{request.GET.end}}"></label>
         <button type="form-submit">Filter</button>
+        <a href="?start={{request.GET.start}}&end={{request.GET.end}}&export=csv">Download CSV</a>
     </form>
+    <br>
+    <div>Report period: {{start}} ... {{end}}</b></div>
     <table>
         <tr>
             <th> Date  </th>
