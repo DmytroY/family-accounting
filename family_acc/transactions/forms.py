@@ -16,15 +16,18 @@ class CreateAccount(forms.ModelForm):
                 .order_by('code')
             )
 
+
 class CreateCurrency(forms.ModelForm):
     class Meta:
         model = models.Currency
         fields = ['code','description']
 
+
 class CreateCategory(forms.ModelForm):
     class Meta:
         model = models.Category
         fields = ['name','income_flag','expense_flag']
+
 
 class CreateExpense(forms.ModelForm):
     class Meta:
@@ -66,3 +69,7 @@ class CreateIncome(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['account'].queryset =  models.Account.objects.filter(family=user.profile.family).order_by('name')
         self.fields['category'].queryset = models.Category.objects.filter(family=user.profile.family, income_flag=True).order_by('name')
+
+
+class UploadAccounts(forms.Form):
+    file = forms.FileField()

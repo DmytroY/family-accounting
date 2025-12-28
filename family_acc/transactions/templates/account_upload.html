@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Accounts upload
+{% endblock %}
+
+{% block content %}
+<div>
+   <h1>Accounts upload</h1>    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.file }}
+        <button type="submit">Upload CSV</button>
+    </form>
+    </br>
+    <div>
+        <h3> Example of data in csv file for upload: </h3>
+        <i>name, balance, currency_code, currency_description </br>
+        Cash, 230.12, USD, US dollars</br>
+        Card, 100.00, EUR, Euro
+        </i>
+    </div>
+</div>
+{% endblock %}

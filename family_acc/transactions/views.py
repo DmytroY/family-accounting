@@ -7,7 +7,7 @@ from django.db.models import F
 from django.http import JsonResponse, HttpResponse
 from django.db.models.deletion import ProtectedError
 from django.contrib import messages
-import csv
+import csv, io
 from django.utils.dateparse import parse_date
 from datetime import date
 
@@ -140,7 +140,6 @@ def transaction_create_income(request):
         form = forms.CreateIncome(initial={'date': timezone.now().date()}, user=request.user)
     return render(request, 'transaction_create_income.html', {'form': form})
 
-
 @login_required(login_url="/accounts/login/")
 def account_create(request):
     if request.method == "POST":
@@ -189,7 +188,6 @@ def account_edit(request, id):
     form = forms.CreateAccount(instance=account, user=request.user)
     return render(request, 'account_edit.html',  {'form': form, 'account': account})
 
-
 @login_required(login_url="/accounts/login/")
 def currency_list(request):
     user = request.user
@@ -235,7 +233,6 @@ def currency_edit(request, id):
     form = forms.CreateCurrency(instance=currency)
     return render(request, 'currency_edit.html',  {'form': form, 'currency': currency})
 
-
 @login_required(login_url="/accounts/login/")
 def category_list(request):
     user = request.user
@@ -280,3 +277,30 @@ def category_edit(request, id):
     
     form = forms.CreateCategory(instance=category)
     return render(request, 'category_edit.html',  {'form': form, 'category': category})
+
+@login_required(login_url="/accounts/login/")
+def account_upload(request):
+    if request.method == "POST":
+        form = forms.UploadAccounts(request.POST, request.FILES)
+        if form.is_valid():
+            family = request.user.profile.family
+            file = io.TextIOWrapper(request.FILES["file"].file, encoding="utf-8")
+            reader = csv.DictReader(file)
+
+            for row in reader:
+                currency, _ = Currency.objects.get_or_create(
+                    code=row["currency_code"],
+                    family=family,
+                    defaults={"description": row["currency_description"]},
+                )
+                Account.objects.get_or_create(
+                    name=row["name"],
+                    family=family,
+                    currency=currency,
+                    defaults={"balance": row["balance"]},
+                )
+                messages.success(request, "Accounts imported, missed currency created")
+            return redirect("transactions:account_list")
+    else:
+        form = forms.UploadAccounts()
+    return render(request, "account_upload.html", {"form": form})

@@ -25,6 +25,7 @@ urlpatterns = [
     path('account_list', views.account_list, name='account_list'),
     path('account_create', views.account_create, name='account_create'),
     path('account_edit/<id>', views.account_edit, name='account_edit'),
+    path("account_upload", views.account_upload, name="account_upload"),
 
     path('currency_list', views.currency_list, name='currency_list'),
     path('currency_create', views.currency_create, name='currency_create'),
