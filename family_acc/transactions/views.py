@@ -160,8 +160,27 @@ def account_create(request):
 @login_required(login_url="/accounts/login/")
 def account_list(request):
     user = request.user
-    accounts_data = Account.objects.filter(family= getattr(user.profile, 'family', None)).order_by('name')
-    return render(request, "account_list.html", {"data": accounts_data})
+    family = getattr(user.profile, "family", None)
+    sort = request.GET.get("sort", "name")
+    if sort not in ["name", "balance", "currency__code"]:
+        sort = "name"
+
+    currency = request.GET.get("currency")
+    if currency:
+        accounts_data = Account.objects.filter(family=family, currency__code=currency).order_by(sort)
+    else:
+        accounts_data = Account.objects.filter(family=family).order_by(sort)
+
+    currencies = Currency.objects.filter(family=family).order_by("code")
+    return render(request,
+                  "account_list.html",
+                    {
+                      "data": accounts_data,
+                      "currencies": currencies,
+                      "current_sort": sort,
+                      "current_currency": currency,
+                    }
+                )
 
 @login_required(login_url="/accounts/login/")
 def account_edit(request, id):

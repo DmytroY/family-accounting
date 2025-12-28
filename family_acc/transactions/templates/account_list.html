@@ -7,11 +7,29 @@
 {% block content %}
 <div>
    <h1>Accounts of {{request.user.username}}'s family</h1>    
+   
+    <form method="get">
+    <label>
+      Currency:
+      <select name="currency">
+        <option value="">All</option>
+        {% for c in currencies %}
+          <option value="{{ c.code }}"
+            {% if c.code == current_currency %}selected{% endif %}>
+            {{ c.code }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+    <input type="hidden" name="sort" value="{{ current_sort }}">
+    <button type="submit">Filter</button>
+  </form>
+
     <table>
         <tr>
-            <th> Account </th>
-            <th> Balance </th>
-            <th> Currency </th>
+            <th><a href="?sort=name">Account</a></th>
+            <th><a href="?sort=balance">Balance</a></th>
+            <th><a href="?sort=currency__code">Currency</a></th>
         </tr>
         {% for item in data%}
             <tr>
