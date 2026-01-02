@@ -318,8 +318,74 @@ def account_upload(request):
                     currency=currency,
                     defaults={"balance": row["balance"]},
                 )
-                messages.success(request, "Accounts imported, missed currency created")
+                messages.success(request, "Account imported, missed currency created")
             return redirect("transactions:account_list")
     else:
         form = forms.UploadAccounts()
     return render(request, "account_upload.html", {"form": form})
+
+@login_required(login_url="/accounts/login/")
+def category_upload(request):
+    if request.method =="POST":
+        form = forms.UploadCategory(request.POST, request.FILES)
+        if form.is_valid():
+            family = request.user.profile.family
+            file = io.TextIOWrapper(request.FILES["file"].file, encoding="utf-8")
+            reader = csv.DictReader(file)
+
+            for row in reader:
+                Category.objects.get_or_create(
+                    name=row["name"],
+                    income_flag=row["income_flag"],
+                    expense_flag=row["expense_flag"],
+                    family=family,
+                )
+                messages.success(request, "Category imported")
+            return redirect("transactions:category_list")
+    else:
+        form = forms.UploadCategory()
+    return render(request, "category_upload.html", {"form": form})
+
+@login_required(login_url="/accounts/login/")
+def transaction_upload(request):
+    if request.method =="POST":
+        form = forms.UploadTransaction(request.POST, request.FILES)
+        if form.is_valid():
+            family = request.user.profile.family
+            created_by = request.user
+            file = io.TextIOWrapper(request.FILES["file"].file, encoding="utf-8")
+            reader = csv.DictReader(file)
+
+            for row in reader:
+                currency, _ = Currency.objects.get_or_create(
+                    code=row["currency_code"],
+                    family=family,
+                    defaults={"description": row.get("currency_description", "")}
+                )
+                category, _ = Category.objects.get_or_create(
+                    name=row["category_name"],
+                    defaults={"income_flag": 1, "expense_flag": 1},
+                    family=family,
+                )
+                account, _ = Account.objects.get_or_create(
+                    name=row["account_name"],
+                    family=family,
+                    currency=currency,
+                    defaults={"balance": 0},
+                )
+                Transaction.objects.get_or_create(
+                    date=row["date"],
+                    account=account,
+                    amount=row["amount"],
+                    currency=currency,
+                    category=category,
+                    remark=row["remark"],
+                    created_by=created_by,
+                    family=family,
+                )
+                messages.success(request, "transaction imported")
+            return redirect("transactions:transaction_list")
+    else:
+        form = forms.UploadCategory()
+    return render(request, "transaction_upload.html", {"form": form})
+

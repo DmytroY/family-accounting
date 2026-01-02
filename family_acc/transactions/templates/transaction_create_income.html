@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1> Add new income </h1>
+    <a href="/transactions/transaction_upload">or upload by csv</a>
     <section>
         <form class="form-with-validation" action="{% url 'transactions:transaction_create_income' %}" method="post" >
             {% csrf_token %}

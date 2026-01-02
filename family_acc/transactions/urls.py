@@ -21,6 +21,7 @@ urlpatterns = [
     path('transaction_edit/<id>', views.transaction_edit, name='transaction_edit'),
     path('transaction_create_expense', views.transaction_create_expense, name='transaction_create_expense'),
     path('transaction_create_income', views.transaction_create_income, name='transaction_create_income'),
+    path("transaction_upload", views.transaction_upload, name="transaction_upload"),
     
     path('account_list', views.account_list, name='account_list'),
     path('account_create', views.account_create, name='account_create'),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('category_list', views.category_list, name='category_list'),
     path('category_create', views.category_create, name='category_create'),
     path('category_edit/<id>', views.category_edit, name='category_edit'),
+    path("category_upload", views.category_upload, name="category_upload"),
 
     path("ajax/account/<int:account_id>/currency/", views.get_account_currency, name="ajax_account_currency")
 ]

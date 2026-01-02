@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1> Create new currency record </h1>
+    <a href="/transactions/category_upload">or upload by csv</a>
 
     <section>
         <form class="form-with-validation" action="{% url 'transactions:currency_create' %}" method="post" >

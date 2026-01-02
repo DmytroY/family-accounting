@@ -73,3 +73,9 @@ class CreateIncome(forms.ModelForm):
 
 class UploadAccounts(forms.Form):
     file = forms.FileField()
+
+class UploadCategory(forms.Form):
+    file = forms.FileField()
+
+class UploadTransaction(forms.Form):
+    file = forms.FileField()
