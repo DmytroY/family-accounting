@@ -15,23 +15,39 @@
     </form>
     <br>
     <div>Report period: {{start}} ... {{end}}</b></div>
-    <table>
-        <tr>
-            <th> Date  </th>
-            <th> Account  </th>
-            <th> Amount  </th>
-            <th> Currency  </th>
-            <th> Category </th>
-        </tr>
-        {% for item in data%}
-            <tr class="{% if item.amount > 0 %}income{% else %}expense{% endif %}">
-                <td> <a href="transaction_edit/{{item.id}}" title="push to edit"> {{item.date|date:"d-m-Y"}} </a></td>
-                <td> {{item.account}} </td>
-                <td> {{item.amount}} </td>
-                <td> {{item.currency}} </td>
-                <td> {{item.category}} </td>
+
+    <form method="post" onsubmit="return confirm('Are you sure you want to delete the selected transactions?');">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+                <th><input type="checkbox" id="select-all"></th>
+                <th> Date  </th>
+                <th> Account  </th>
+                <th> Amount  </th>
+                <th> Currency  </th>
+                <th> Category </th>
             </tr>
-        {% endfor %}
-    </table>  
+            {% for item in data%}
+                <tr class="{% if item.amount > 0 %}income{% else %}expense{% endif %}">
+                    <td> <input type="checkbox" name="ids" value="{{ item.id }}" class="select-row"> </td>
+                    <td> <a href="transaction_edit/{{item.id}}" title="push to edit"> {{item.date|date:"d-m-Y"}} </a></td>
+                    <td> {{item.account}} </td>
+                    <td> {{item.amount}} </td>
+                    <td> {{item.currency}} </td>
+                    <td> {{item.category}} </td>
+                </tr>
+            {% endfor %}
+        </table>  
+        <script>
+            const selectAll = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('.select-row');
+
+            selectAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            });
+        </script>
+        <button type="submit" name="action" value="delete">Delete selected</button>
+    </form>
 </div>
 {% endblock %}

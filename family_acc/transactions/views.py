@@ -45,6 +45,12 @@ def transaction_list(request):
             writer.writerow([t.date, t.account, t.amount, t.currency, t.category, t.remark])
         return response
     
+    if request.method == "POST" and request.POST.get("action") == "delete":
+        ids = request.POST.getlist("ids")
+        Transaction.objects.filter(id__in=ids, family=family).delete()
+        messages.success(request, f"Transactions deleted.")
+        return redirect(request.path)
+    
     context = {
         "data": qs,
         "start": start_date.strftime("%Y-%m-%d"),

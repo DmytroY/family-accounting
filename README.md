@@ -51,5 +51,5 @@ Proper secret storage (env vars or secret management system) should be used for 
 
 ## To-Do list
 * Translation
-* import/export via WEB
+* batch records deletion
 * reports
