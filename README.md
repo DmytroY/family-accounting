@@ -51,5 +51,7 @@ Proper secret storage (env vars or secret management system) should be used for 
 
 ## To-Do list
 * Translation
+* deploy variants
+* android app
 * batch records deletion
 * reports

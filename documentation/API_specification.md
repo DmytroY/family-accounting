@@ -200,6 +200,7 @@ To filter transactions next parameters could be applied:
 - **currency** - 3-letter code of currency
 - **account_id** - account id. See more about account_id in [3.2. Accounts](###3.2.-accounts). Note, that by using account_id filtered reults will be limited only to account connected to relevant currency. The result will be same as when you use **account** & **currency** filters.
 - **category** - name of income or expence category
+- **count** - N last transactions
 
 
 Examples:
@@ -211,4 +212,6 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/transactions/?account=Card&currency=USD"
 
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/transactions/?category=api_test_expense_categ
+
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/transactions/?count=5"
 ```

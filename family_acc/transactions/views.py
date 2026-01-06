@@ -342,9 +342,11 @@ def category_upload(request):
             for row in reader:
                 Category.objects.get_or_create(
                     name=row["name"],
-                    income_flag=row["income_flag"],
-                    expense_flag=row["expense_flag"],
                     family=family,
+                    defaults = {
+                        "income_flag": row["income_flag"] == "1",
+                        "expense_flag": row["expense_flag"] == "1",
+                    }
                 )
                 messages.success(request, "Category imported")
             return redirect("transactions:category_list")

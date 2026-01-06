@@ -127,6 +127,7 @@ class TransactionList(APIView):
         account_name = request.query_params.get("account")
         category_name = request.query_params.get("category")
         currency_code = request.query_params.get("currency")
+        count = request.query_params.get("count")
 
         if date_from:
             qs = qs.filter(date__gte=date_from)
@@ -140,7 +141,8 @@ class TransactionList(APIView):
             qs = qs.filter(category__name=category_name, category__family=family)
         if currency_code:
              qs = qs.filter(currency__code=currency_code, currency__family=family)
+        if count:
+            qs = qs.order_by("-date", "-id")[:int(count)]
 
-        
         return Response(TransactionSerializer(qs, many=True).data)
 
