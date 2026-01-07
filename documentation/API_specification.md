@@ -112,12 +112,17 @@ curl -X POST \
   {success":"account created"}
   ```
 
-Last of accounts:
+List of accounts:
 ```
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/accounts/
 
 [{"id":9,"name":"cash","balance":"0.00","currency":"USD"}]
 ```
+To filter accounts **currency_id** parameters could be applied:
+```
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/accounts/?currency_id=2"
+```
+
 
 ### 3.3. Category
 Creating income category:
@@ -141,7 +146,7 @@ curl -X POST \
   {"success":"category created"}
 ```
 
-list of categories:
+list of all categories:
 ```
 curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://127.0.0.1:8000/transactions/api/category/
 
@@ -149,11 +154,18 @@ curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" http://1
 
 ```
 
+Optional parameters **income_flag** and/or **expense_flag** can be applied as parameter to filter category list. "True", "true", "Yes", "yes", "1" - all this inputs will be evaluated as "True", other not Null inputs will be evaluated as "False":
+```
+curl -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" "http://127.0.0.1:8000/transactions/api/category/?income_flag=0&expense_flag=True"
+
+[{"id":2,"name":"api_test_expense_categ","income_flag":false,"expense_flag":true}]
+```
+
 ### 3.4. Transactions
 
 #### 3.4.1. Income transaction creating
 
-Below is API request for creating income transaction. Doesn't matter if you use positive or negative amount in this API request - it will be saved as positive in any case because it is an income. Note that you should use account id, not account name, reason is account.name is not unique, combination account.name + account.currency is unique. By providing account id you unambiguously identify account and currency.
+Below is API request for creating income transaction. Doesn't matter if you use positive or negative amount in this API request - it will be saved as positive in any case because it is an income. Note that you should use account id and category id, not name. account.name is not unique, combination account.name + account.currency is unique and correcpond to unique account id. By providing account id you unambiguously identify account and currency, so no need additionaly specify currency.
 ```
 curl -X POST \
   -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" \
@@ -161,7 +173,7 @@ curl -X POST \
   -d '{"date":"2025-12-23",
 	"account": 9,
 	"amount":23.12,
-	"category":"api_test_income_categ",
+	"category": 1,
 	"remark":"some remark to income transaction"
    }'\
   http://127.0.0.1:8000/transactions/api/income_create/
@@ -170,7 +182,7 @@ curl -X POST \
 ```
 
 #### 3.4.2. Expense transaction creating
-Doesn't matter if you use positive or negative amount in this API request, because it is expense it always will be saved as negative amount. Same as in creating income  you should use account id, not account name here.
+Doesn't matter if you use positive or negative amount in this API request, because it is expense it always will be saved as negative amount. Same as in creating income  you should use account id and category id, not name.
 ```
 curl -X POST \
   -H "Authorization: Token df78ee9cfa687bc27008d9eb20a22fb07dd9c7b6" \
@@ -178,7 +190,7 @@ curl -X POST \
   -d '{"date":"2025-12-23",
 	"account": 9,
 	"amount":12.01,
-	"category":"api_test_expense_categ",
+	"category": 2,
 	"remark":"some remark to income transaction"
    }'\
   http://127.0.0.1:8000/transactions/api/expense_create/

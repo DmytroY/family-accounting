@@ -65,7 +65,7 @@ class ExpenseCreate(APIView):
 
     def post(self, request):
         data = request.data.copy()
-        data["category"] = Category.objects.get(name=data["category"], family=request.user.profile.family).id
+        # data["category"] = Category.objects.get(name=data["category"], family=request.user.profile.family).id
         form = CreateExpense(data, user=request.user)
         if form.is_valid():
             new_exp = form.save(commit=False)
@@ -75,7 +75,7 @@ class ExpenseCreate(APIView):
             Account.objects.filter(id=new_exp.account_id).update(balance=F('balance') + new_exp.amount)
             new_exp.save()
             return Response({"success": "expense created"}, status=status.HTTP_201_CREATED)
-        return Response(form.error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryCreate(APIView):
@@ -103,16 +103,29 @@ class AccountList(APIView):
 
     def get(self, request):
         family = request.user.profile.family
+        currency_id = request.query_params.get("currency_id")
         qs = Account.objects.filter(family=family)
+        if currency_id:
+            qs = qs.filter(currency=currency_id)
         return Response(AccountSerializer(qs, many=True).data)
     
+def str_to_bool(str) -> bool:
+    return str.lower() in ("1", "true", "yes")
 
 class CategoryList(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         family = request.user.profile.family
+        income_flag = request.query_params.get("income_flag") # true
+        expense_flag = request.query_params.get("expense_flag") # false
         qs = Category.objects.filter(family=family)
+
+        if income_flag is not None:
+            qs = qs.filter(income_flag=str_to_bool(income_flag))
+        if expense_flag is not None:
+            qs = qs.filter(expense_flag=str_to_bool(expense_flag))
+
         return Response(CategorySerializer(qs, many=True).data)
     
 class TransactionList(APIView):
