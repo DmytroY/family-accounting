@@ -49,6 +49,60 @@ PASSWORD = '...........'
 ```
 Proper secret storage (env vars or secret management system) should be used for production.
 
+### Deployment
+I deploy on Ubuntu server and forward port to interned with [ngrok API Gateway](https://ngrok.com/).
+#### Preparing environment.
+Using venv is recomended.
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+We will keep next secrets as environment variables:
+1. DJANGO_SECRET_KEY - Used for cryptographic signing in Django,
+2. DJANGO_EMAIL_HOST_USER - host email for ending password recovery link
+3. DJANGO_EMAIL_HOST_PASSWORD - password to the host email, in case of gmail it generates in [App passwords management](myaccount.google.com/apppasswords)
+
+with online generator or in python console generate secret key for django
+```
+import secrets
+print(secrets.token_urlsafe(50))
+```
+add to ~/.bashrc or ~/.bash_profile strings with django secret key, host email and email password:
+```
+ export DJANGO_SECRET_KEY='generated secret key'
+ export DJANGO_EMAIL_HOST_USER='email'
+ export DJANGO_EMAIL_HOST_PASSWORD='email password'
+```
+apply it with `source ~/.bashrc` and check with `echo $DJANGO_SECRET_KEY`
+
+#### Instaling from github
+```
+pip install git+https://github.com/DmytroY/family-accounting.git
+```
+
+#### migrate DB and create superuser
+```
+python3 family_acc\manage.py migrate
+python3 family_acc\manage.py createsuperuser
+```
+
+#### collectstatic
+```
+python3 family_acc\manage.py collectstatic
+```
+
+#### Run Gunicorn
+
+```
+gunicorn family_acc.wsgi:application
+```
+ngrok can be used to forward port to interned
+
+```
+ngrok http 8000
+```
+
+
 ## To-Do list
 * Translation
 * deploy variants

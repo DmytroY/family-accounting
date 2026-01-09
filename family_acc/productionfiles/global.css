@@ -94,7 +94,7 @@ body {
   user-select: none;
 }
 
-/* Mobile first - horisontal menu for with < 900 */
+/* Mobile first - horisontal menu for with < 1120 */
 .menu {
   display: flex;
   flex-direction: row;
@@ -103,7 +103,7 @@ body {
 }
 
 
-@media (min-width: 900px) {
+@media (min-width: 1120px) {
   .header {grid-area: 1 / span 6;}
   .menu {
     grid-area: 2 / span 1;
@@ -116,7 +116,7 @@ body {
 }
 
 
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
   .header {grid-area: 1 / span 6;}
   .menu {
     grid-area: 2 / span 1;

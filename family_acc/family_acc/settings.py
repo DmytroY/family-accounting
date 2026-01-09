@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-from . import secrets
+# from . import secrets
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,20 +22,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets.SECRET_K
+# SECRET_KEY = secrets.SECRET_K
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = True
+
+# for production, force sending session cookie and CSRF token cookie only over HTTPS. Prevents session hijacking on HTTP.
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
 ]
-ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
-# ALLOWED_HOSTS = [
-#     'django-app-env.eba-c5m8udum.us-east-1.elasticbeanstalk.com',
-#     'localhost',
-#     '127.0.0.1',
-# ]
+# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    ".ngrok-free.app",
+]
 
 # Application definition
 
@@ -142,13 +148,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
+# STATIC_ROOT is only for production
 STATIC_ROOT = BASE_DIR / 'productionfiles'
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'staticfiles'
-]
+STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -164,8 +169,10 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = secrets.EMAIL
-EMAIL_HOST_PASSWORD = secrets.APPPASSWORD
+# EMAIL_HOST_USER = secrets.EMAIL
+EMAIL_HOST_USER = os.environ.get("DJANGO_EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = secrets.APPPASSWORD
+EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGOUT_REDIRECT_URL = '/'
