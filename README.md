@@ -77,7 +77,7 @@ apply it with `source ~/.bashrc` and check with `echo $DJANGO_SECRET_KEY`
 
 #### Instaling from github
 ```
-pip install git+https://github.com/DmytroY/family-accounting.git
+git clone https://github.com/DmytroY/family-accounting.git
 ```
 
 #### migrate DB and create superuser

@@ -38,6 +38,7 @@ CSRF_TRUSTED_ORIGINS = [
 # ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
 ALLOWED_HOSTS = [
     "127.0.0.1",
+    "192.168.100.28",
     "localhost",
     ".ngrok-free.app",
 ]
