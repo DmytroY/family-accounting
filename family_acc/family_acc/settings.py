@@ -9,9 +9,15 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+# Preparing for production
+# comment secrets
+# uncoment env vars
+# DEBUG = False
+# uncoment SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE
+
 
 from pathlib import Path
-# from . import secrets
+from . import secrets
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,18 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = secrets.SECRET_K
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = secrets.SECRET_K
+# SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # for production, force sending session cookie and CSRF token cookie only over HTTPS. Prevents session hijacking on HTTP.
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
+    "https://knottier-tori-nontoxically.ngrok-free.dev",
 ]
 # ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
 ALLOWED_HOSTS = [
@@ -71,6 +78,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -89,6 +97,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -143,6 +152,18 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+LANGUAGES = [
+    ('en', 'English'),
+    ('cs', 'Czech'),
+    ('uk', 'Ukrainian'),
+    # ('de', 'German'),
+    # ('ru', 'Russian'),
+    ('es', 'Spanish'),
+]
+print(f"---DEBUG---: Locale path is {BASE_DIR / 'locale'}")
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 USE_TZ = True
 

@@ -19,8 +19,10 @@ from django.urls import path, include
 from . import views, api_views
 from rest_framework.authtoken.views import obtain_auth_token
 
-urlpatterns = [
+urlpatterns = [  
     path('admin/', admin.site.urls),
+
+    path('i18n/', include('django.conf.urls.i18n')),
 
     path("api/token/", obtain_auth_token),
     path("api/token/regenerate/", api_views.regenerate_token),

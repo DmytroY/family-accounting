@@ -46,6 +46,32 @@ body {
   background-color: var(--color-background-dark);
   text-align: center;
   color: var(--color-text-light);
+
+  /* make header a flexible row so elements can align left / right */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 8px 16px;
+  flex-wrap: wrap; /* allows language selector to wrap on small screens */
+  text-align: left; /* avoid center alignment of children */
+}
+
+/* keep inline layout for logout / links */
+.logout,
+.header > a,
+.header form:not(.language) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ensure the language form sits on the right in the flex row */
+.language {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .header form,

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 {% load static %}
 <html lang="en">
     <link rel="stylesheet" href="{% static 'global.css' %}" />
@@ -10,6 +11,7 @@
         {% block title %}
         {% endblock %}
     </title>
+
 </head>
 <body>
 <div class="grid-container">
@@ -18,53 +20,74 @@
         {% if user.is_authenticated %}
             <form class="logout" action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                You authorized as
-                {% comment %}<a href="/members/{{user.profile.uuid}}" title="push to see details">{{user.username}}</a>{% endcomment %}
+                {% trans "You authorized as" %}
                 <a href="{% url 'members:member_edit' user.profile.uuid %}" title="push to see details">{{user.username}} </a>
-                , you can 
-                <button title="Logout" aria-label="User Logout">LOGOUT</button>
+                {% trans ", you can" %}
+                <a href="#" onclick="this.closest('form').submit(); return false;" title="Logout" aria-label="User Logout">Logout</a>
             </form>
         {% else  %}
-            <a href="{% url 'members:register' %}">REGISTRATION</a> |
-            <a href="{% url 'login' %}">LOGIN</a> 
+            <a href="{% url 'members:register' %}">{% trans "Registration" %}</a> |
+            <a href="{% url 'login' %}">{% trans "Login" %}</a>  | 
         {% endif %}   
+
+        <form class="language" action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            {% trans "language:" %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            <select name="language">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.name_local }} ({{ language.code }})
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value={% trans "Go" %}>
+        </form>
+
+    </div>
+
+    <div>
+
     </div>
 
     <div class="menu">
         <details class="menu-section">
-            <summary>TRANSACTIONS</summary>
+            <summary>{% trans "TRANSACTIONS" %}</summary>
             <ul>
-                <li><a href="/transactions/transaction_list">List</a></li>
-                <li><a href="/transactions/transaction_create_expense">New expense</a></li>
-                <li><a href="/transactions/transaction_create_income">New income</a></li>
+                <li><a href="/transactions/transaction_list">{% trans "List" %}</a></li>
+                <li><a href="/transactions/transaction_create_expense">{% trans "New expense" %}</a></li>
+                <li><a href="/transactions/transaction_create_income">{% trans "New income" %}</a></li>
             </ul>
         </details>
         <details class="menu-section">
-            <summary>CURRENCY</summary>
+            <summary>{% trans "CURRENCY" %}</summary>
             <ul>
-                <li><a href="/transactions/currency_list">List</a></li>
-                <li><a href="/transactions/currency_create">New</a></li>
+                <li><a href="/transactions/currency_list">{% trans "List" %}</a></li>
+                <li><a href="/transactions/currency_create">{% trans "New" %}</a></li>
             </ul>
         </details>
         <details class="menu-section">
-            <summary>ACCOUNTS</summary>
+            <summary>{% trans "ACCOUNTS" %}</summary>
             <ul>
-                <li><a href="/transactions/account_list">List</a></li>
-                <li><a href="/transactions/account_create">New</a></li>
+                <li><a href="/transactions/account_list">{% trans "List" %}</a></li>
+                <li><a href="/transactions/account_create">{% trans "New" %}</a></li>
             </ul>
         </details>
         <details class="menu-section">
-            <summary>CATEGORIES</summary>
+            <summary>{% trans "CATEGORIES" %}</summary>
             <ul>
-                <li><a href="/transactions/category_list">List</a></li>
-                <li><a href="/transactions/category_create">New</a></li>
+                <li><a href="/transactions/category_list">{% trans "List" %}</a></li>
+                <li><a href="/transactions/category_create">{% trans "New" %}</a></li>
             </ul>
         </details>
         <details class="menu-section">
-            <summary>MY_FAMILY </summary>
+            <summary>{% trans "MY_FAMILY" %}</summary>
             <ul>
-                <li><a href="/members">Members</a></li>
-                <li><a href="/members/member_create">New</a></li>
+                <li><a href="/members">{% trans "Members" %}</a></li>
+                <li><a href="/members/member_create">{% trans "New" %}</a></li>
             </ul>
         </details>
     </div>
@@ -81,12 +104,12 @@
                 <div class="{{ m.tags }}">{{ m }}</div>
             {% endfor %}
         {% else %}
-            All running smooth
+            {% trans "All running smooth" %}
         {% endif %}
     </div>
 
     <div class="footer">
-        Dmytro Yakovenko. 2025.
+        {% trans "Dmytro Yakovenko. 2025." %}
     </div>
 
 </div>

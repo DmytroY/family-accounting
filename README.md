@@ -51,6 +51,12 @@ Proper secret storage (env vars or secret management system) should be used for 
 
 ### Deployment
 I deploy on Ubuntu server and forward port to interned with [ngrok API Gateway](https://ngrok.com/).
+#### Instaling from github
+```
+git clone https://github.com/DmytroY/family-accounting.git
+cd family-accounting
+```
+
 #### Preparing environment.
 Using venv is recomended.
 ```
@@ -75,10 +81,6 @@ add to ~/.bashrc or ~/.bash_profile strings with django secret key, host email a
 ```
 apply it with `source ~/.bashrc` and check with `echo $DJANGO_SECRET_KEY`
 
-#### Instaling from github
-```
-git clone https://github.com/DmytroY/family-accounting.git
-```
 
 #### migrate DB and create superuser
 ```
@@ -92,19 +94,38 @@ python3 family_acc\manage.py collectstatic
 ```
 
 #### Run Gunicorn
+from root directory of project(family-accounting) run gunicorn:
 
 ```
-gunicorn family_acc.wsgi:application
+gunicorn --pythonpath family_acc family_acc.wsgi
 ```
-ngrok can be used to forward port to interned
+[ngrok](ngrok.com) can be used to forward port to interned
 
 ```
-ngrok http 8000
+ngrok http 8000 --url <yuor public ngrok domain>
 ```
+
+Note! do tot forget to add yuor public ngrok domain to CSRF_TRUSTED_ORIGINS in settings.py
 
 
 ## To-Do list
 * Translation
+in templates:
+ {% load i18n %},
+{% blocktrans %}text to translate{% endblocktrans %}, {% trans "text to translate" %}
+in vievs:
+from django.utils.translation import gettext as _
+context = {'data': _("text to translate")}
+
+Generate .po files for each specific language:
+'''
+python family_acc\manage.py makemessages -l es -i venv
+'''
+edit  .po files, Run the compile command
+'''
+python family_acc\manage.py compilemessages -l es -i venv
+'''
+
 * deploy variants
 * android app
 * batch records deletion
