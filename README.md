@@ -32,12 +32,12 @@ Income transactions have positive amounts in **Transaction** table, expences hav
 ### Mooving from sqlite to PostgreSQL
 1. Use Django ORM exports to get data from SQLite:
 ```
-python family_acc\manage.py dumpdata --natural-foreign --natural-primary --exclude auth.permission --exclude contenttypes > data.json
+python3 family_acc/manage.py dumpdata --natural-foreign --natural-primary --exclude auth.permission --exclude contenttypes > data.json
 ```
 1. Create identical schema on PostgreSQL via Django migrations.
 1. Import data:
 ```
-python family_acc\manage.py loaddata data.json
+python3 family_acc/manage.py loaddata data.json
 ```
 
 ### Secrets
@@ -68,7 +68,7 @@ We will keep next secrets as environment variables:
 2. DJANGO_EMAIL_HOST_USER - host email for ending password recovery link
 3. DJANGO_EMAIL_HOST_PASSWORD - password to the host email, in case of gmail it generates in [App passwords management](myaccount.google.com/apppasswords)
 
-with online generator or in python console generate secret key for django
+with online generator or in Python console generate secret key for django
 ```
 import secrets
 print(secrets.token_urlsafe(50))
@@ -84,13 +84,13 @@ apply it with `source ~/.bashrc` and check with `echo $DJANGO_SECRET_KEY`
 
 #### migrate DB and create superuser
 ```
-python3 family_acc\manage.py migrate
-python3 family_acc\manage.py createsuperuser
+python3 family_acc/manage.py migrate
+python3 family_acc/manage.py createsuperuser
 ```
 
 #### collectstatic
 ```
-python3 family_acc\manage.py collectstatic
+python3 family_acc/manage.py collectstatic
 ```
 
 #### Run Gunicorn
@@ -119,11 +119,11 @@ context = {'data': _("text to translate")}
 
 Generate .po files for each specific language:
 '''
-python family_acc\manage.py makemessages -l uk -i venv
+python3 family_acc/manage.py makemessages -l uk -i venv
 '''
 edit  .po files, Run the compile command
 '''
-python family_acc\manage.py compilemessages -l uk -i venv
+python3 family_acc/manage.py compilemessages -l uk -i venv
 '''
 
 ### To-Do
