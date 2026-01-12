@@ -158,9 +158,8 @@ LANGUAGES = [
     ('uk', 'Ukrainian'),
     # ('de', 'German'),
     # ('ru', 'Russian'),
-    ('es', 'Spanish'),
 ]
-print(f"---DEBUG---: Locale path is {BASE_DIR / 'locale'}")
+# print(f"---DEBUG---: Locale path is {BASE_DIR / 'locale'}")
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]

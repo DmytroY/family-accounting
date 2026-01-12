@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Transactions
+    {% trans "Transactions" %}
 {% endblock %}
 
 {% block content %}
 <div>
-    <h1>Transactions</h1>
+    <h1>{% trans "Transactions" %}</h1>
     <form method="get">
-        <label>From: <input type="date" name="start" value="{{request.GET.start}}"></label>
-        <label>To: <input type="date" name="end" value="{{request.GET.end}}"></label>
-        <button type="form-submit">Filter</button>
-        <a href="?start={{request.GET.start}}&end={{request.GET.end}}&export=csv">Download CSV</a>
+        <label>{% trans "From" %}: <input type="date" name="start" value="{{request.GET.start}}"></label>
+        <label>{% trans "To" %}: <input type="date" name="end" value="{{request.GET.end}}"></label>
+        <button type="form-submit">{% trans "Filter" %}</button>
+        <a href="?start={{request.GET.start}}&end={{request.GET.end}}&export=csv">{% trans "Download CSV" %}</a>
     </form>
     <br>
-    <div>Report period: {{start}} ... {{end}}</b></div>
+    <div>{% trans "Report period" %}: {{start}} ... {{end}}</b></div>
 
     <form method="post" onsubmit="return confirm('Are you sure you want to delete the selected transactions?');">
         {% csrf_token %}
@@ -22,11 +23,11 @@
         <table>
             <tr>
                 <th><input type="checkbox" id="select-all"></th>
-                <th> Date  </th>
-                <th> Account  </th>
-                <th> Amount  </th>
-                <th> Currency  </th>
-                <th> Category </th>
+                <th> {% trans "Date" %}  </th>
+                <th> {% trans "Account" %}  </th>
+                <th> {% trans "Amount" %}  </th>
+                <th> {% trans "Currency" %}  </th>
+                <th> {% trans "Category" %} </th>
             </tr>
             {% for item in data%}
                 <tr class="{% if item.amount > 0 %}income{% else %}expense{% endif %}">
@@ -47,7 +48,7 @@
                 checkboxes.forEach(cb => cb.checked = selectAll.checked);
             });
         </script>
-        <button type="submit" name="action" value="delete">Delete selected</button>
+        <button type="submit" name="action" value="delete">{% trans "Delete selected" %}</button>
     </form>
 </div>
 {% endblock %}

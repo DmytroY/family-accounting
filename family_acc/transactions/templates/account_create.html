@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
     Account create
 {% endblock %}
 
 {% block content %}
-    <h1> Create new account </h1>
-    <a href="/transactions/account_upload">or upload by csv</a>
+    <h1> {% trans "Create new account" %}</h1>
+    <a href="/transactions/account_upload">{% trans "or upload by csv" %}</a>
 
     <section>
         <form class="form-with-validation" action="{% url 'transactions:account_create' %}" method="post" >
             {% csrf_token %}
-            <div>Account name: {{ form.name }}</div>
-            <div>Initial balance: {{ form.balance }}</div>
-            <div>Currency: {{ form.currency }}</div>
-            <button class="form-submit">Save</button>
+            <div>{% trans "Account name" %}: {{ form.name }}</div>
+            <div>{% trans "Initial balance" %}: {{ form.balance }}</div>
+            <div>{% trans "Currency" %}: {{ form.currency }}</div>
+            <button class="form-submit">{% trans "Save" %}</button>
         </form>        
     </section>
 

@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Registration
+    {% trans "Registration" %}
 {% endblock %}
     
 {% block content %}
 <div class="registration">
-    <h1>Registration</h1>
+    <h1>{% trans "Registration" %}</h1>
 
     <form action="/members/register/" method="post">
         {{form}}
         {% csrf_token %}
-        <button class="button">Submit</button>
+        <button class="button">{% trans "Save" %}</button>
     </form>   
 </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
     Not found
@@ -6,5 +7,5 @@
 
 {% block content %}
     <h1> 404 </h1>
-    <p>Hm...Looks like there is nothing to see...</p>
+    <p>{% trans "Hm...Looks like there is nothing to see..." %}</p>
 {% endblock %}

@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Category create
+    {% trans "Create category" %}
 {% endblock %}
 
 {% block content %}
-    <h1> Create new category record </h1>
-    <a href="/transactions/category_upload">or upload by csv</a>
+    <h1>{% trans "Create category" %}</h1>
+    <a href="/transactions/category_upload">{% trans "or upload by csv" %}</a>
 
     <section>
         <form class="form-with-validation" action="{% url 'transactions:category_create' %}" method="post" >
             {% csrf_token %}
-            <div>Category name: {{ form.name }}</div>
-            <div>Use it for income?: {{ form.income_flag }}</div>
-            <div>Use it for expense?:{{ form.expense_flag }}</div>
-            <button class="form-submit">Save</button>
+            <div>{% trans "Category name" %} {{ form.name }}</div>
+            <div>{% trans "Use it for income?" %}: {{ form.income_flag }}</div>
+            <div>{% trans "Use it for expense?" %}:{{ form.expense_flag }}</div>
+            <button class="form-submit">{% trans "Save" %}</button>
         </form>        
     </section>
 

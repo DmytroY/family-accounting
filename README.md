@@ -108,7 +108,7 @@ ngrok http 8000 --url <yuor public ngrok domain>
 Note! do tot forget to add yuor public ngrok domain to CSRF_TRUSTED_ORIGINS in settings.py
 
 
-## To-Do list
+### How to
 * Translation
 in templates:
  {% load i18n %},
@@ -119,14 +119,13 @@ context = {'data': _("text to translate")}
 
 Generate .po files for each specific language:
 '''
-python family_acc\manage.py makemessages -l es -i venv
+python family_acc\manage.py makemessages -l uk -i venv
 '''
 edit  .po files, Run the compile command
 '''
-python family_acc\manage.py compilemessages -l es -i venv
+python family_acc\manage.py compilemessages -l uk -i venv
 '''
 
-* deploy variants
+### To-Do
 * android app
-* batch records deletion
 * reports

@@ -1,22 +1,23 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Edit memeber
+    {% trans "Edit memeber" %}
 {% endblock %}
 
 {% block content %}
 <div class="mycard">
-    <h1>Edit member {{mymember.username}}</h1>
+    <h1>{% trans "Edit memeber" %}</h1>
     <form method="post">
         {% csrf_token %}
         <div>{{form.first_name.label_tag}} {{form.first_name}}</div>
         <div>{{form.last_name.label_tag}} {{form.last_name}}</div>
         <div>{{form.email.label_tag}} {{form.email}}</div>
-        <button class="form-submit" name="action" value="save">Save</button>
-        <button class="form-submit" name="action" value="delete">Delete</button>
+        <button class="form-submit" name="action" value="save">{% trans "Save" %}</button>
+        <button class="form-submit" name="action" value="delete"></button>
     </form>
     {% if mymember.username == user.get_username %}
-        <a href="{% url 'password_change' %}">Change password</a>
+        <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>
     {% endif %}
 </div>
 

@@ -1,18 +1,22 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Currency edit {{account.id}}
+    {% trans "Edit currency" %}
 {% endblock %}
 
 {% block content %}
 <div class="mycard">
-  <h1>Edit currency</h1>
-  <form method="post">
+  <h1>{% trans "Edit currency" %}</h1>
+
+  <form class="form-with-validation" action="{% url 'transactions:currency_edit' currency.id %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="form-submit" name="action" value="save">Save</button>
-    <button type="form-submit" name="action" value="delete">Delete</button>
-    <button type="form-submit" name="action" value="cancel">Cancel</button>
+    <div>{% trans "Currency code" %}: {{ form.code }}</div>
+    <div>{% trans "Currency description" %}: {{ form.description }}</div>
+    <button type="form-submit" name="action" value="save">{% trans "Save" %}</button>
+    <button type="form-submit" name="action" value="delete">{% trans "Delete" %}</button>
+    <button type="form-submit" name="action" value="cancel">{% trans "Cancel" %}</button>
   </form>
+
 </div>
 {% endblock %}

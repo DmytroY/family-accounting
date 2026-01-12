@@ -1,20 +1,21 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Accounts upload
+    {% trans "Accounts upload" %}
 {% endblock %}
 
 {% block content %}
 <div>
-   <h1>Accounts upload</h1>    
+   <h1>{% trans "Accounts upload" %}</h1>    
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.file }}
-        <button type="submit">Upload CSV</button>
+        <button type="submit">{% trans "Upload CSV" %}</button>
     </form>
     </br>
     <div>
-        <h3> Example of data in csv file for upload: </h3>
+        <h3>{% trans "Example of data in csv file for upload" %}:</h3>
         <i>name, balance, currency_code, currency_description </br>
         Cash, 230.12, USD, US dollars</br>
         Card, 100.00, EUR, Euro

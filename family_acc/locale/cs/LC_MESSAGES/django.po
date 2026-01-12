@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-12 14:31+0100\n"
+"POT-Creation-Date: 2026-01-12 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,31 +16,29 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: .\family_acc\family_acc\views.py:9 .\family_acc\templates\home.html:10
 msgid "Hello"
-msgstr "Привіт"
+msgstr "Ahoj!"
 
 #: .\family_acc\members\templates\all_members.html:5
 #: .\family_acc\members\templates\all_members.html:10
 msgid "Family members"
-msgstr "Члени родини"
+msgstr "Členové rodiny"
 
 #: .\family_acc\members\templates\all_members.html:13
 msgid "Username"
-msgstr "Користувач"
+msgstr "Uživatelské jméno"
 
 #: .\family_acc\members\templates\all_members.html:14
 msgid "First Name"
-msgstr "Ім'я"
+msgstr "Křestní jméno"
 
 #: .\family_acc\members\templates\all_members.html:15
 msgid "Last Name"
-msgstr "Фамілія"
+msgstr "Příjmení"
 
 #: .\family_acc\members\templates\all_members.html:16
 msgid "email"
@@ -49,7 +47,7 @@ msgstr "email"
 #: .\family_acc\members\templates\member_edit.html:5
 #: .\family_acc\members\templates\member_edit.html:10
 msgid "Edit memeber"
-msgstr "Редагування данних користувача"
+msgstr "Upravit údaje uživatele"
 
 #: .\family_acc\members\templates\member_edit.html:16
 #: .\family_acc\members\templates\register.html:15
@@ -63,29 +61,29 @@ msgstr "Редагування данних користувача"
 #: .\family_acc\transactions\templates\transaction_create_income.html:21
 #: .\family_acc\transactions\templates\transaction_edit.html:14
 msgid "Save"
-msgstr "Зберегти"
+msgstr "Uložit"
 
 #: .\family_acc\members\templates\member_edit.html:20
 msgid "Change password"
-msgstr "Змінити пароль"
+msgstr "Změnit heslo"
 
 #: .\family_acc\members\templates\register.html:5
 #: .\family_acc\members\templates\register.html:10
 #: .\family_acc\templates\home.html:17 .\family_acc\templates\layout.html:29
 msgid "Registration"
-msgstr "Реєстрація"
+msgstr "Registrace"
 
 #: .\family_acc\members\templates\registration\login.html:19
 msgid "Submit"
-msgstr "Увійти"
+msgstr "Přihlásit se"
 
 #: .\family_acc\members\templates\registration\login.html:22
 msgid "Reset password"
-msgstr "Скинути пароль"
+msgstr "Obnovit heslo"
 
 #: .\family_acc\templates\404.html:10
 msgid "Hm...Looks like there is nothing to see..."
-msgstr "Дідько!... Тут нічого немає!"
+msgstr "Sakra! Tady nic není!"
 
 #: .\family_acc\templates\home.html:11
 msgid ""
@@ -97,10 +95,10 @@ msgid ""
 "    It has only basic functionality and nothing superfluous.\n"
 "    "
 msgstr ""
-"Деякий час я шукав просту і безкоштовну систему обліку власних доходів і "
-"витрат. Як ви вже мабуть здогадалися, існування цього сайту говорить про те, "
-"що я її не знайшов і вирішив її створити самостійно. Тут є лише базовий "
-"функціонал і нічого зайвого."
+"Nějakou dobu jsem hledal jednoduchý a bezplatný systém pro evidenci "
+"vlastních příjmů a výdajů. Jak jste asi již uhodli, existence této stránky "
+"svědčí o tom, že jsem jej nenašel a rozhodl se jej vytvořit sám. Najdete zde "
+"pouze základní funkce a nic zbytečného."
 
 #: .\family_acc\templates\home.html:18
 msgid ""
@@ -113,16 +111,15 @@ msgid ""
 "to restore access if you forget your password.\n"
 "    "
 msgstr ""
-"Основна ідея полягає в тому що користувачі об'єднані в родини і ведуть "
-"фінансові записи що доступні членам конкретної родини. Перший член родини "
-"реєструється самостійно, після чого він може створювати облікові записи для "
-"інших членів своєї родини. Уважно заповнюйте вашу електронну адресу - на неї "
-"буде надіслано посилання для відновлення доступу у випадку якщо ви забудете "
-"пароль."
+"Hlavní myšlenka spočívá v tom, že uživatelé jsou sdruženi do rodin a vedou "
+"finanční záznamy, které jsou přístupné členům konkrétní rodiny. První člen "
+"rodiny se registruje samostatně, poté může vytvářet účty pro ostatní členy "
+"své rodiny. Pečlivě vyplňte svou e-mailovou adresu – na ni vám bude zaslán "
+"odkaz pro obnovení přístupu v případě, že zapomenete heslo."
 
 #: .\family_acc\templates\home.html:24
 msgid "So how do you record income or expenses?"
-msgstr "Тож як записати дохід чи витрату?"
+msgstr "Jak tedy zaznamenáváte příjmy a výdaje?"
 
 #: .\family_acc\templates\home.html:25
 msgid ""
@@ -139,14 +136,13 @@ msgid ""
 "when creating a category.\n"
 "    "
 msgstr ""
-"Для початку створіть валюти. Потім створіть рахунки і вкажіть яку валюту "
-"використовує конкретний рахунок. Рахунки з різними валютами можуть мати "
-"однакові імена, наприклад можуть існувати рахунки “Моя готівка (UDS)” і “Моя "
-"готівка (EUR)”. Створіть категорію доходів або витрат. Кожна категорія може "
-"використовуватися тільки для доходів (Зарплата), тільки для Витрат (Харчі) "
-"або і для доходів і витрат (Переказ між рахунками). Поставте відповідні "
-"галоки “використовувати для доходів” і “використовувати для витрат” при "
-"створенні категорії."
+"Nejprve vytvořte měny. Poté vytvořte účty a uveďte, jakou měnu konkrétní "
+"účet používá. Účty s různými měnami mohou mít stejné názvy, například mohou "
+"existovat účty „Moje hotovost (UDS)“ a „Moje hotovost (EUR)“. Vytvořte "
+"kategorii příjmů nebo výdajů. Každá kategorie může být použita pouze pro "
+"příjmy (Plat), pouze pro výdaje (Potraviny) nebo pro příjmy i výdaje (Převod "
+"mezi účty). Při vytváření kategorie zaškrtněte příslušná políčka „použít pro "
+"příjmy“ a „použít pro výdaje“."
 
 #: .\family_acc\templates\home.html:34
 msgid ""
@@ -166,18 +162,18 @@ msgid ""
 "depending on whether you chose to create an expense or income.\n"
 "    "
 msgstr ""
-"Як тільки у вас є Рахунок (відповідно і Валюта) і Категорія ви можете "
-"створити нову фінансову транзакцію - новий дохід або нову витрату. При "
-"переводі грошей з одного рахунку на інший потрібно створити 2 транзакції з "
-"однаковими сумами. Наприклад, якщо знімаєте готівку з банкомата перша "
-"транзакція буде Витрата на рахунку “Картка” а друга Дохід на рахунку "
-"“Готівка”. Всі доходи відображаються з позитивною сумою, всі витрати з "
-"негативною. Вам не потрібно думати про знак - система сама його проставить "
-"відповідно до того ви вибрали створення витрати чи доходу."
+"Jakmile máte účet (a odpovídající měnu) a kategorii, můžete vytvořit novou "
+"finanční transakci – nový příjem nebo nový výdaj. Při převodu peněz z "
+"jednoho účtu na druhý je třeba vytvořit 2 transakce se stejnými částkami. "
+"Například pokud vybíráte hotovost z bankomatu, první transakce bude výdaj na "
+"účtu „Karta“ a druhá příjem na účtu „Hotovost“. Všechny příjmy se zobrazují "
+"s kladnou částkou, všechny výdaje se zápornou. Nemusíte přemýšlet o znaménku "
+"– systém jej sám přidá podle toho, zda jste zvolili vytvoření výdaje nebo "
+"příjmu."
 
 #: .\family_acc\templates\home.html:43
 msgid "Uploading and downloading data."
-msgstr "Завантаження або вивантаження даних."
+msgstr "Nahrávání a stahování dat."
 
 #: .\family_acc\templates\home.html:44
 msgid ""
@@ -197,19 +193,18 @@ msgid ""
 "    if it is not for that purpose.\n"
 "    "
 msgstr ""
-"Ви помітете, що на відповідних сторінках у вас є можливість завантажитти або "
-"вивантажити дані в форматі csv. Хоча така можливість існує, ви можете не "
-"завантажувати валюти, рахунки і категорії перед завантаженням транзакції, "
-"оскільки при завантаженні транзакцій відсутні валюти, рахунки і категорії "
-"створяться автоматично. Єдине що треба буде після цього зробити це "
-"проставити правильні суми балансів в рахунках. Також можете зайти в "
-"категорій і прибрати галочку “використовувати для доходів” або "
-"“використовувати для витрат” щоб ця категорія не пропонувалася під час "
-"введення доходу/втрати якщо вона не для цього"
+"Zjistíte, že na příslušných stránkách máte možnost stáhnout nebo nahrát data "
+"ve formátu csv. I když tato možnost existuje, nemusíte před nahráním "
+"transakcí stahovat měny, účty a kategorie, protože při nahrávání transakcí "
+"se měny, účty a kategorie vytvoří automaticky. Jediné, co poté budete muset "
+"udělat, je zadat správné částky zůstatků na účtech. Můžete také přejít do "
+"kategorií a zrušit zaškrtnutí políčka „použít pro příjmy“ nebo „použít pro "
+"výdaje“, aby se tato kategorie nenabízela při zadávání příjmů/výdajů, pokud "
+"k tomu neslouží."
 
 #: .\family_acc\templates\home.html:53
 msgid "Attention!"
-msgstr "Увага!"
+msgstr "Pozor!"
 
 #: .\family_acc\templates\home.html:54
 msgid ""
@@ -222,112 +217,117 @@ msgid ""
 "function.\n"
 "    "
 msgstr ""
-"Це некомерційний продукт. Ви можете вільно їм користуватися для власних "
-"потреб, але я, як розробник, не несу відповідальності за збереження даних, "
-"стабільність роботи цього продукту, доступність в різний час доби. Якщо ви "
-"вирішили користуватися цим продуктом рекомендую не забувати регулярно робити "
-"резервну копію ваших даних за допомогою відповідного функціоналу "
-"вивантаження csv файлу."
+"Toto je nekomerční produkt. Můžete jej volně používat pro své vlastní "
+"potřeby, ale já jako vývojář nenesu odpovědnost za uchování dat, stabilitu "
+"fungování tohoto produktu ani jeho dostupnost v různých časech dne. Pokud "
+"jste se rozhodli tento produkt používat, doporučuji nezapomínat pravidelně "
+"zálohovat vaše data pomocí příslušné funkce exportu csv souboru."
 
 #: .\family_acc\templates\home.html:61
 msgid "Source code on GitHub."
-msgstr "Вихідний код на GitHub"
+msgstr "Zdrojový kód na GitHubu."
 
 #: .\family_acc\templates\home.html:62
 msgid "You can send your suggestions to my email address:"
-msgstr "Ваші побачання можете надсилати на мою електронну адресу"
+msgstr "Své návrhy můžete zasílat na mou e-mailovou adresu:"
 
 #: .\family_acc\templates\home.html:64
 msgid "Best regards, Dmytro!"
-msgstr "З найкращими побажаннями, Дмитро!"
+msgstr "S pozdravem, Dmytro!"
 
 #: .\family_acc\templates\layout.html:23
 msgid "You authorized as"
-msgstr "Ви авторизувалися як "
+msgstr "Autorizovali jste jako"
 
 #: .\family_acc\templates\layout.html:25
 msgid ", you can"
-msgstr ", щоб вийти тисніть "
+msgstr ", můžete"
 
 #: .\family_acc\templates\layout.html:30
 msgid "Login"
-msgstr "Увійти"
+msgstr "Přihlášení"
 
 #: .\family_acc\templates\layout.html:35
 msgid "language:"
-msgstr "Вибір мови:"
+msgstr "jazyk:"
 
 #: .\family_acc\templates\layout.html:47
 msgid "Go"
-msgstr "Змінити"
+msgstr "Přejít"
 
 #: .\family_acc\templates\layout.html:58
 msgid "TRANSACTIONS"
-msgstr "ТРАНЗАКЦІЇ"
+msgstr "TRANSAKCE"
 
 #: .\family_acc\templates\layout.html:60 .\family_acc\templates\layout.html:68
 #: .\family_acc\templates\layout.html:75 .\family_acc\templates\layout.html:82
 msgid "List"
-msgstr "Список"
+msgstr "Seznam"
 
 #: .\family_acc\templates\layout.html:61
 msgid "New expense"
-msgstr "Нова витрата"
+msgstr "Nové výdaje"
 
 #: .\family_acc\templates\layout.html:62
 msgid "New income"
-msgstr "Новий дохід"
+msgstr "Nový příjem"
 
 #: .\family_acc\templates\layout.html:66
 msgid "CURRENCY"
-msgstr "ВАЛЮТА"
+msgstr "MĚNA"
 
 #: .\family_acc\templates\layout.html:69 .\family_acc\templates\layout.html:76
 #: .\family_acc\templates\layout.html:83 .\family_acc\templates\layout.html:90
 msgid "New"
-msgstr "Створити"
+msgstr "Nový"
 
 #: .\family_acc\templates\layout.html:73
 msgid "ACCOUNTS"
-msgstr "РАХУНКИ"
+msgstr "ÚČTY"
 
 #: .\family_acc\templates\layout.html:80
 msgid "CATEGORIES"
-msgstr "КАТЕГОРІЇ"
+msgstr "KATEGORIE"
 
 #: .\family_acc\templates\layout.html:87
 msgid "MY_FAMILY"
-msgstr "МОЯ РОДИНА"
+msgstr "MOJE RODINA"
 
 #: .\family_acc\templates\layout.html:89
 msgid "Members"
-msgstr "Рідні"
+msgstr "Členové"
 
 #: .\family_acc\templates\layout.html:107
 msgid "All running smooth"
-msgstr "Все працює добре"
+msgstr "Vše běží hladce"
 
 #: .\family_acc\templates\layout.html:112
 msgid "Dmytro Yakovenko. 2025."
-msgstr "Дмитро Яковенко. 2025."
+msgstr "Dmytro Yakovenko. 2025."
 
 #: .\family_acc\templates\test.html:26
 msgid ""
 "\n"
 "    my friend, \n"
 "    "
-msgstr ""
-"\n"
-"    друже, \n"
-"    "
+msgstr "můj příteli,"
 
 #: .\family_acc\templates\test.html:30
 msgid "how are you?"
-msgstr "як справи?"
+msgstr "jak se máte?"
+
+#: .\family_acc\transactions\forms.py:24
+msgid "code"
+msgstr "kód"
+
+#: .\family_acc\transactions\forms.py:24
+#| msgid "Description"
+msgid "description"
+msgstr "Popis"
 
 #: .\family_acc\transactions\templates\account_create.html:9
 msgid "Create new account"
-msgstr "Створити новий рахунок"
+msgstr "Vytvořit nový účet"
 
 #: .\family_acc\transactions\templates\account_create.html:10
 #: .\family_acc\transactions\templates\category_create.html:10
@@ -335,232 +335,229 @@ msgstr "Створити новий рахунок"
 #: .\family_acc\transactions\templates\transaction_create_expense.html:10
 #: .\family_acc\transactions\templates\transaction_create_income.html:10
 msgid "or upload by csv"
-msgstr "або завантажити csv файл"
+msgstr "nebo nahrát pomocí souboru CSV"
 
 #: .\family_acc\transactions\templates\account_create.html:15
 msgid "Account name"
-msgstr "Назва рахунку"
+msgstr "Název účtu"
 
 #: .\family_acc\transactions\templates\account_create.html:16
 msgid "Initial balance"
-msgstr "Початковий баланс"
+msgstr "Počáteční bilanční zůstatek"
 
 #: .\family_acc\transactions\templates\account_create.html:17
 #: .\family_acc\transactions\templates\account_list.html:14
 #: .\family_acc\transactions\templates\account_list.html:33
 #: .\family_acc\transactions\templates\transaction_list.html:29
 msgid "Currency"
-msgstr "Валюта"
+msgstr "Měna"
 
 #: .\family_acc\transactions\templates\account_edit.html:5
 #: .\family_acc\transactions\templates\account_edit.html:10
 msgid "Edit account"
-msgstr "Рндагувати рахунок"
+msgstr "Upravit účet"
 
 #: .\family_acc\transactions\templates\account_edit.html:15
 #: .\family_acc\transactions\templates\category_edit.html:15
 #: .\family_acc\transactions\templates\currency_edit.html:15
 #: .\family_acc\transactions\templates\transaction_edit.html:15
 msgid "Delete"
-msgstr "Видалити"
+msgstr "Smazat"
 
 #: .\family_acc\transactions\templates\account_edit.html:16
 #: .\family_acc\transactions\templates\category_edit.html:16
 #: .\family_acc\transactions\templates\currency_edit.html:16
 #: .\family_acc\transactions\templates\transaction_edit.html:16
 msgid "Cancel"
-msgstr "Відмінити"
+msgstr "Zrušit"
 
 #: .\family_acc\transactions\templates\account_list.html:5
 #: .\family_acc\transactions\templates\account_list.html:10
 msgid "Accounts"
-msgstr "Рахунки"
+msgstr "Účty"
 
 #: .\family_acc\transactions\templates\account_list.html:26
 #: .\family_acc\transactions\templates\transaction_list.html:14
 msgid "Filter"
-msgstr "Фільтрувати"
+msgstr "Filtrovat"
 
 #: .\family_acc\transactions\templates\account_list.html:31
 #: .\family_acc\transactions\templates\transaction_create_expense.html:15
 #: .\family_acc\transactions\templates\transaction_create_income.html:15
 #: .\family_acc\transactions\templates\transaction_list.html:27
 msgid "Account"
-msgstr "Рахунок"
+msgstr "Účet"
 
 #: .\family_acc\transactions\templates\account_list.html:32
 msgid "Balance"
-msgstr "Баланс"
+msgstr "Bilanční zůstatek"
 
 #: .\family_acc\transactions\templates\account_upload.html:5
 #: .\family_acc\transactions\templates\account_upload.html:10
 msgid "Accounts upload"
-msgstr "Завантаження рахункі"
+msgstr "Nahrávání účtů"
 
 #: .\family_acc\transactions\templates\account_upload.html:14
 #: .\family_acc\transactions\templates\category_upload.html:13
 #: .\family_acc\transactions\templates\transaction_upload.html:14
 msgid "Upload CSV"
-msgstr "Завантажити CSV"
+msgstr "Nahrát CSV"
 
 #: .\family_acc\transactions\templates\account_upload.html:18
 #: .\family_acc\transactions\templates\category_upload.html:2
 #: .\family_acc\transactions\templates\category_upload.html:17
 #: .\family_acc\transactions\templates\transaction_upload.html:18
 msgid "Example of data in csv file for upload"
-msgstr "Зразок данних в CSV файлі для завантаження"
+msgstr "Příklad dat v souboru CSV pro nahrání"
 
 #: .\family_acc\transactions\templates\category_create.html:5
 #: .\family_acc\transactions\templates\category_create.html:9
 msgid "Create category"
-msgstr "Створити категорію"
+msgstr "Vytvořit kategorii"
 
 #: .\family_acc\transactions\templates\category_create.html:15
-#| msgid "Category"
 msgid "Category name"
-msgstr "Категорія"
+msgstr "Název kategorie"
 
 #: .\family_acc\transactions\templates\category_create.html:16
-#| msgid "Use for income?"
 msgid "Use it for income?"
-msgstr "Використовувати для доходів?"
+msgstr "Použít to pro příjem?"
 
 #: .\family_acc\transactions\templates\category_create.html:17
-#| msgid "Use for expense?"
 msgid "Use it for expense?"
-msgstr "Використовувати для витрат?"
+msgstr "Použít to na výdaje?"
 
 #: .\family_acc\transactions\templates\category_edit.html:5
 #: .\family_acc\transactions\templates\category_edit.html:10
 msgid "Edit category of income/expenses"
-msgstr "Редагувати категорію доходів/витрат"
+msgstr "Upravit kategorii příjmů/výdajů"
 
 #: .\family_acc\transactions\templates\category_list.html:5
 #: .\family_acc\transactions\templates\category_list.html:10
 msgid "Categories of income/expenses"
-msgstr "Категорія доходів/витрат"
+msgstr "Kategorie příjmů/výdajů"
 
 #: .\family_acc\transactions\templates\category_list.html:13
 msgid "Name"
-msgstr "Назва"
+msgstr "Jméno"
 
 #: .\family_acc\transactions\templates\category_list.html:14
 msgid "Use for income?"
-msgstr "Використовувати для доходів?"
+msgstr "Použít to pro příjem?"
 
 #: .\family_acc\transactions\templates\category_list.html:15
 msgid "Use for expense?"
-msgstr "Використовувати для витрат?"
+msgstr "Použít to na výdaje?"
 
 #: .\family_acc\transactions\templates\category_upload.html:4
 #: .\family_acc\transactions\templates\category_upload.html:9
 msgid "Category upload"
-msgstr "Завантаженя категорій"
+msgstr "Nahrajte kategorie"
 
 #: .\family_acc\transactions\templates\currency_create.html:6
 #: .\family_acc\transactions\templates\currency_create.html:10
 msgid "Create currency"
-msgstr "Створення валюти"
+msgstr "Vytvořit měnu"
 
 #: .\family_acc\transactions\templates\currency_create.html:16
 msgid "Currency code"
-msgstr "Код валюти"
+msgstr "Kód měny"
 
 #: .\family_acc\transactions\templates\currency_create.html:17
 msgid "Currency description"
-msgstr "Опис валюти"
+msgstr "Popis měny"
 
 #: .\family_acc\transactions\templates\currency_edit.html:5
 #: .\family_acc\transactions\templates\currency_edit.html:10
 msgid "Edit currency"
-msgstr "Редагуання валюти"
+msgstr "Upravit měnu"
 
 #: .\family_acc\transactions\templates\currency_list.html:5
 #: .\family_acc\transactions\templates\currency_list.html:10
 msgid "Currencies"
-msgstr "Валюти"
+msgstr "Měny"
 
 #: .\family_acc\transactions\templates\currency_list.html:13
 msgid "Code"
-msgstr "Код"
+msgstr "Kód"
 
 #: .\family_acc\transactions\templates\currency_list.html:14
 msgid "Description"
-msgstr "Опис"
+msgstr "Popis"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:5
 #: .\family_acc\transactions\templates\transaction_create_expense.html:9
 msgid "Create expense"
-msgstr "Нова витрата"
+msgstr "Vytvořit výdaj"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:14
 #: .\family_acc\transactions\templates\transaction_create_income.html:14
 #: .\family_acc\transactions\templates\transaction_list.html:26
 msgid "Date"
-msgstr "Дата"
+msgstr "Datum"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:15
 #: .\family_acc\transactions\templates\transaction_create_income.html:15
 msgid "add account"
-msgstr "додати рахунок"
+msgstr "přidat účet"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:16
 #: .\family_acc\transactions\templates\transaction_create_income.html:16
 #: .\family_acc\transactions\templates\transaction_list.html:28
 msgid "Amount"
-msgstr "Сума"
+msgstr "Částka"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:19
 #: .\family_acc\transactions\templates\transaction_create_income.html:19
 #: .\family_acc\transactions\templates\transaction_list.html:30
 msgid "Category"
-msgstr "Категорія"
+msgstr "Kategorie"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:19
 #: .\family_acc\transactions\templates\transaction_create_income.html:19
 msgid "add category"
-msgstr "додати категорію"
+msgstr "přidat kategorii"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:20
 #: .\family_acc\transactions\templates\transaction_create_income.html:20
 msgid "Remark"
-msgstr "Коментар"
+msgstr "Poznámka"
 
 #: .\family_acc\transactions\templates\transaction_create_income.html:5
 #: .\family_acc\transactions\templates\transaction_create_income.html:9
 msgid "Create income"
-msgstr "Новий дохід"
+msgstr "Vytvářejte příjmy"
 
 #: .\family_acc\transactions\templates\transaction_edit.html:5
 #: .\family_acc\transactions\templates\transaction_edit.html:10
 msgid "Edit transaction"
-msgstr "Редагуати транзакцію"
+msgstr "Upravit transakci"
 
 #: .\family_acc\transactions\templates\transaction_list.html:5
 #: .\family_acc\transactions\templates\transaction_list.html:10
 msgid "Transactions"
-msgstr "Транзакції"
+msgstr "Transakce"
 
 #: .\family_acc\transactions\templates\transaction_list.html:12
 msgid "From"
-msgstr "Від"
+msgstr "Od"
 
 #: .\family_acc\transactions\templates\transaction_list.html:13
 msgid "To"
-msgstr "До"
+msgstr "Do"
 
 #: .\family_acc\transactions\templates\transaction_list.html:15
 msgid "Download CSV"
-msgstr "Cкачати CSV"
+msgstr "Stáhnout CSV"
 
 #: .\family_acc\transactions\templates\transaction_list.html:18
 msgid "Report period"
-msgstr "Звітний період"
+msgstr "Seznam za období"
 
 #: .\family_acc\transactions\templates\transaction_list.html:51
 msgid "Delete selected"
-msgstr "Видалити вибране"
+msgstr "Odstranit vybrané"
 
 #: .\family_acc\transactions\templates\transaction_upload.html:10
 msgid "Transactions upload"
-msgstr "Завантаження транзакцій"
+msgstr "Nahrávání transakcí"

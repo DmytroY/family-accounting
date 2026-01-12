@@ -201,7 +201,7 @@ def account_edit(request, id):
             messages.error(request, 'Cannot delete account. It is used by existing transaction records.')
             return redirect('transactions:account_edit',  id=id)
     
-    if request.POST.get("action") == "cansel":
+    if request.POST.get("action") == "cancel":
         return redirect('transactions:account_list')
     
     if request.method == "POST":
@@ -246,7 +246,7 @@ def currency_edit(request, id):
             messages.error(request, "Cannot delete. Currency is used in existing transactions.")
             return redirect('transactions:currency_edit', id=id)
             
-    if request.POST.get("action") == "cansel":
+    if request.POST.get("action") == "cancel":
         return redirect('transactions:currency_list')
     
     if request.method == "POST":
@@ -291,7 +291,7 @@ def category_edit(request, id):
             messages.error(request, "Cannot delete. Category is used in existing transactions.")
             return redirect('transactions:category_edit', id=id)
     
-    if request.POST.get("action") == "cansel":
+    if request.POST.get("action") == "cancel":
         return redirect('transactions:category_list')
     
     if request.method == "POST":

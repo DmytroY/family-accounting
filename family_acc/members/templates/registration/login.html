@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
     Login
@@ -15,10 +16,10 @@
         {% else  %}
             <input type="hidden" name="next" value="{% url 'transactions:transaction_list' %}" />
         {% endif %}
-        <button class="form-submit">Submit</button>
+        <button class="form-submit">{% trans "Submit" %}</button>
     </form>
     <p>
-        <a href="{% url 'password_reset' %}">Reset password</a>
+        <a href="{% url 'password_reset' %}">{% trans "Reset password" %}</a>
     </p>
         
 

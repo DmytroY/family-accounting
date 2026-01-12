@@ -1,16 +1,17 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    List of used currency
+    {% trans "Currencies" %}
 {% endblock %}
 
 {% block content %}
 <div>
-   <h1>Currency of {{request.user.username}}'s family</h1>    
+   <h1>{% trans "Currencies" %}</h1>    
     <table>
         <tr>
-            <th> Code </th>
-            <th> Description </th>
+            <th> {% trans "Code" %} </th>
+            <th> {% trans "Description" %} </th>
         </tr>
         {% for item in data%}
             <tr>

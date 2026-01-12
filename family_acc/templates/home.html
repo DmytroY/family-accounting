@@ -1,53 +1,67 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
     Home
 {% endblock %}
 
 {% block content %}
-    <h1> Hello </h1>
-    <p>For some time, I have been searching for a simple and free system for tracking my income and expenses.
-        As you may have guessed, the existence of this site indicates that I did not find one and decided to create it myself.
-        It has only basic functionality and nothing superfluous.
-    </br></br>
-<h3>Registration</h3>
+<div>
+    <h2>{% trans "Hello" %}</h2>
+    {% blocktrans %}
+    For some time, I have been searching for a simple and free system for tracking my income and expenses.
+    As you may have guessed, the existence of this site indicates that I did not find one and decided to create it myself.
+    It has only basic functionality and nothing superfluous.
+    {% endblocktrans %}
+    <br><br>
+    <h3>{% trans "Registration" %}</h3>
+    {% blocktrans %}
 	The main idea is that users are grouped into families and keep financial records that are accessible to members of a specific family.
     The first family member registers independently, after which they can create accounts for other members of their family.
     Please fill in your email address carefully — a link will be sent to it to restore access if you forget your password.
-</br></br>
-    <h3>So how do you record income or expenses?</h3>
-First, create currencies.
-Then create accounts and specify which currency a particular account uses.
-Accounts with different currencies can have the same names, for example, there can be accounts called “My cash (USD)” and “My cash (EUR)”.
-Create an income or expense category.
-Each category can be used only for income (Salary), only for expenses (Food), or for both income and expenses (Transfer between accounts).
-Check the appropriate boxes “use for income” and “use for expenses” when creating a category.
-</br></br>
-Once you have an Account (and Currency) and Category, you can create a new financial transaction - new income or new expense.
-When transferring money from one account to another, you need to create 2 transactions with the same amounts.
-When transferring money from one account to another, you need to create two transactions with the same amounts.
-For example, if you withdraw cash from an ATM, the first transaction will be an expense on the “Card” account and the second will be income on the “Cash” account.
-All income is displayed with a positive amount, all expenses with a negative amount.
-You don't need to think about the sign — the system will add it itself depending on whether you chose to create an expense or income.
-</br></br>
-<h3>Uploading and downloading data.</h3>
-You will notice that on the relevant pages you have the option to upload or download data in csv format.
-Although this option exists, you do not need to upload currencies, accounts, and categories before uploading transactions, as currencies, accounts,
-and categories that are missing when uploading transactions will be created automatically.
-The only thing you need to do after that is to enter the correct balance amounts in the accounts.
-You can also go to the categories and uncheck “use for income” or “use for expenses” so that this category is not offered when entering income/loss
-if it is not for that purpose.
-</br></br>
-<h3>Attention!</h3>
-<b>This is a non-commercial product. You are free to use it for your own needs, but as the developer,
+    {% endblocktrans %}
+    <br><br>
+    <h3>{% trans "So how do you record income or expenses?" %}</h3>
+    {% blocktrans %}
+    First, create currencies.
+    Then create accounts and specify which currency a particular account uses.
+    Accounts with different currencies can have the same names, for example, there can be accounts called “My cash (USD)” and “My cash (EUR)”.
+    Create an income or expense category.
+    Each category can be used only for income (Salary), only for expenses (Food), or for both income and expenses (Transfer between accounts).
+    Check the appropriate boxes “Use it for income” and “Use it for expense” when creating a category.
+    {% endblocktrans %}
+    <br><br>
+    {% blocktrans %}
+    Once you have an Account (and Currency) and Category, you can create a new financial transaction - new income or new expense.
+    When transferring money from one account to another, you need to create 2 transactions with the same amounts.
+    When transferring money from one account to another, you need to create two transactions with the same amounts.
+    For example, if you withdraw cash from an ATM, the first transaction will be an expense on the “Card” account and the second will be income on the “Cash” account.
+    All income is displayed with a positive amount, all expenses with a negative amount.
+    You don't need to think about the sign — the system will add it itself depending on whether you chose to create an expense or income.
+    {% endblocktrans %}
+    <br><br>
+    <h3>{% trans "Uploading and downloading data." %}</h3>
+    {% blocktrans %}
+    You will notice that on the relevant pages you have the option to upload or download data in csv format.
+    Although this option exists, you do not need to upload currencies, accounts, and categories before uploading transactions, as currencies, accounts,
+    and categories that are missing when uploading transactions will be created automatically.
+    The only thing you need to do after that is to enter the correct balance amounts in the accounts.
+    You can also go to the categories and uncheck “use for income” or “use for expenses” so that this category is not offered when entering income/loss
+    if it is not for that purpose.
+    {% endblocktrans %}
+    <br><br>
+    <h3>{% trans "Attention!" %}</h3>
+    <b>{% blocktrans %}This is a non-commercial product. You are free to use it for your own needs, but as the developer,
     I am not responsible for data storage, the stability of this product, or its availability at different times of the day.
     If you decide to use this product, I recommend that you remember to regularly back up your data using the corresponding csv file export function.
-</b>
-</br></br>
-You can send your suggestions to my email address dmitry.yakovenko@gmail.com.
+    {% endblocktrans %}
+    </b>
+    <br><br>
 
-The source code is available here https://github.com/DmytroY/family-accounting.
+    <a href="https://github.com/DmytroY/family-accounting">{% trans "Source code on GitHub." %}</a><br>
+    {% trans "You can send your suggestions to my email address:" %} <a href="mailto:dmitry.yakovenko@gmail.com">dmitry.yakovenko@gmail.com</a><br>
+    <br>
+    {% trans "Best regards, Dmytro!" %}
 
-Best regards, Dmytro!
-</p>
+</div>
 {% endblock %}

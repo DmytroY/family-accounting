@@ -1,18 +1,21 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Category edit {{account.id}}
+    {% trans "Edit category of income/expenses" %}
 {% endblock %}
 
 {% block content %}
 <div class="mycard">
-  <h1>Edit category of income/expenses</h1>
-  <form method="post">
+  <h1>{% trans "Edit category of income/expenses" %}</h1>
+  <form class="form-with-validation" action="{% url 'transactions:category_edit' category.id %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="form-submit" name="action" value="save">Save</button>
-    <button type="form-submit" name="action" value="delete">Delete</button>
-    <button type="form-submit" name="action" value="cancel">Cancel</button>
+    <div>{% trans "Category name" %} {{ form.name }}</div>
+    <div>{% trans "Use it for income?" %}: {{ form.income_flag }}</div>
+    <div>{% trans "Use it for expense?" %}:{{ form.expense_flag }}</div>
+    <button type="form-submit" name="action" value="save">{% trans "Save" %}</button>
+    <button type="form-submit" name="action" value="delete">{% trans "Delete" %}</button>
+    <button type="form-submit" name="action" value="cancel">{% trans "Cancel" %}</button>
   </form>
 </div>
 {% endblock %}
