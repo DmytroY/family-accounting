@@ -9,15 +9,16 @@
     <h1> {% trans "Create income" %} </h1>
     <a href="/transactions/transaction_upload">{% trans "or upload by csv" %}</a>
     <section>
-        <form class="form-with-validation" action="{% url 'transactions:transaction_create_income' %}" method="post" >
+        <form class="form-with-validation" action="{% url 'transactions:transaction_create' transaction_type='income' %}" method="post" >
             {% csrf_token %}
             <div>{% trans "Date" %} {{ form.date }} </div>
+            <div>{% trans "Currency" %} {{ form.currency }}</div>
             <div>{% trans "Account" %} {{ form.account }} <a href="{% url 'transactions:account_create' %}">{% trans "add account" %}</a></div>
             <div>{% trans "Amount" %}   {{ form.amount }} <span id="currency-info"></span></div>
             {{ form.amount.errors }}
 
             <div>{% trans "Category" %} {{ form.category }} <a href="{% url 'transactions:category_create' %}">{% trans "add category" %}</a></div>
-            <div>{% trans "Remark" %}  {{ form.remark }}</div>
+            <div>{% trans "Remark" %}   {{ form.remark }}</div>
             <button class="form-submit">{% trans "Save" %}</button>
         </form>        
     </section>

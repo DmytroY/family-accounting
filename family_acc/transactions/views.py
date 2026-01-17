@@ -9,7 +9,7 @@ from django.db.models.deletion import ProtectedError
 from django.contrib import messages
 import csv, io
 from django.utils.dateparse import parse_date
-from datetime import date
+from django.utils.translation import gettext as _
 
 
 @login_required(login_url="/accounts/login/")
@@ -17,6 +17,19 @@ def get_account_currency(request, account_id):
     """ helper function used in get_currency.js"""
     account = Account.objects.get(id=account_id)
     return JsonResponse({"currency": account.currency.code})
+
+@login_required
+def get_accounts_by_currency(request):
+    currency_id = request.GET.get("currency")
+    family = request.user.profile.family
+    data =[]
+
+    if currency_id:
+        qs = Account.objects.filter(family=family, currency_id=currency_id).values("id", "name")
+        data = list(qs)
+
+    return JsonResponse(data, safe=False)
+
 
 @login_required(login_url="/accounts/login/")
 def transaction_list(request):
@@ -107,45 +120,38 @@ def transaction_edit(request, id):
     return render(request, "transaction_edit.html", {'form': form, 'transaction': transaction})
 
 @login_required(login_url="/accounts/login/")
-def transaction_create_expense(request):
+def transaction_create(request, transaction_type):
+    CONFIG = {
+        "expense": {
+            "form": forms.CreateExpense,
+            "sign": -1,
+            "template": "transaction_create_expense.html"
+        },
+        "income": {
+            "form": forms.CreateIncome,
+            "sign": 1,
+            "template": "transaction_create_income.html"
+        },
+    }
+    
+    cfg = CONFIG[transaction_type]
+
     if(request.method == "POST"):
-        form = forms.CreateExpense(request.POST, user=request.user)
+        form = cfg["form"](request.POST, user=request.user)
         if form.is_valid():
-            expense = form.save(commit=False)
-            expense.created_by = request.user
-            # expenses always shoud be saved as negative amount transaction
-            expense.amount = -abs(expense.amount)
-            expense.currency = Currency.objects.get(id=expense.account.currency_id)
-            # adjust acount balance accordingly
-            Account.objects.filter(id=expense.account_id).update(balance=F('balance') + expense.amount)
-            #commit changes
-            expense.save()
-            messages.success(request, "expense transaction created")
+            trx = form.save(commit=False)
+            trx.created_by = request.user
+            trx.amount = cfg["sign"] * abs(trx.amount)  # expenses always saved as negative, income as positive
+            trx.currency = form.cleaned_data["currency"]
+            Account.objects.filter(id=trx.account_id).update(balance=F('balance') + trx.amount)  # adjust acount balance accordingly
+            trx.save()
+            messages.success(request, _("transaction created"))
             return redirect('transactions:transaction_list')
     else:
-        form = forms.CreateExpense(initial={'date': timezone.now().date()}, user=request.user)
-    return render(request, 'transaction_create_expense.html', {'form': form})
+        form = cfg["form"](initial={'date': timezone.now().date()}, user=request.user)
 
-@login_required(login_url="/accounts/login/")
-def transaction_create_income(request):
-    if(request.method == "POST"):
-        form = forms.CreateIncome(request.POST, user=request.user)
-        if form.is_valid():
-            # save
-            income = form.save(commit=False)
-            income.created_by = request.user
-            # income always shoud be saved as positive amount transaction
-            income.amount = abs(income.amount)
-            income.currency = Currency.objects.get(id=income.account.currency_id)
-            # adjust acount balance accordingly
-            Account.objects.filter(id=income.account_id).update(balance=F('balance') + income.amount)
-            income.save()
-            messages.success(request, "Income transaction created")
-            return redirect('transactions:transaction_list')
-    else:
-        form = forms.CreateIncome(initial={'date': timezone.now().date()}, user=request.user)
-    return render(request, 'transaction_create_income.html', {'form': form})
-
+    return render(request, cfg["template"], {'form': form})
+        
 @login_required(login_url="/accounts/login/")
 def account_create(request):
     if request.method == "POST":
@@ -361,7 +367,15 @@ def transaction_upload(request):
         if form.is_valid():
             family = request.user.profile.family
             created_by = request.user
+            
+            #debuging
+            uploaded = request.FILES["file"]
+            size = uploaded.size  # bytes
+            print(f"--DY-- file for upload size:{size}")
+            # /debuging
+
             file = io.TextIOWrapper(request.FILES["file"].file, encoding="utf-8")
+            
             reader = csv.DictReader(file)
 
             for row in reader:

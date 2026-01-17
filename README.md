@@ -127,5 +127,7 @@ python3 family_acc/manage.py compilemessages -l uk -i venv
 '''
 
 ### To-Do
+
+* filter transactions by account
 * android app
 * reports

@@ -3,7 +3,8 @@
 {% load static %}
 <html lang="en">
     <link rel="stylesheet" href="{% static 'global.css' %}" />
-    <script src="{% static 'get_currency.js' %}"></script>
+    <script src="{% static 'listeners.js' %}"></script>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'favicon.gif' %}" type="image/gif">
@@ -58,8 +59,8 @@
             <summary>{% trans "TRANSACTIONS" %}</summary>
             <ul>
                 <li><a href="/transactions/transaction_list">{% trans "List" %}</a></li>
-                <li><a href="/transactions/transaction_create_expense">{% trans "New expense" %}</a></li>
-                <li><a href="/transactions/transaction_create_income">{% trans "New income" %}</a></li>
+                <li><a href="/transactions/transaction_create/expense">{% trans "New expense" %}</a></li>
+                <li><a href="/transactions/transaction_create/income">{% trans "New income" %}</a></li>
             </ul>
         </details>
         <details class="menu-section">
