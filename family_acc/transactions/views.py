@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Transaction, Account, Currency, Category
 from django.contrib.auth.decorators import login_required
 from . import forms
@@ -73,7 +73,12 @@ def transaction_list(request):
 
 @login_required(login_url="/accounts/login/")
 def transaction_edit(request, id):
-    transaction = Transaction.objects.get(id=id)
+    transaction = get_object_or_404(Transaction, id=id)
+    old_amount = transaction.amount
+    old_account_id = transaction.account_id
+
+    FormCls = forms.CreateIncome if transaction.amount >= 0 else forms.CreateExpense
+    sign = 1 if transaction.amount >= 0 else -1
 
     # POST
     if request.method == "POST":
@@ -81,42 +86,29 @@ def transaction_edit(request, id):
 
         if action == "delete":
             # adjust account balance
-            Account.objects.filter(id=transaction.account_id).update(balance=F('balance') - transaction.amount)
-            #delete transaction
+            Account.objects.filter(id=old_account_id).update(balance=F('balance') - old_amount)
             transaction.delete()
-            messages.success(request, f"Transaction deleted.")
+            messages.success(request, _("Transaction deleted."))
             return redirect('transactions:transaction_list')
         
         if action == "cancel":
             return redirect('transactions:transaction_list')
         
         if action == "save":
-            amt_old = transaction.amount
-            if transaction.amount >= 0:         
-                # treat it as income
-                form = forms.CreateIncome(request.POST, instance=transaction, user=request.user)
-                sign = 1
-            else:
-                #treat as expense
-                form = forms.CreateExpense(request.POST, instance=transaction, user=request.user)
-                sign = -1
+            form = FormCls(request.POST, instance=transaction, user=request.user)
             
             if form.is_valid():
                 tr = form.save(commit=False)
                 tr.amount = sign * abs(tr.amount)
                 tr.created_by = request.user
                 # adjust account balance
-                Account.objects.filter(id=transaction.account_id).update(balance=F('balance') + (tr.amount - amt_old))
-           
+                Account.objects.filter(id=old_account_id).update(balance=F('balance') + tr.amount)
                 tr.save()
-                messages.success(request, f"Transaction edited.")
+                messages.success(request, _("Transaction edited."))
                 return redirect('transactions:transaction_list')
             
     # GET
-    if transaction.amount >= 0:
-        form = forms.CreateIncome(instance=transaction, user=request.user)
-    else:
-        form = forms.CreateExpense(instance=transaction, user=request.user)
+    form = FormCls(instance=transaction, user=request.user)
     return render(request, "transaction_edit.html", {'form': form, 'transaction': transaction})
 
 @login_required(login_url="/accounts/login/")

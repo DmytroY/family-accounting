@@ -12,7 +12,7 @@ class TestHomePage(SimpleTestCase):
 
     def test_homapage_message(self):
         response = self.client.get('/')
-        self.assertContains(response, 'This is home p', status_code=200)
+        self.assertContains(response, 'Hello', status_code=200)
 
 class TestTransactionsPage(TestCase):
     def setUp(self):

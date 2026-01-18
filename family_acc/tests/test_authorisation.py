@@ -14,11 +14,11 @@ class LoginRequiredForAnyNotHomePage(TestCase):
         response = self.client.post(reverse('transactions:transaction_list'))
         self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_list', status_code=302, target_status_code=200)
 
-        response = self.client.post(reverse('transactions:transaction_create_expense'))
-        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create_expense', status_code=302, target_status_code=200)
+        response = self.client.post(reverse('transactions:transaction_create', kwargs={'transaction_type': 'expense'}))
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create/expense', status_code=302, target_status_code=200)
 
-        response = self.client.post(reverse('transactions:transaction_create_income'))
-        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create_income', status_code=302, target_status_code=200)
+        response = self.client.post(reverse('transactions:transaction_create', kwargs={'transaction_type': 'income'}))
+        self.assertRedirects(response, '/accounts/login/?next=/transactions/transaction_create/income', status_code=302, target_status_code=200)
 
         response = self.client.post(reverse('transactions:account_list'))
         self.assertRedirects(response, '/accounts/login/?next=/transactions/account_list', status_code=302, target_status_code=200)
@@ -51,43 +51,43 @@ class AnyPageAccessibleForAuthorisedUser(TestCase):
     def test_access_after_login(self):
         response = self.client.post(reverse('members:list'))
         self.assertTemplateUsed(response, 'all_members.html')
-        self.assertContains(response, '<h1>Members of my family</h1>', status_code=200)
+        self.assertContains(response, 'Family members', status_code=200)
 
         response = self.client.post(reverse('transactions:transaction_list'))
         self.assertTemplateUsed(response, 'transaction_list.html')
-        self.assertContains(response, f'<h1>Transactions</h1>', status_code=200)
+        self.assertContains(response, 'Transactions', status_code=200)
 
-        response = self.client.post(reverse('transactions:transaction_create_expense'))
+        response = self.client.post(reverse('transactions:transaction_create', kwargs={'transaction_type': 'expense'}))
         self.assertTemplateUsed(response, 'transaction_create_expense.html')
-        self.assertContains(response, f'Add new expense', status_code=200)
+        self.assertContains(response, 'Create expense', status_code=200)
 
-        response = self.client.post(reverse('transactions:transaction_create_income'))
+        response = self.client.post(reverse('transactions:transaction_create', kwargs={'transaction_type': 'income'}))
         self.assertTemplateUsed(response, 'transaction_create_income.html')
-        self.assertContains(response, f'Add new income', status_code=200)
+        self.assertContains(response, 'Create income', status_code=200)
 
         response = self.client.post(reverse('transactions:account_list'))
         self.assertTemplateUsed(response, 'account_list.html')
-        self.assertContains(response, f'Accounts of family', status_code=200)
+        self.assertContains(response, 'Accounts', status_code=200)
 
         response = self.client.post(reverse('transactions:account_create'))
         self.assertTemplateUsed(response, 'account_create.html')
-        self.assertContains(response, f'Create new account', status_code=200)
+        self.assertContains(response, 'Create new account', status_code=200)
 
         response = self.client.post(reverse('transactions:category_list'))
         self.assertTemplateUsed(response, 'category_list.html')
-        self.assertContains(response, f'Categories of income/expenses used by', status_code=200)
+        self.assertContains(response, 'Categories of income/expenses', status_code=200)
 
         response = self.client.post(reverse('transactions:category_create'))
         self.assertTemplateUsed(response, 'category_create.html')
-        self.assertContains(response, f'Create new category record', status_code=200)
+        self.assertContains(response, 'Create category', status_code=200)
 
         response = self.client.post(reverse('transactions:currency_list'))
         self.assertTemplateUsed(response, 'currency_list.html')
-        self.assertContains(response, f'Currency used by', status_code=200)
+        self.assertContains(response, 'Currencies', status_code=200)
 
         response = self.client.post(reverse('transactions:currency_create'))
         self.assertTemplateUsed(response, 'currency_create.html')
-        self.assertContains(response, f'Create new currency record', status_code=200)
+        self.assertContains(response, 'Create currency', status_code=200)
 
 class UserHasAccessOnlyOwnFamilyRecords(TestCase):
     def setUp(self):

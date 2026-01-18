@@ -12,6 +12,7 @@
     {% csrf_token %}
     
     <div>{% trans "Date" %} {{ form.date }} </div>
+    <div>{% trans "Currency" %} {{ form.currency }} </div>
     <div>{% trans "Account" %} {{ form.account }} </div>
     <div>{% trans "Amount" %}   {{ form.amount }} <span id="currency-info"></span></div>
     <div>{% trans "Category" %} {{ form.category }} </div>

@@ -29,5 +29,41 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ["id", "date", "account", "amount", "currency", "category", "remark", "created_by"]
+        read_only_fields = fields
 
+class TransactionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ['date', 'account', 'amount', 'category', 'remark']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        account = validated_data['account']
+        if( self.context['transaction_type'] == 'income'):
+            amount = abs(validated_data.pop('amount'))
+        else:
+            amount = -abs(validated_data.pop('amount'))
+            
+        return Transaction.objects.create(
+            **validated_data,
+            created_by=user,
+            family=user.profile.family,
+            currency=account.currency,
+            amount=amount,
+        )
+        
+    def validate_amount(self, value):
+        if value == 0:
+            raise serializers.ValidationError("Account cannot be 0")
+        return value
     
+    # def validate(self, attrs):
+    #     user = self.context['request'].user
+    #     family = user.profile.family
+
+    #     if attrs['account'].family != family:
+    #         raise serializers.ValidationError({"account": "Invalid account"})
+    #     if attrs['category'].family != family:
+    #         raise serializers.ValidationError({"category": "Invalid category"})
+        
+        return attrs

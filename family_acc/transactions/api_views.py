@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from . serializers import CurrencySerializer, AccountSerializer, CategorySerializer, TransactionSerializer
+from . serializers import CurrencySerializer, AccountSerializer, CategorySerializer, TransactionSerializer, TransactionCreateSerializer
 from django.db.models import F
 
    
@@ -37,45 +37,19 @@ class AccountCreate(APIView):
         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class IncomeCreate(APIView):
+class TransactionCreate(APIView):
     permission_classes = [IsAuthenticated]
+    trx_type = None
     
     def post(self, request):
-        # fields: ["date", "account", "amount", "category", "remark"]
-        data = request.data.copy()
-        # get id for foreign key fields
-        # data["currency"] = Currency.objects.get(code=data["currency"], family=request.user.profile.family).id
-        # data["account"] = Account.objects.get(name=data["account"], family=request.user.profile.family).id
-        data["category"] = Category.objects.get(name=data["category"], family=request.user.profile.family).id
-        form = CreateIncome(data, user=request.user)
-        if form.is_valid():
-            new_inc = form.save(commit=False)
-            # next should be done by signals
-            # new_inc.family = request.user.profile.family
-            new_inc.created_by = request.user
-            new_inc.amount = abs(new_inc.amount)
-            new_inc.currency = Currency.objects.get(id=new_inc.account.currency_id)
-            Account.objects.filter(id=new_inc.account_id).update(balance=F('balance') + new_inc.amount)
-            new_inc.save()
-            return Response({"success": "income created"}, status=status.HTTP_201_CREATED)
-        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-class ExpenseCreate(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        data = request.data.copy()
-        # data["category"] = Category.objects.get(name=data["category"], family=request.user.profile.family).id
-        form = CreateExpense(data, user=request.user)
-        if form.is_valid():
-            new_exp = form.save(commit=False)
-            new_exp.created_by = request.user
-            new_exp.amount = -abs(new_exp.amount)
-            new_exp.currency = Currency.objects.get(id=new_exp.account.currency_id)
-            Account.objects.filter(id=new_exp.account_id).update(balance=F('balance') + new_exp.amount)
-            new_exp.save()
-            return Response({"success": "expense created"}, status=status.HTTP_201_CREATED)
-        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = TransactionCreateSerializer(
+            data = request.data,
+            context={'request': request, 'transaction_type': self.trx_type}
+        )
+        serializer.is_valid(raise_exception=True)
+        trx = serializer.save()
+        Account.objects.filter(id=trx.account_id).update(balance=F('balance') + trx.amount)
+        return Response({"success": "transaction created"}, status=status.HTTP_201_CREATED)
 
 
 class CategoryCreate(APIView):
