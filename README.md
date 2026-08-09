@@ -30,15 +30,21 @@ Income transactions have positive amounts in **Transaction** table, expences hav
 
 ## REMARKS
 ### Mooving from sqlite to PostgreSQL
+
+DATABASES block in settings.py secure automatic fallback to local SQLite in case of DATABASE_URL env var not configured.
+
 1. Use Django ORM exports to get data from SQLite:
 ```
 python3 family_acc/manage.py dumpdata --natural-foreign --natural-primary --exclude auth.permission --exclude contenttypes > data.json
 ```
-1. Create identical schema on PostgreSQL via Django migrations.
+1. Set environment variable DATABASE_URL as PostgreSQL connection string. 
+1. Create identical schema on PostgreSQL via Django migrations ```python family_acc/manage.py migrate```
 1. Import data:
-```
-python3 family_acc/manage.py loaddata data.json
-```
+```python3 family_acc/manage.py loaddata data.json```
+
+
+If you prefer do not import data admin user should be created manualy:
+```python family_acc/manage.py createsuperuser```
 
 ### Secrets
 During development secrets was stored in **secrets.py** in same directory with settings.py, in format:

@@ -19,6 +19,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from . import secrets
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -112,17 +113,30 @@ WSGI_APPLICATION = 'family_acc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+
+#         # 'ENGINE': 'django.db.backends.postgresql',
+#         # 'NAME': 'postgres',
+#         # 'USER': secrets.USER,
+#         # 'PASSWORD': secrets.PASSWORD,
+#         # 'HOST': 'db-instance4django.ck1yimasulhp.us-east-1.rds.amazonaws.com',
+#         # 'PORT': '5432',
+#     }
+# }
+
+#  automatic fallback to local SQLite in case of DATABASE_URL env var not configured
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'postgres',
-        # 'USER': secrets.USER,
-        # 'PASSWORD': secrets.PASSWORD,
-        # 'HOST': 'db-instance4django.ck1yimasulhp.us-east-1.rds.amazonaws.com',
-        # 'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        # 1. Fallback to local SQLite if DATABASE_URL is not set
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
+        # 2. Re-use open connections for up to 10 minutes to save speed
+        conn_max_age=600,
+        # 3. Force SSL encryption when connecting to Neon over the internet
+        ssl_require=True if os.environ.get("DATABASE_URL") else False
+    )
 }
 
 
