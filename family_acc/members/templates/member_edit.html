@@ -14,7 +14,7 @@
         <div>{{form.last_name.label_tag}} {{form.last_name}}</div>
         <div>{{form.email.label_tag}} {{form.email}}</div>
         <button class="form-submit" name="action" value="save">{% trans "Save" %}</button>
-        <button class="form-submit" name="action" value="delete"></button>
+        <button class="form-submit" name="action" value="delete">{% trans "Delete" %}</button>
     </form>
     {% if mymember.username == user.get_username %}
         <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>

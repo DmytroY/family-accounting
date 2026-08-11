@@ -29,15 +29,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets.SECRET_K
-# SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+# SECRET_KEY = secrets.SECRET_K
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # for production, force sending session cookie and CSRF token cookie only over HTTPS. Prevents session hijacking on HTTP.
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",
@@ -117,13 +117,6 @@ WSGI_APPLICATION = 'family_acc.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
-
-#         # 'ENGINE': 'django.db.backends.postgresql',
-#         # 'NAME': 'postgres',
-#         # 'USER': secrets.USER,
-#         # 'PASSWORD': secrets.PASSWORD,
-#         # 'HOST': 'db-instance4django.ck1yimasulhp.us-east-1.rds.amazonaws.com',
-#         # 'PORT': '5432',
 #     }
 # }
 
