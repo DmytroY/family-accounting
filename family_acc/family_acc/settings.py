@@ -128,7 +128,7 @@ DATABASES = {
         # 2. Re-use open connections for up to 10 minutes to save speed
         conn_max_age=600,
         # 3. Force SSL encryption when connecting to Neon over the internet
-        ssl_require=True if os.environ.get("DATABASE_URL") else False
+        ssl_require=True if os.environ.get("DATABASE_URL","").startswith('postgresql') else False
     )
 }
 

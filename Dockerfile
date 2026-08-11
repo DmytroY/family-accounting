@@ -2,8 +2,8 @@
 FROM python:3.11-slim
 
 # do not precreate .pyc files. Do not buffer output - instant logging
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # working directory inside the container
 WORKDIR /app
@@ -30,4 +30,5 @@ EXPOSE 8000
 
 # Start the application using Gunicorn
 # Using the path structure: --pythonpath family_acc family_acc.wsgi
-CMD ["gunicorn", "--pythonpath", "family_acc", "family_acc.wsgi", "--bind", "0.0.0.0:8000"]
+CMD ["python3", "family_acc/manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["gunicorn", "--pythonpath", "family_acc", "family_acc.wsgi", "--bind", "0.0.0.0:8000"]
