@@ -128,6 +128,9 @@ DATABASE_URL=postgresql://neondb_owner:....
 ```
 * build an image `docker build -t family-accounting-app .`
 * run container `docker run --env-file .env -p 8000:8000 family-accounting-ap`
+
+Note. No need in next steps in case we will use existing DB, we used before with thes app
+
 * find container_id with `docker ps`
 * run the migrations `docker exec -it <container_id> python3 family_acc/manage.py migrate`
 * create superuser `docker exec -it <container_id> python3 family_acc/manage.py createsuperuser`
