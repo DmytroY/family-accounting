@@ -28,7 +28,10 @@ RUN DJANGO_SECRET_KEY=dummy_key_for_build python3 family_acc/manage.py collectst
 # Expose the port Gunicorn will run on
 EXPOSE 8000
 
+
 # Start the application using Gunicorn
 # Using the path structure: --pythonpath family_acc family_acc.wsgi
-CMD ["python3", "family_acc/manage.py", "runserver", "0.0.0.0:8000"]
-# CMD ["gunicorn", "--pythonpath", "family_acc", "family_acc.wsgi", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--pythonpath", "family_acc", "family_acc.wsgi", "--bind", "0.0.0.0:8000"]
+
+# start with development Django server
+# CMD ["python3", "family_acc/manage.py", "runserver", "0.0.0.0:8000"]

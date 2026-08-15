@@ -135,6 +135,19 @@ Note. No need in next steps in case we will use existing DB, we used before with
 * run the migrations `docker exec -it <container_id> python3 family_acc/manage.py migrate`
 * create superuser `docker exec -it <container_id> python3 family_acc/manage.py createsuperuser`
 
+### Deployment on Google Run
+- Create secterets in Google Cloud Secret Manager.
+- Enable the Compute Engine API.
+- Grant Compute Engine access to the secrets - add default compute engine as principal with  Secret Manager Secret Accessor role.
+- Greate repo in GC Artifact Registry.
+- Tag properly and push docker image to GC Artifact Registry.
+- In Google Cloud Run create new deployment from container. Do not forget in security management:
+1. sets environment variables 
+ALLOWED_HOSTS as external url of this app run without "https://" prefix and
+CSRF_TRUSTED_ORIGINS as external url of this app run with "https://" prefix.
+2. map DATABASE_URL, DJANGO_SECRET_KEY, DJANGO_EMAIL_HOST_USER and DJANGO_EMAIL_HOST_PASSWORD to values from Google Cloud Secret Manager
+- Deploy
+
 ### How to
 #### Translation: 
 in templates:

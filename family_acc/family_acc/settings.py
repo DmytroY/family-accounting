@@ -44,13 +44,25 @@ CSRF_TRUSTED_ORIGINS = [
     "https://knottier-tori-nontoxically.ngrok-free.dev",
 ]
 # ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "192.168.100.28",
-    "localhost",
-    ".ngrok-free.app",
-    ".ngrok-free.dev",
-]
+# ALLOWED_HOSTS = [
+#     "127.0.0.1",
+#     "192.168.100.28",
+#     "localhost",
+#     ".ngrok-free.app",
+#     ".ngrok-free.dev",
+# ]
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+
+# next 2 constant(SECURE_PROXY_SSL_HEADER and CSRF_TRUSTED_ORIGINS) required for run in Google Cloud
+# Trust the active HTTPS termination from Cloud Run's proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Read CSRF trusted origins from environment variables, fallback to localhost for development
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    "CSRF_TRUSTED_ORIGINS", 
+    "http://localhost:8000,http://127.0.0.1:8000"
+).split(",")
 
 # Application definition
 
