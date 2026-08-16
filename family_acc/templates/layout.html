@@ -3,10 +3,11 @@
 {% load static %}
 <html lang="en">
     <link rel="stylesheet" href="{% static 'global.css' %}" />
+    <link rel="stylesheet" href="{% static 'ai_chat.css' %}">
     <script src="{% static 'listeners.js' %}"></script>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0", shrink-to-fit=no>
     <link rel="icon" href="{% static 'favicon.gif' %}" type="image/gif">
     <title>
         {% block title %}
@@ -113,6 +114,27 @@
         {% trans "Dmytro Yakovenko. 2025." %}
     </div>
 
+    <!-- AI Chat Widget -->
+    <div id="ai-chat-container" class="ai-chat-hidden">
+        <div class="ai-chat-header">
+            <span>{% trans "AI Assistant" %}</span>
+            <button id="close-chat">×</button>
+        </div>
+        <div id="ai-chat-history">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" id="ai-user-input" placeholder="{% trans 'Ask about your transactions...' %}">
+            <button id="send-ai-message">{% trans "Send" %}</button>
+        </div>
+    </div>
+
+    <!-- Floating Toggle Button -->
+    <button id="ai-chat-toggle">
+        {% trans "Chat with AI" %}
+    </button>
+
 </div>
+<script src="{% static 'ai_chat.js' %}"></script>
 </body>
 </html>

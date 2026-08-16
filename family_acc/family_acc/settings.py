@@ -33,17 +33,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # for production, force sending session cookie and CSRF token cookie only over HTTPS. Prevents session hijacking on HTTP.
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+#for development only !!!! - delete it before production !!!
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_DOMAIN = None
+
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://*.ngrok-free.app",
+#     "https://knottier-tori-nontoxically.ngrok-free.dev",
+# ]
+
+# Read CSRF trusted origins from environment variables, fallback to localhost for development
+# CSRF_TRUSTED_ORIGINS = os.environ.get(
+#     "CSRF_TRUSTED_ORIGINS", 
+#     "http://localhost:8000,http://127.0.0.1:8000"
+# ).split(",")
+
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.ngrok-free.app",
-    "https://knottier-tori-nontoxically.ngrok-free.dev",
+    'http://192.168.100.2:8000',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
 ]
-# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+
+ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 # ALLOWED_HOSTS = [
 #     "127.0.0.1",
 #     "192.168.100.28",
@@ -52,17 +71,8 @@ CSRF_TRUSTED_ORIGINS = [
 #     ".ngrok-free.dev",
 # ]
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
-
-# next 2 constant(SECURE_PROXY_SSL_HEADER and CSRF_TRUSTED_ORIGINS) required for run in Google Cloud
 # Trust the active HTTPS termination from Cloud Run's proxy
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Read CSRF trusted origins from environment variables, fallback to localhost for development
-CSRF_TRUSTED_ORIGINS = os.environ.get(
-    "CSRF_TRUSTED_ORIGINS", 
-    "http://localhost:8000,http://127.0.0.1:8000"
-).split(",")
 
 # Application definition
 
