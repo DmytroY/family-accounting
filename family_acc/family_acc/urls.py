@@ -33,4 +33,6 @@ urlpatterns = [
     path('members/', include(('members.urls', 'members'), namespace='members')),
     path('transactions/', include(('transactions.urls', 'transactions'), namespace='transactions')), 
     path("accounts/", include("django.contrib.auth.urls")),
+
+    path('ai/chat/', views.ai_chat_view, name='ai_chat_view'),
 ]

@@ -1,3 +1,4 @@
+import csv, io
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Transaction, Account, Currency, Category
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,6 @@ from django.db.models import F
 from django.http import JsonResponse, HttpResponse
 from django.db.models.deletion import ProtectedError
 from django.contrib import messages
-import csv, io
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 
@@ -29,7 +29,6 @@ def get_accounts_by_currency(request):
         data = list(qs)
 
     return JsonResponse(data, safe=False)
-
 
 @login_required(login_url="/accounts/login/")
 def transaction_list(request):
@@ -402,4 +401,3 @@ def transaction_upload(request):
     else:
         form = forms.UploadCategory()
     return render(request, "transaction_upload.html", {"form": form})
-

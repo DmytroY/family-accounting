@@ -38,5 +38,4 @@ urlpatterns = [
 
     path("ajax/account-by-currency/", views.get_accounts_by_currency, name="ajax_accounts_by_currency"),
     path("ajax/account/<int:account_id>/currency/", views.get_account_currency, name="ajax_account_currency"),
-
 ]
