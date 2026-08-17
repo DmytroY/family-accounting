@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.getElementById('close-chat');
     const sendButton = document.getElementById('send-ai-message');
     const userInput = document.getElementById('ai-user-input');
-    const chatHistory = document.getElementById('ai-chat-history');
+    const displayChatHistory = document.getElementById('ai-chat-history');
+
+    let messageHistory = []; // message history array
 
     // Toggle Chat Visibility
     toggleButton.addEventListener('click', () => {
@@ -23,41 +25,41 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Enter') sendMessage();
     });
 
-    function sendMessage() {
+    async function sendMessage() {
         const message = userInput.value.trim();
         if (!message) return;
 
+        // update chat with user message
         appendMessage('user', message);
         userInput.value = '';
 
-        // Fetch CSRF token from cookies
-        const csrftoken = getCookie('csrftoken');
+        // Add user message to local history
+        messageHistory.push({"role": "user", "content": message});
 
-        // Send to your Django backend (Update this URL to your actual view path)
-        fetch('/ai/chat/', {
+        const response = await fetch('/ai/chat/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
+                'X-CSRFToken': getCookie('csrftoken'),
             },
-            body: JSON.stringify({ message: message })
-        })
-        .then(response => response.json())
-        .then(data => {
-            appendMessage('ai', data.reply);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            appendMessage('ai', 'Sorry, I encountered an error. Please try again.');
+            // 2. Send the entire history to the backend
+            body: JSON.stringify({ history: messageHistory })
         });
+
+        const data = await response.json();
+        
+        // 3. Add AI's reply to history so it knows what it said next time
+        messageHistory.push({"role": "assistant", "content": data.reply});
+        // update chat with AI response
+        appendMessage('ai', data.reply);
     }
 
     function appendMessage(sender, text) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${sender}-message`;
         msgDiv.textContent = text;
-        chatHistory.appendChild(msgDiv);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        displayChatHistory.appendChild(msgDiv);
+        displayChatHistory.scrollTop = displayChatHistory.scrollHeight;
     }
 
     // Standard Django function to get CSRF token from cookie

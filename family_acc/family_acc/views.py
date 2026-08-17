@@ -29,17 +29,30 @@ def ai_chat_view(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            user_message = data.get('message')
+            print("---- Data from fromnend JS ---")
+            print(f"data: {data}")
+            conversation_history = data.get('history', [])
             client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-            system_prompt = get_ai_system_prompt()
+            messages = [{"role": "system", "content": get_ai_system_prompt()}]
+            messages.extend(conversation_history)
+
             chat_completion = client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_message},
-                ],
-                model="openai/gpt-oss-120b"
+                messages=messages,
+                model="openai/gpt-oss-120b",
+                max_completion_tokens = 150,
+                temperature = 0.5
             )
+            print("---- Request to AI API ------")
+            print(f"messages:{messages}\n")
+
+            print("---- Response of AI ---------")
+            usage_dict = chat_completion.usage.model_dump()
+            print(json.dumps(usage_dict, indent=4))
+            print("-----------------------------\n")
+
             return JsonResponse({'reply': chat_completion.choices[0].message.content})
+               
         except Exception as e:
+            print(f"AI Chat Error: {str(e)}") # Log error to server console
             return JsonResponse({'reply': f"Error: {str(e)}"}, status=500)
     return JsonResponse({'reply': "Invalid request"}, status=400)

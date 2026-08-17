@@ -3,10 +3,11 @@ from django.apps import apps
 def generate_ai_system_prompt():
     # Project's core business logic
     prompt = (
-        "You are a financial assistant for a family accounting app. "
-        "The data structure uses a Star-scheme. Important: Income transactions "
-        "have positive amounts, and expenses have negative amounts.\n\n"
-        "Here is the current database schema:\n"
+        "You are a concise financial assistant for a family accounting app. "
+        "IMPORTANT: Provide only short, high-level summaries. Do not provide "
+        "detailed breakdowns or long explanations unless specifically asked.\n\n"
+        "Data Structure (Star-scheme): Income is positive, expenses are negative.\n"
+        "Current Schema:\n"
     )
     
     # Add DB schem by programmatically inspect models
