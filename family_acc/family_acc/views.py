@@ -6,6 +6,16 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from groq import Groq
 
+_CACHED_AI_SYSTEM_PROMPT = None
+
+def get_ai_system_prompt():
+    global _CACHED_AI_SYSTEM_PROMPT
+    if _CACHED_AI_SYSTEM_PROMPT is None:
+        # This will only execute once, on the very first chat request
+        from .utils import generate_ai_system_prompt
+        _CACHED_AI_SYSTEM_PROMPT = generate_ai_system_prompt()
+    return _CACHED_AI_SYSTEM_PROMPT
+
 def home(request):
     return render(request, "home.html")
 
@@ -21,18 +31,13 @@ def ai_chat_view(request):
             data = json.loads(request.body)
             user_message = data.get('message')
             client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-            system_prompt = (
-                "You are a helpful financial assistant for a family accounting app. "
-                "The app uses a Star-scheme database. The 'Transaction' table stores records "
-                "where income is positive and expenses are negative. Dimension tables include "
-                "User, Currency, Account, and Category."
-            )
+            system_prompt = get_ai_system_prompt()
             chat_completion = client.chat.completions.create(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message},
                 ],
-                model="llama-3.3-70b-versatile"
+                model="openai/gpt-oss-120b"
             )
             return JsonResponse({'reply': chat_completion.choices[0].message.content})
         except Exception as e:
