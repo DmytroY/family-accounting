@@ -6,7 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInput = document.getElementById('ai-user-input');
     const displayChatHistory = document.getElementById('ai-chat-history');
 
-    let messageHistory = []; // message history array
+    // Load chat history from localStorage
+    const savedHistory = localStorage.getItem('ai_chat_history');
+    if (savedHistory) {
+        const messages = JSON.parse(savedHistory);
+        // Loop through saved messages and append them to chat UI
+        messages.forEach(msg => {
+            renderMessage(msg.role, msg.content); 
+        });
+    }
+
 
     // Toggle Chat Visibility
     toggleButton.addEventListener('click', () => {
@@ -17,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     closeButton.addEventListener('click', () => {
         chatContainer.classList.add('ai-chat-hidden');
         toggleButton.classList.remove('ai-chat-hidden');
+    });
+
+    let messageHistory = JSON.parse(sessionStorage.getItem('aiChatHistory') || '[]'); // message history, restored from sessionStorage
+    messageHistory.forEach(msg => {
+        appendMessage(msg.role === 'user' ? 'user' : 'ai', msg.content);
     });
 
     // Handle Sending Messages
@@ -33,8 +47,10 @@ document.addEventListener('DOMContentLoaded', function() {
         appendMessage('user', message);
         userInput.value = '';
 
-        // Add user message to local history
+        // Add user message to local history and  to browser cach
         messageHistory.push({"role": "user", "content": message});
+        sessionStorage.setItem('aiChatHistory', JSON.stringify(messageHistory));
+
 
         const response = await fetch('/ai/chat/', {
             method: 'POST',
@@ -50,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 3. Add AI's reply to history so it knows what it said next time
         messageHistory.push({"role": "assistant", "content": data.reply});
+        sessionStorage.setItem('aiChatHistory', JSON.stringify(messageHistory));
+        
         // update chat with AI response
         appendMessage('ai', data.reply);
     }
