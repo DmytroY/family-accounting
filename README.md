@@ -48,6 +48,8 @@ python3 family_acc/manage.py dumpdata --natural-foreign --natural-primary --excl
 If you prefer do not import data admin user should be created manualy:
 ```python family_acc/manage.py createsuperuser```
 
+In real deployment PostgreSQL in [neon.tech](https://neon.com/docs/introduction) was used. 
+
 ### Secrets
 During development secrets was stored in **secrets.py** in same directory with settings.py, in format:
 ```
@@ -167,3 +169,27 @@ edit  .po files, Run the compile command
 ```
 python3 family_acc/manage.py compilemessages -l uk -i venv
 ```
+
+---------------------------------------------------------------------
+# Stage 2 - AI instruments
+
+After simple AI chat was implemented on the site I desided to extend it ability with RAG grounded to document **UI_specification.md** which describe site UI.
+Components description:
+1. groq.com API as core LLM
+1. pgvector extention for vector DB in PostgreSQL on [neon.tech](https://neon.com/docs/introduction)
+1. embedding model **text-embedding-3-small** on Azure OpenAI. The model default size is 1536 dimention but I progrmmaticaly decrease dimentions to 512 to speeds up retrieval performance, cuts RAM usage and vector storage in 3 times.
+For using Azure embedding model do not forget deploy embedding model instance in Azure and add environment variables
+- OPEN_AI_ENDPOINT
+- OPEN_AI_API_KEY
+- OPEN_AI_EMBEDDING_DEPLOYMENT
+to .env file.
+
+I wrote custom command which can be used to generate vector DB from markdown documents:
+``` 
+python family_acc/manage.py ingest_docs documentation/general_info.md --category general
+```
+choose category:
+- **ui** when ingest documentation/UI_specification.md, 
+- **api** when ingest documentation/API_specification.md, 
+- **general**  when ingest documentation/general_info.md.
+those .md files can be updated and then re-ingested.

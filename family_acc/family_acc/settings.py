@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'members',
     'transactions',
+    'assistant',
     'rest_framework',
     'rest_framework.authtoken',
 ]
