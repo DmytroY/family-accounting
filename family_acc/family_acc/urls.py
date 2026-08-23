@@ -34,5 +34,5 @@ urlpatterns = [
     path('transactions/', include(('transactions.urls', 'transactions'), namespace='transactions')), 
     path("accounts/", include("django.contrib.auth.urls")),
 
-    path('ai/chat/', views.ai_chat_view, name='ai_chat_view'),
+    path('ai/', include(('assistant.urls', 'assistant'), namespace='assistant')),
 ]
