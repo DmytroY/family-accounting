@@ -58,18 +58,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCookie('csrftoken'),
             },
-            // 2. Send the entire history to the backend
+            // Send the entire history to the backend
             body: JSON.stringify({ history: messageHistory })
         });
 
         const data = await response.json();
+
+        // Check if server returned a CLEAR_HISTORY command action
+        if (data.action === 'CLEAR_HISTORY') {
+            clearChatUIAndStorage();
+            appendMessage('ai', data.reply || 'Chat history cleared.');
+            return;
+        }
         
-        // 3. Add AI's reply to history so it knows what it said next time
+        // Add AI's reply to history so it knows what it said next time
         messageHistory.push({"role": "assistant", "content": data.reply});
         sessionStorage.setItem('aiChatHistory', JSON.stringify(messageHistory));
         
         // update chat with AI response
         appendMessage('ai', data.reply);
+    }
+
+    function clearChatUIAndStorage() {
+        messageHistory = [];
+        sessionStorage.removeItem('aiChatHistory');
+        localStorage.removeItem('ai_chat_history');
+        displayChatHistory.innerHTML = '';
     }
 
     function appendMessage(sender, text) {
