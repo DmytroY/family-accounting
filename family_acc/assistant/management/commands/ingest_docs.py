@@ -6,6 +6,45 @@ from openai import OpenAI
 from assistant.models import UIDocumentationChunk
 
 
+def clean_and_format_chunk(raw_chunk: str) -> tuple[str, str]:
+    """
+    Cleans raw Markdown chunk by extracting titles, stripping heavy header syntax,
+    removing horizontal dividers, and prepending lightweight contextual metadata.
+    Returns a tuple of (extracted_title, cleaned_text).
+    """
+    text = raw_chunk.strip()
+    if not text:
+        return "", ""
+
+    lines = text.split("\n")
+    
+    # Extract header title if present
+    extracted_title = ""
+    if lines[0].startswith("#"):
+        extracted_title = lines[0].lstrip("#").strip()
+        # Remove the header line from the body
+        lines = lines[1:]
+    
+    cleaned_body = "\n".join(lines)
+
+    # 1. Remove Markdown horizontal lines (---, ***, ___)
+    cleaned_body = re.sub(r"^\s*[-*_]{3,}\s*$", "", cleaned_body, flags=re.MULTILINE)
+    
+    # 2. Downgrade/strip internal header markers inside the body to plain bold text
+    # Turns "### Step 1: Open page" into "**Step 1: Open page**"
+    cleaned_body = re.sub(r"^\s*#{1,6}\s*(.+)$", r"**\1**", cleaned_body, flags=re.MULTILINE)
+
+    # 3. Normalize multiple trailing blank lines
+    cleaned_body = re.sub(r"\n{3,}", "\n\n", cleaned_body).strip()
+
+    # 4. Prepend lightweight context for the embedding & LLM (instead of raw # headers)
+    if extracted_title:
+        final_text = f"[Context: {extracted_title}]\n{cleaned_body}".strip()
+    else:
+        final_text = cleaned_body
+
+    return extracted_title, final_text
+
 class Command(BaseCommand):
     help = "Ingests a specific Markdown document into pgvector."
 
@@ -51,15 +90,14 @@ class Command(BaseCommand):
 
         created_count = 0
         for raw_chunk in raw_chunks:
-            text = raw_chunk.strip()
-            if not text:
+            title, cleaned_text = clean_and_format_chunk(raw_chunk)
+            
+            if not cleaned_text:
                 continue
 
-            lines = text.split("\n")
-            title = lines[0].lstrip("#").strip() if lines[0].startswith("#") else ""
-
+            # Embed the preprocessed context string
             response = client.embeddings.create(
-                input=text, model=deployment_name, dimensions=512
+                input=cleaned_text, model=deployment_name, dimensions=512
             )
             embedding_vector = response.data[0].embedding
 
@@ -67,7 +105,7 @@ class Command(BaseCommand):
                 source_file=file_name,
                 category=category,
                 title=title,
-                content=text,
+                content=cleaned_text,
                 embedding=embedding_vector,
             )
             created_count += 1

@@ -86,10 +86,35 @@ document.addEventListener('DOMContentLoaded', function() {
         displayChatHistory.innerHTML = '';
     }
 
-    function appendMessage(sender, text) {
+    function parseMarkdown(text) {
+        if (!text) return '';
+        
+        return text
+            // Escape existing HTML tags to prevent XSS injection attacks
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            
+            // Format bold text: **text** -> <strong>text</strong>
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            
+            // Format italic text: *text* -> <em>text</em>
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            
+            // Format inline code snippets: `code` -> <code>code</code>
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            
+            // Format line breaks: \n -> <br>
+            .replace(/\n/g, '<br>');
+    }
+
+function appendMessage(sender, text) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${sender}-message`;
-        msgDiv.textContent = text;
+        
+        // Parse markdown text and set HTML content safely
+        msgDiv.innerHTML = parseMarkdown(text);
+        
         displayChatHistory.appendChild(msgDiv);
         displayChatHistory.scrollTop = displayChatHistory.scrollHeight;
     }

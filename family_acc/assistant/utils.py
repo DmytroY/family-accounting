@@ -4,6 +4,7 @@ from openai import OpenAI
 from pgvector.django import CosineDistance
 from .models import UIDocumentationChunk
 from groq import Groq
+from django.db import connection
 
 def generate_ai_system_prompt():
     # Project's core business logic
@@ -15,12 +16,14 @@ def generate_ai_system_prompt():
         "Current Schema:\n"
     )
     
-    # Add DB schem by programmatically inspect models
+    # Programmatically inspect models to get actual DB table and column names
     app_config = apps.get_app_config('transactions')
-    for model_name, model in app_config.models.items():
-        prompt += f"- Table: {model_name.capitalize()}\n"
+    for model in app_config.get_models():
+        # Retrieve actual PostgreSQL table name (e.g., transactions_transaction)
+        prompt += f"- Table: {model._meta.db_table}\n"
         for field in model._meta.fields:
-            prompt += f"  * Field: {field.name} ({field.get_internal_type()})\n"
+            # Retrieve actual column name in DB
+            prompt += f"  * Column: {field.column} ({field.get_internal_type()})\n"
             
     return prompt
 
@@ -92,3 +95,14 @@ def retrieve_documentation_context(user_query: str, top_k: int = 3) -> str:
         context_blocks.append(f"{header}\n{chunk.content}")
         
     return "\n\n".join(context_blocks)
+
+def execute_read_only_sql(sql_query):
+    # Ensure query is strictly a SELECT statement
+    clean_sql = sql_query.strip().rstrip(';')
+    if not clean_sql.upper().startswith("SELECT"):
+        raise ValueError("Only SELECT queries are allowed.")
+    
+    with connection.cursor() as cursor:
+        cursor.execute(clean_sql)
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
