@@ -33,43 +33,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # for production, force sending session cookie and CSRF token cookie only over HTTPS. Prevents session hijacking on HTTP.
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 #for development only !!!! - delete it before production !!!
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_DOMAIN = None
-
-# CSRF_TRUSTED_ORIGINS = [
-#     "https://*.ngrok-free.app",
-#     "https://knottier-tori-nontoxically.ngrok-free.dev",
-# ]
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_DOMAIN = None
 
 # Read CSRF trusted origins from environment variables, fallback to localhost for development
 # CSRF_TRUSTED_ORIGINS = os.environ.get(
-#     "CSRF_TRUSTED_ORIGINS", 
-#     "http://localhost:8000,http://127.0.0.1:8000"
-# ).split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost:8000,http://127.0.0.1:8000").split(",")
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://192.168.100.2:8000',
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-]
-
-ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
-# ALLOWED_HOSTS = [
-#     "127.0.0.1",
-#     "192.168.100.28",
-#     "localhost",
-#     ".ngrok-free.app",
-#     ".ngrok-free.dev",
-# ]
+# ALLOWED_HOSTS = ['*'] #In production, this should be replaced with a proper domain name: ALLOWED_HOSTS = ['yourdomain.com']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # Trust the active HTTPS termination from Cloud Run's proxy
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -134,15 +114,6 @@ WSGI_APPLICATION = 'family_acc.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 #  automatic fallback to local SQLite in case of DATABASE_URL env var not configured
 DATABASES = {
     'default': dj_database_url.config(
@@ -155,10 +126,8 @@ DATABASES = {
     )
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -174,14 +143,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
 LANGUAGES = [
     ('en', 'English'),
@@ -196,7 +162,6 @@ LOCALE_PATHS = [
 ]
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

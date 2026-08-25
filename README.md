@@ -128,7 +128,9 @@ family-accounting/
 │   ├── UI_specification.md       # Web interface documentation
 │   └── general_info.md           # User guide and AI assistant docs
 ├── family_acc/                    # Django project root
+│   ├── assistant/                # AI assistant
 │   ├── family_acc/               # Main Django app & settings
+│   ├── locale/                   # Czech and Ukrainian translations
 │   ├── members/                  # User management & authentication
 │   ├── transactions/             # Financial transactions & accounting
 │   ├── templates/                # HTML templates
@@ -245,6 +247,8 @@ Visit `http://localhost:8000` in your browser.
    - `OPEN_AI_API_KEY`
    - `OPEN_AI_ENDPOINT`
    - `OPEN_AI_EMBEDDING_DEPLOYMENT`
+   - `CSRF_TRUSTED_ORIGINS`
+   - `ALLOWED_HOSTS`
 
 2. Enable required APIs:
    - Compute Engine API
@@ -260,13 +264,13 @@ Visit `http://localhost:8000` in your browser.
    ```bash
    gcloud artifacts repositories create family-accounting \
      --repository-format=docker \
-     --location=us-central1
+     --location=europe-west1
    ```
 
 2. Build and push image:
    ```bash
-   docker build -t us-central1-docker.pkg.dev/PROJECT_ID/family-accounting/app:latest .
-   docker push us-central1-docker.pkg.dev/PROJECT_ID/family-accounting/app:latest
+   docker build -t europe-west1-docker.pkg.dev/PROJECT_ID/family-accounting/app:latest .
+   docker push europe-west1-docker.pkg.dev/PROJECT_ID/family-accounting/app:latest
    ```
 
 #### Step 3: Deploy to Cloud Run
@@ -586,5 +590,3 @@ python family_acc/manage.py compilemessages -l uk -i venv
 See [LICENSE](LICENSE) file for details.
 
 ---
-
-**Last Updated:** December 2025
