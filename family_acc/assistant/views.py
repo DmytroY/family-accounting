@@ -34,6 +34,8 @@ def ai_chat_view(request):
                 if latest_msg.get('role') == 'user':
                     user_query = latest_msg.get('content', '')
 
+            print(f"--- DY --- User query: {user_query}")
+
             # classify user intent and extract command if exist
             result = classify_intent(client, user_query)
             intent = result.get("intent", "GENERAL")
@@ -49,7 +51,6 @@ def ai_chat_view(request):
                     "Formatting Rules:\n"
                     "- Do NOT reuse markdown headers, dividers or formatters (e.g., #, -, *) directly from the retrieved context.\n"
                     "- Present instructions using clean, numbered steps or bullet points.\n"
-                    # "- Bold key terms, UI elements, and code endpoints inline (e.g., **URL:** `/transactions/create`).\n"
                     "- Keep text concise and easy to scan.\n"
                     "If the answer cannot be found in the context, clearly state that you don't know.\n\n"
                     f"DOCUMENTATION CONTEXT:\n{rag_context}"
@@ -59,11 +60,9 @@ def ai_chat_view(request):
                 chat_completion = client.chat.completions.create(
                     messages=messages,
                     model="openai/gpt-oss-120b",
-                    max_completion_tokens=250,
-                    temperature=0.3  # Lower temperature for higher factual grounding
+                    max_completion_tokens=750,
+                    temperature=0.2  # Lower temperature for higher factual grounding
                 )
-                print(f"--- DY --- message to AI: {messages}")
-                print(f"--- DY --- responce of AI: {chat_completion.choices[0].message.content}")
                 return JsonResponse({'reply': chat_completion.choices[0].message.content})
 
             if intent == "DATA":
@@ -123,7 +122,7 @@ def ai_chat_view(request):
                 summary_completion = client.chat.completions.create(
                     messages=summary_messages,
                     model="openai/gpt-oss-120b",
-                    max_completion_tokens=250,
+                    max_completion_tokens=750,
                     temperature=0.3
                 )
                 
@@ -145,8 +144,8 @@ def ai_chat_view(request):
             chat_completion = client.chat.completions.create(
                 messages=messages,
                 model="openai/gpt-oss-120b",
-                max_completion_tokens = 150,
-                temperature = 0.5
+                max_completion_tokens = 750,
+                temperature = 0.3
             )
             print(f"--- DY --- message to AI: {messages}")
             print(f"--- DY --- responce of AI: {chat_completion.choices[0].message.content}")

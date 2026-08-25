@@ -9,9 +9,6 @@ from django.db import connection
 def generate_ai_system_prompt():
     # Project's core business logic
     prompt = (
-        "You are a concise financial assistant for a family accounting app. "
-        "IMPORTANT: Provide only short, high-level summaries. Do not provide "
-        "detailed breakdowns or long explanations unless specifically asked.\n\n"
         "Data Structure (Star-scheme): Income is positive, expenses are negative.\n"
         "Current Schema:\n"
     )
@@ -32,8 +29,8 @@ def classify_intent(client: Groq, user_query: str) -> str:
     and extracts specific command actions."""
     classifier_prompt = (
         "Analyze the user message and classify it into exactly one category:\n"
-        "1. GENERAL: Greetings, small talk, general financial advice.\n"
-        "2. DOCUMENTATION: Questions about how to use the app, UI, navigation, or API specs.\n"
+        "1. GENERAL: Greetings, small talk, social chitchat (e.g., 'hello', 'how are you').\n"
+        "2. DOCUMENTATION: Questions about this application, capabilities, features, how to use it, UI, navigation, or API specs (e.g., 'what can I do with this app?', 'how do I use this?').\n"
         "3. DATA: Questions about specific account balances, transactions, spending, or income.\n"
         "4. COMMAND: Direct requests to perform session/app controls.\n\n"
         "Supported actions for COMMAND intent:\n"
@@ -41,11 +38,14 @@ def classify_intent(client: Groq, user_query: str) -> str:
         "- 'SUMMARIZE_CHAT': Request to summarize, recap, or outline the current conversation.\n"
         "- 'EXPORT_CHAT': Request to export, download, or save the conversation.\n"
         "- 'UNKNOWN': Command is unrecognized.\n\n"
+        "Examples:\n"
+        'User: "what can I do with this app?" -> {"intent": "DOCUMENTATION", "action": null}\n'
+        'User: "hi there" -> {"intent": "GENERAL", "action": null}\n\n'
         "Respond ONLY with a JSON object in this schema:\n"
-        '{\n'
+        "{\n"
         '  "intent": "GENERAL" | "DOCUMENTATION" | "DATA" | "COMMAND",\n'
         '  "action": "CLEAR_HISTORY" | "SUMMARIZE_CHAT" | "EXPORT_CHAT" | "UNKNOWN" | null\n'
-        '}'
+        "}"
     )
     try:
         response = client.chat.completions.create(
