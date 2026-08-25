@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-12 14:31+0100\n"
+"POT-Creation-Date: 2026-08-25 17:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: .\family_acc\family_acc\views.py:9 .\family_acc\templates\home.html:10
+#: .\family_acc\family_acc\views.py:9
 msgid "Hello"
 msgstr "Привіт"
 
@@ -54,16 +54,24 @@ msgstr "Редагування данних користувача"
 #: .\family_acc\members\templates\member_edit.html:16
 #: .\family_acc\members\templates\register.html:15
 #: .\family_acc\transactions\templates\account_create.html:18
-#: .\family_acc\transactions\templates\account_edit.html:14
+#: .\family_acc\transactions\templates\account_edit.html:18
 #: .\family_acc\transactions\templates\category_create.html:18
-#: .\family_acc\transactions\templates\category_edit.html:14
+#: .\family_acc\transactions\templates\category_edit.html:16
 #: .\family_acc\transactions\templates\currency_create.html:19
-#: .\family_acc\transactions\templates\currency_edit.html:14
-#: .\family_acc\transactions\templates\transaction_create_expense.html:21
-#: .\family_acc\transactions\templates\transaction_create_income.html:21
-#: .\family_acc\transactions\templates\transaction_edit.html:14
+#: .\family_acc\transactions\templates\currency_edit.html:16
+#: .\family_acc\transactions\templates\transaction_create_expense.html:22
+#: .\family_acc\transactions\templates\transaction_create_income.html:22
+#: .\family_acc\transactions\templates\transaction_edit.html:21
 msgid "Save"
 msgstr "Зберегти"
+
+#: .\family_acc\members\templates\member_edit.html:17
+#: .\family_acc\transactions\templates\account_edit.html:19
+#: .\family_acc\transactions\templates\category_edit.html:17
+#: .\family_acc\transactions\templates\currency_edit.html:17
+#: .\family_acc\transactions\templates\transaction_edit.html:22
+msgid "Delete"
+msgstr "Видалити"
 
 #: .\family_acc\members\templates\member_edit.html:20
 msgid "Change password"
@@ -71,7 +79,7 @@ msgstr "Змінити пароль"
 
 #: .\family_acc\members\templates\register.html:5
 #: .\family_acc\members\templates\register.html:10
-#: .\family_acc\templates\home.html:17 .\family_acc\templates\layout.html:29
+#: .\family_acc\templates\layout.html:31
 msgid "Registration"
 msgstr "Реєстрація"
 
@@ -87,229 +95,161 @@ msgstr "Скинути пароль"
 msgid "Hm...Looks like there is nothing to see..."
 msgstr "Дідько!... Тут нічого немає!"
 
-#: .\family_acc\templates\home.html:11
+#: .\family_acc\templates\home.html:10
+msgid "Welcome to Family Accounting"
+msgstr "Вітаю в Домашній Бухгалтерії"
+
+#: .\family_acc\templates\home.html:14
 msgid ""
 "\n"
-"    For some time, I have been searching for a simple and free system for "
-"tracking my income and expenses.\n"
-"    As you may have guessed, the existence of this site indicates that I did "
-"not find one and decided to create it myself.\n"
-"    It has only basic functionality and nothing superfluous.\n"
-"    "
-msgstr ""
-"Деякий час я шукав просту і безкоштовну систему обліку власних доходів і "
-"витрат. Як ви вже мабуть здогадалися, існування цього сайту говорить про те, "
-"що я її не знайшов і вирішив її створити самостійно. Тут є лише базовий "
-"функціонал і нічого зайвого."
-
-#: .\family_acc\templates\home.html:18
+"        A simple and secure tool to help your family manage household "
+"finances — accounts, currencies, and transactions — without unnecessary "
+"complexity.\n"
+"        "
+msgstr "\n"
+"Простий і надійний інструмент, який допоможе вашій родині керувати сімейними фінансами - "
+"рахунками, валютами та операціями без зайвої складності.\n"
+"        "
+#: .\family_acc\templates\home.html:20
 msgid ""
 "\n"
-"\tThe main idea is that users are grouped into families and keep financial "
-"records that are accessible to members of a specific family.\n"
-"    The first family member registers independently, after which they can "
-"create accounts for other members of their family.\n"
-"    Please fill in your email address carefully — a link will be sent to it "
-"to restore access if you forget your password.\n"
-"    "
+"        If you need guidance, use the built‑in AI assistant in the app — it "
+"can help with setup, imports, troubleshooting, and answering any questions "
+"about features.\n"
+"        "
 msgstr ""
-"Основна ідея полягає в тому що користувачі об'єднані в родини і ведуть "
-"фінансові записи що доступні членам конкретної родини. Перший член родини "
-"реєструється самостійно, після чого він може створювати облікові записи для "
-"інших членів своєї родини. Уважно заповнюйте вашу електронну адресу - на неї "
-"буде надіслано посилання для відновлення доступу у випадку якщо ви забудете "
-"пароль."
-
-#: .\family_acc\templates\home.html:24
-msgid "So how do you record income or expenses?"
-msgstr "Тож як записати дохід чи витрату?"
-
-#: .\family_acc\templates\home.html:25
+"\n"
+"Якщо вам потрібна допомога, скористайтеся вбудованим AI-помічником у додатку."
+"Він допоможе з налаштуванням, імпортом даних та відповість на будь-які запитання щодо функціоналу.\n"
+"        "
+#: .\family_acc\templates\home.html:26
 msgid ""
 "\n"
-"    First, create currencies.\n"
-"    Then create accounts and specify which currency a particular account "
-"uses.\n"
-"    Accounts with different currencies can have the same names, for example, "
-"there can be accounts called “My cash (USD)” and “My cash (EUR)”.\n"
-"    Create an income or expense category.\n"
-"    Each category can be used only for income (Salary), only for expenses "
-"(Food), or for both income and expenses (Transfer between accounts).\n"
-"    Check the appropriate boxes “Use it for income” and “Use it for expense” "
-"when creating a category.\n"
-"    "
+"        Your data is private to your family group. We recommend exporting "
+"backups regularly to keep your records safe.\n"
+"        "
 msgstr ""
-"Для початку створіть валюти. Потім створіть рахунки і вкажіть яку валюту "
-"використовує конкретний рахунок. Рахунки з різними валютами можуть мати "
-"однакові імена, наприклад можуть існувати рахунки “Моя готівка (UDS)” і “Моя "
-"готівка (EUR)”. Створіть категорію доходів або витрат. Кожна категорія може "
-"використовуватися тільки для доходів (Зарплата), тільки для Витрат (Харчі) "
-"або і для доходів і витрат (Переказ між рахунками). Поставте відповідні "
-"галоки “використовувати для доходів” і “використовувати для витрат” при "
-"створенні категорії."
-
-#: .\family_acc\templates\home.html:34
-msgid ""
 "\n"
-"    Once you have an Account (and Currency) and Category, you can create a "
-"new financial transaction - new income or new expense.\n"
-"    When transferring money from one account to another, you need to create "
-"2 transactions with the same amounts.\n"
-"    When transferring money from one account to another, you need to create "
-"two transactions with the same amounts.\n"
-"    For example, if you withdraw cash from an ATM, the first transaction "
-"will be an expense on the “Card” account and the second will be income on "
-"the “Cash” account.\n"
-"    All income is displayed with a positive amount, all expenses with a "
-"negative amount.\n"
-"    You don't need to think about the sign — the system will add it itself "
-"depending on whether you chose to create an expense or income.\n"
-"    "
-msgstr ""
-"Як тільки у вас є Рахунок (відповідно і Валюта) і Категорія ви можете "
-"створити нову фінансову транзакцію - новий дохід або нову витрату. При "
-"переводі грошей з одного рахунку на інший потрібно створити 2 транзакції з "
-"однаковими сумами. Наприклад, якщо знімаєте готівку з банкомата перша "
-"транзакція буде Витрата на рахунку “Картка” а друга Дохід на рахунку "
-"“Готівка”. Всі доходи відображаються з позитивною сумою, всі витрати з "
-"негативною. Вам не потрібно думати про знак - система сама його проставить "
-"відповідно до того ви вибрали створення витрати чи доходу."
+"Ваші дані є приватними для вашої сімейної групи."
+"Ми рекомендуємо регулярно експортувати резервні копії, щоб забезпечити безпеку ваших даних.\n"
+"        "
+#: .\family_acc\templates\home.html:32
 
-#: .\family_acc\templates\home.html:43
-msgid "Uploading and downloading data."
-msgstr "Завантаження або вивантаження даних."
-
-#: .\family_acc\templates\home.html:44
-msgid ""
-"\n"
-"    You will notice that on the relevant pages you have the option to upload "
-"or download data in csv format.\n"
-"    Although this option exists, you do not need to upload currencies, "
-"accounts, and categories before uploading transactions, as currencies, "
-"accounts,\n"
-"    and categories that are missing when uploading transactions will be "
-"created automatically.\n"
-"    The only thing you need to do after that is to enter the correct balance "
-"amounts in the accounts.\n"
-"    You can also go to the categories and uncheck “use for income” or “use "
-"for expenses” so that this category is not offered when entering income/"
-"loss\n"
-"    if it is not for that purpose.\n"
-"    "
-msgstr ""
-"Ви помітете, що на відповідних сторінках у вас є можливість завантажитти або "
-"вивантажити дані в форматі csv. Хоча така можливість існує, ви можете не "
-"завантажувати валюти, рахунки і категорії перед завантаженням транзакції, "
-"оскільки при завантаженні транзакцій відсутні валюти, рахунки і категорії "
-"створяться автоматично. Єдине що треба буде після цього зробити це "
-"проставити правильні суми балансів в рахунках. Також можете зайти в "
-"категорій і прибрати галочку “використовувати для доходів” або "
-"“використовувати для витрат” щоб ця категорія не пропонувалася під час "
-"введення доходу/втрати якщо вона не для цього"
-
-#: .\family_acc\templates\home.html:53
-msgid "Attention!"
-msgstr "Увага!"
-
-#: .\family_acc\templates\home.html:54
-msgid ""
-"This is a non-commercial product. You are free to use it for your own needs, "
-"but as the developer,\n"
-"    I am not responsible for data storage, the stability of this product, or "
-"its availability at different times of the day.\n"
-"    If you decide to use this product, I recommend that you remember to "
-"regularly back up your data using the corresponding csv file export "
-"function.\n"
-"    "
-msgstr ""
-"Це некомерційний продукт. Ви можете вільно їм користуватися для власних "
-"потреб, але я, як розробник, не несу відповідальності за збереження даних, "
-"стабільність роботи цього продукту, доступність в різний час доби. Якщо ви "
-"вирішили користуватися цим продуктом рекомендую не забувати регулярно робити "
-"резервну копію ваших даних за допомогою відповідного функціоналу "
-"вивантаження csv файлу."
-
-#: .\family_acc\templates\home.html:61
-msgid "Source code on GitHub."
+#| msgid "Source code on GitHub."
+msgid "Source code on GitHub"
 msgstr "Вихідний код на GitHub"
 
-#: .\family_acc\templates\home.html:62
-msgid "You can send your suggestions to my email address:"
-msgstr "Ваші побачання можете надсилати на мою електронну адресу"
+#: .\family_acc\templates\home.html:33
+#| msgid "Source code on GitHub."
+msgid "report issues or contribute on GitHub."
+msgstr "повідомляйте про проблеми або робіть ваш внесок в розробку."
 
-#: .\family_acc\templates\home.html:64
-msgid "Best regards, Dmytro!"
-msgstr "З найкращими побажаннями, Дмитро!"
+#: .\family_acc\templates\home.html:37
+msgid ""
+"\n"
+"        Questions or feedback? Email:\n"
+"        "
+msgstr ""
+"\n"
+"        Запитання чи побажання? Пишіть:\n"
+"        "
 
-#: .\family_acc\templates\layout.html:23
+#: .\family_acc\templates\home.html:44
+#| msgid "Best regards, Dmytro!"
+msgid "Best regards,"
+msgstr "З найкращими побажаннями,"
+
+#: .\family_acc\templates\home.html:44
+msgid "Dmytro"
+msgstr "Дмитро"
+
+#: .\family_acc\templates\layout.html:25
 msgid "You authorized as"
 msgstr "Ви авторизувалися як "
 
-#: .\family_acc\templates\layout.html:25
+#: .\family_acc\templates\layout.html:27
 msgid ", you can"
 msgstr ", щоб вийти тисніть "
 
-#: .\family_acc\templates\layout.html:30
+#: .\family_acc\templates\layout.html:32
 msgid "Login"
 msgstr "Увійти"
 
-#: .\family_acc\templates\layout.html:35
+#: .\family_acc\templates\layout.html:37
 msgid "language:"
 msgstr "Вибір мови:"
 
-#: .\family_acc\templates\layout.html:47
+#: .\family_acc\templates\layout.html:49
 msgid "Go"
 msgstr "Змінити"
 
-#: .\family_acc\templates\layout.html:58
+#: .\family_acc\templates\layout.html:60
 msgid "TRANSACTIONS"
 msgstr "ТРАНЗАКЦІЇ"
 
-#: .\family_acc\templates\layout.html:60 .\family_acc\templates\layout.html:68
-#: .\family_acc\templates\layout.html:75 .\family_acc\templates\layout.html:82
+#: .\family_acc\templates\layout.html:62 .\family_acc\templates\layout.html:70
+#: .\family_acc\templates\layout.html:77 .\family_acc\templates\layout.html:84
 msgid "List"
 msgstr "Список"
 
-#: .\family_acc\templates\layout.html:61
+#: .\family_acc\templates\layout.html:63
 msgid "New expense"
 msgstr "Нова витрата"
 
-#: .\family_acc\templates\layout.html:62
+#: .\family_acc\templates\layout.html:64
 msgid "New income"
 msgstr "Новий дохід"
 
-#: .\family_acc\templates\layout.html:66
+#: .\family_acc\templates\layout.html:68
 msgid "CURRENCY"
 msgstr "ВАЛЮТА"
 
-#: .\family_acc\templates\layout.html:69 .\family_acc\templates\layout.html:76
-#: .\family_acc\templates\layout.html:83 .\family_acc\templates\layout.html:90
+#: .\family_acc\templates\layout.html:71 .\family_acc\templates\layout.html:78
+#: .\family_acc\templates\layout.html:85 .\family_acc\templates\layout.html:92
 msgid "New"
 msgstr "Створити"
 
-#: .\family_acc\templates\layout.html:73
+#: .\family_acc\templates\layout.html:75
 msgid "ACCOUNTS"
 msgstr "РАХУНКИ"
 
-#: .\family_acc\templates\layout.html:80
+#: .\family_acc\templates\layout.html:82
 msgid "CATEGORIES"
 msgstr "КАТЕГОРІЇ"
 
-#: .\family_acc\templates\layout.html:87
+#: .\family_acc\templates\layout.html:89
 msgid "MY_FAMILY"
 msgstr "МОЯ РОДИНА"
 
-#: .\family_acc\templates\layout.html:89
+#: .\family_acc\templates\layout.html:91
 msgid "Members"
 msgstr "Рідні"
 
-#: .\family_acc\templates\layout.html:107
+#: .\family_acc\templates\layout.html:109
 msgid "All running smooth"
 msgstr "Все працює добре"
 
-#: .\family_acc\templates\layout.html:112
-msgid "Dmytro Yakovenko. 2025."
-msgstr "Дмитро Яковенко. 2025."
+#: .\family_acc\templates\layout.html:114
+
+#| msgid "Dmytro Yakovenko. 2025."
+msgid "Dmytro Yakovenko. 2026."
+msgstr "Дмитро Яковенко. 2026."
+
+#: .\family_acc\templates\layout.html:120
+msgid "AI Assistant"
+msgstr ""
+
+#: .\family_acc\templates\layout.html:127
+msgid "Ask about your transactions..."
+msgstr ""
+
+#: .\family_acc\templates\layout.html:128
+msgid "Send"
+msgstr ""
+
+#: .\family_acc\templates\layout.html:134
+msgid "Chat with AI"
+msgstr ""
 
 #: .\family_acc\templates\test.html:26
 msgid ""
@@ -338,6 +278,7 @@ msgid "or upload by csv"
 msgstr "або завантажити csv файл"
 
 #: .\family_acc\transactions\templates\account_create.html:15
+#: .\family_acc\transactions\templates\account_edit.html:15
 msgid "Account name"
 msgstr "Назва рахунку"
 
@@ -346,8 +287,12 @@ msgid "Initial balance"
 msgstr "Початковий баланс"
 
 #: .\family_acc\transactions\templates\account_create.html:17
+#: .\family_acc\transactions\templates\account_edit.html:17
 #: .\family_acc\transactions\templates\account_list.html:14
 #: .\family_acc\transactions\templates\account_list.html:33
+#: .\family_acc\transactions\templates\transaction_create_expense.html:15
+#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_edit.html:15
 #: .\family_acc\transactions\templates\transaction_list.html:29
 msgid "Currency"
 msgstr "Валюта"
@@ -357,17 +302,15 @@ msgstr "Валюта"
 msgid "Edit account"
 msgstr "Рндагувати рахунок"
 
-#: .\family_acc\transactions\templates\account_edit.html:15
-#: .\family_acc\transactions\templates\category_edit.html:15
-#: .\family_acc\transactions\templates\currency_edit.html:15
-#: .\family_acc\transactions\templates\transaction_edit.html:15
-msgid "Delete"
-msgstr "Видалити"
-
 #: .\family_acc\transactions\templates\account_edit.html:16
-#: .\family_acc\transactions\templates\category_edit.html:16
-#: .\family_acc\transactions\templates\currency_edit.html:16
-#: .\family_acc\transactions\templates\transaction_edit.html:16
+#: .\family_acc\transactions\templates\account_list.html:32
+msgid "Balance"
+msgstr "Баланс"
+
+#: .\family_acc\transactions\templates\account_edit.html:20
+#: .\family_acc\transactions\templates\category_edit.html:18
+#: .\family_acc\transactions\templates\currency_edit.html:18
+#: .\family_acc\transactions\templates\transaction_edit.html:23
 msgid "Cancel"
 msgstr "Відмінити"
 
@@ -382,15 +325,12 @@ msgid "Filter"
 msgstr "Фільтрувати"
 
 #: .\family_acc\transactions\templates\account_list.html:31
-#: .\family_acc\transactions\templates\transaction_create_expense.html:15
-#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_create_expense.html:16
+#: .\family_acc\transactions\templates\transaction_create_income.html:16
+#: .\family_acc\transactions\templates\transaction_edit.html:16
 #: .\family_acc\transactions\templates\transaction_list.html:27
 msgid "Account"
 msgstr "Рахунок"
-
-#: .\family_acc\transactions\templates\account_list.html:32
-msgid "Balance"
-msgstr "Баланс"
 
 #: .\family_acc\transactions\templates\account_upload.html:5
 #: .\family_acc\transactions\templates\account_upload.html:10
@@ -416,17 +356,17 @@ msgid "Create category"
 msgstr "Створити категорію"
 
 #: .\family_acc\transactions\templates\category_create.html:15
-#| msgid "Category"
+#: .\family_acc\transactions\templates\category_edit.html:13
 msgid "Category name"
 msgstr "Категорія"
 
 #: .\family_acc\transactions\templates\category_create.html:16
-#| msgid "Use for income?"
+#: .\family_acc\transactions\templates\category_edit.html:14
 msgid "Use it for income?"
 msgstr "Використовувати для доходів?"
 
 #: .\family_acc\transactions\templates\category_create.html:17
-#| msgid "Use for expense?"
+#: .\family_acc\transactions\templates\category_edit.html:15
 msgid "Use it for expense?"
 msgstr "Використовувати для витрат?"
 
@@ -463,10 +403,12 @@ msgid "Create currency"
 msgstr "Створення валюти"
 
 #: .\family_acc\transactions\templates\currency_create.html:16
+#: .\family_acc\transactions\templates\currency_edit.html:14
 msgid "Currency code"
 msgstr "Код валюти"
 
 #: .\family_acc\transactions\templates\currency_create.html:17
+#: .\family_acc\transactions\templates\currency_edit.html:15
 msgid "Currency description"
 msgstr "Опис валюти"
 
@@ -495,34 +437,38 @@ msgstr "Нова витрата"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:14
 #: .\family_acc\transactions\templates\transaction_create_income.html:14
+#: .\family_acc\transactions\templates\transaction_edit.html:14
 #: .\family_acc\transactions\templates\transaction_list.html:26
 msgid "Date"
 msgstr "Дата"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:15
-#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_create_expense.html:16
+#: .\family_acc\transactions\templates\transaction_create_income.html:16
 msgid "add account"
 msgstr "додати рахунок"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:16
-#: .\family_acc\transactions\templates\transaction_create_income.html:16
+#: .\family_acc\transactions\templates\transaction_create_expense.html:17
+#: .\family_acc\transactions\templates\transaction_create_income.html:17
+#: .\family_acc\transactions\templates\transaction_edit.html:17
 #: .\family_acc\transactions\templates\transaction_list.html:28
 msgid "Amount"
 msgstr "Сума"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:19
-#: .\family_acc\transactions\templates\transaction_create_income.html:19
+#: .\family_acc\transactions\templates\transaction_create_expense.html:20
+#: .\family_acc\transactions\templates\transaction_create_income.html:20
+#: .\family_acc\transactions\templates\transaction_edit.html:18
 #: .\family_acc\transactions\templates\transaction_list.html:30
 msgid "Category"
 msgstr "Категорія"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:19
-#: .\family_acc\transactions\templates\transaction_create_income.html:19
+#: .\family_acc\transactions\templates\transaction_create_expense.html:20
+#: .\family_acc\transactions\templates\transaction_create_income.html:20
 msgid "add category"
 msgstr "додати категорію"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:20
-#: .\family_acc\transactions\templates\transaction_create_income.html:20
+#: .\family_acc\transactions\templates\transaction_create_expense.html:21
+#: .\family_acc\transactions\templates\transaction_create_income.html:21
+#: .\family_acc\transactions\templates\transaction_edit.html:19
 msgid "Remark"
 msgstr "Коментар"
 
@@ -564,3 +510,158 @@ msgstr "Видалити вибране"
 #: .\family_acc\transactions\templates\transaction_upload.html:10
 msgid "Transactions upload"
 msgstr "Завантаження транзакцій"
+
+#: .\family_acc\transactions\views.py:90
+
+#| msgid "Transactions upload"
+msgid "Transaction deleted."
+msgstr "Завантаження транзакцій"
+
+#: .\family_acc\transactions\views.py:106
+
+#| msgid "Transactions"
+msgid "Transaction edited."
+msgstr "Транзакції"
+
+#: .\family_acc\transactions\views.py:139
+
+#| msgid "Transactions upload"
+msgid "transaction created"
+msgstr "Завантаження транзакцій"
+
+#~ msgid ""
+#~ "\n"
+#~ "    For some time, I have been searching for a simple and free system for "
+#~ "tracking my income and expenses.\n"
+#~ "    As you may have guessed, the existence of this site indicates that I "
+#~ "did not find one and decided to create it myself.\n"
+#~ "    It has only basic functionality and nothing superfluous.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Деякий час я шукав просту і безкоштовну систему обліку власних доходів і "
+#~ "витрат. Як ви вже мабуть здогадалися, існування цього сайту говорить про "
+#~ "те, що я її не знайшов і вирішив її створити самостійно. Тут є лише "
+#~ "базовий функціонал і нічого зайвого."
+
+#~ msgid ""
+#~ "\n"
+#~ "\tThe main idea is that users are grouped into families and keep "
+#~ "financial records that are accessible to members of a specific family.\n"
+#~ "    The first family member registers independently, after which they can "
+#~ "create accounts for other members of their family.\n"
+#~ "    Please fill in your email address carefully — a link will be sent to "
+#~ "it to restore access if you forget your password.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Основна ідея полягає в тому що користувачі об'єднані в родини і ведуть "
+#~ "фінансові записи що доступні членам конкретної родини. Перший член родини "
+#~ "реєструється самостійно, після чого він може створювати облікові записи "
+#~ "для інших членів своєї родини. Уважно заповнюйте вашу електронну адресу - "
+#~ "на неї буде надіслано посилання для відновлення доступу у випадку якщо ви "
+#~ "забудете пароль."
+
+#~ msgid "So how do you record income or expenses?"
+#~ msgstr "Тож як записати дохід чи витрату?"
+
+#~ msgid ""
+#~ "\n"
+#~ "    First, create currencies.\n"
+#~ "    Then create accounts and specify which currency a particular account "
+#~ "uses.\n"
+#~ "    Accounts with different currencies can have the same names, for "
+#~ "example, there can be accounts called “My cash (USD)” and “My cash "
+#~ "(EUR)”.\n"
+#~ "    Create an income or expense category.\n"
+#~ "    Each category can be used only for income (Salary), only for expenses "
+#~ "(Food), or for both income and expenses (Transfer between accounts).\n"
+#~ "    Check the appropriate boxes “Use it for income” and “Use it for "
+#~ "expense” when creating a category.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Для початку створіть валюти. Потім створіть рахунки і вкажіть яку валюту "
+#~ "використовує конкретний рахунок. Рахунки з різними валютами можуть мати "
+#~ "однакові імена, наприклад можуть існувати рахунки “Моя готівка (UDS)” і "
+#~ "“Моя готівка (EUR)”. Створіть категорію доходів або витрат. Кожна "
+#~ "категорія може використовуватися тільки для доходів (Зарплата), тільки "
+#~ "для Витрат (Харчі) або і для доходів і витрат (Переказ між рахунками). "
+#~ "Поставте відповідні галоки “використовувати для доходів” і "
+#~ "“використовувати для витрат” при створенні категорії."
+
+#~ msgid ""
+#~ "\n"
+#~ "    Once you have an Account (and Currency) and Category, you can create "
+#~ "a new financial transaction - new income or new expense.\n"
+#~ "    When transferring money from one account to another, you need to "
+#~ "create 2 transactions with the same amounts.\n"
+#~ "    When transferring money from one account to another, you need to "
+#~ "create two transactions with the same amounts.\n"
+#~ "    For example, if you withdraw cash from an ATM, the first transaction "
+#~ "will be an expense on the “Card” account and the second will be income on "
+#~ "the “Cash” account.\n"
+#~ "    All income is displayed with a positive amount, all expenses with a "
+#~ "negative amount.\n"
+#~ "    You don't need to think about the sign — the system will add it "
+#~ "itself depending on whether you chose to create an expense or income.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Як тільки у вас є Рахунок (відповідно і Валюта) і Категорія ви можете "
+#~ "створити нову фінансову транзакцію - новий дохід або нову витрату. При "
+#~ "переводі грошей з одного рахунку на інший потрібно створити 2 транзакції "
+#~ "з однаковими сумами. Наприклад, якщо знімаєте готівку з банкомата перша "
+#~ "транзакція буде Витрата на рахунку “Картка” а друга Дохід на рахунку "
+#~ "“Готівка”. Всі доходи відображаються з позитивною сумою, всі витрати з "
+#~ "негативною. Вам не потрібно думати про знак - система сама його "
+#~ "проставить відповідно до того ви вибрали створення витрати чи доходу."
+
+#~ msgid "Uploading and downloading data."
+#~ msgstr "Завантаження або вивантаження даних."
+
+#~ msgid ""
+#~ "\n"
+#~ "    You will notice that on the relevant pages you have the option to "
+#~ "upload or download data in csv format.\n"
+#~ "    Although this option exists, you do not need to upload currencies, "
+#~ "accounts, and categories before uploading transactions, as currencies, "
+#~ "accounts,\n"
+#~ "    and categories that are missing when uploading transactions will be "
+#~ "created automatically.\n"
+#~ "    The only thing you need to do after that is to enter the correct "
+#~ "balance amounts in the accounts.\n"
+#~ "    You can also go to the categories and uncheck “use for income” or "
+#~ "“use for expenses” so that this category is not offered when entering "
+#~ "income/loss\n"
+#~ "    if it is not for that purpose.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Ви помітете, що на відповідних сторінках у вас є можливість завантажитти "
+#~ "або вивантажити дані в форматі csv. Хоча така можливість існує, ви можете "
+#~ "не завантажувати валюти, рахунки і категорії перед завантаженням "
+#~ "транзакції, оскільки при завантаженні транзакцій відсутні валюти, рахунки "
+#~ "і категорії створяться автоматично. Єдине що треба буде після цього "
+#~ "зробити це проставити правильні суми балансів в рахунках. Також можете "
+#~ "зайти в категорій і прибрати галочку “використовувати для доходів” або "
+#~ "“використовувати для витрат” щоб ця категорія не пропонувалася під час "
+#~ "введення доходу/втрати якщо вона не для цього"
+
+#~ msgid "Attention!"
+#~ msgstr "Увага!"
+
+#~ msgid ""
+#~ "This is a non-commercial product. You are free to use it for your own "
+#~ "needs, but as the developer,\n"
+#~ "    I am not responsible for data storage, the stability of this product, "
+#~ "or its availability at different times of the day.\n"
+#~ "    If you decide to use this product, I recommend that you remember to "
+#~ "regularly back up your data using the corresponding csv file export "
+#~ "function.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Це некомерційний продукт. Ви можете вільно їм користуватися для власних "
+#~ "потреб, але я, як розробник, не несу відповідальності за збереження "
+#~ "даних, стабільність роботи цього продукту, доступність в різний час доби. "
+#~ "Якщо ви вирішили користуватися цим продуктом рекомендую не забувати "
+#~ "регулярно робити резервну копію ваших даних за допомогою відповідного "
+#~ "функціоналу вивантаження csv файлу."
+
+#~ msgid "You can send your suggestions to my email address:"
+#~ msgstr "Ваші побачання можете надсилати на мою електронну адресу"

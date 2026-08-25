@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-12 15:11+0100\n"
+"POT-Creation-Date: 2026-08-25 17:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: .\family_acc\family_acc\views.py:9 .\family_acc\templates\home.html:10
+#: .\family_acc\family_acc\views.py:9
 msgid "Hello"
 msgstr "Ahoj!"
 
@@ -52,16 +52,24 @@ msgstr "Upravit údaje uživatele"
 #: .\family_acc\members\templates\member_edit.html:16
 #: .\family_acc\members\templates\register.html:15
 #: .\family_acc\transactions\templates\account_create.html:18
-#: .\family_acc\transactions\templates\account_edit.html:14
+#: .\family_acc\transactions\templates\account_edit.html:18
 #: .\family_acc\transactions\templates\category_create.html:18
-#: .\family_acc\transactions\templates\category_edit.html:14
+#: .\family_acc\transactions\templates\category_edit.html:16
 #: .\family_acc\transactions\templates\currency_create.html:19
-#: .\family_acc\transactions\templates\currency_edit.html:14
-#: .\family_acc\transactions\templates\transaction_create_expense.html:21
-#: .\family_acc\transactions\templates\transaction_create_income.html:21
-#: .\family_acc\transactions\templates\transaction_edit.html:14
+#: .\family_acc\transactions\templates\currency_edit.html:16
+#: .\family_acc\transactions\templates\transaction_create_expense.html:22
+#: .\family_acc\transactions\templates\transaction_create_income.html:22
+#: .\family_acc\transactions\templates\transaction_edit.html:21
 msgid "Save"
 msgstr "Uložit"
+
+#: .\family_acc\members\templates\member_edit.html:17
+#: .\family_acc\transactions\templates\account_edit.html:19
+#: .\family_acc\transactions\templates\category_edit.html:17
+#: .\family_acc\transactions\templates\currency_edit.html:17
+#: .\family_acc\transactions\templates\transaction_edit.html:22
+msgid "Delete"
+msgstr "Smazat"
 
 #: .\family_acc\members\templates\member_edit.html:20
 msgid "Change password"
@@ -69,7 +77,7 @@ msgstr "Změnit heslo"
 
 #: .\family_acc\members\templates\register.html:5
 #: .\family_acc\members\templates\register.html:10
-#: .\family_acc\templates\home.html:17 .\family_acc\templates\layout.html:29
+#: .\family_acc\templates\layout.html:31
 msgid "Registration"
 msgstr "Registrace"
 
@@ -85,245 +93,171 @@ msgstr "Obnovit heslo"
 msgid "Hm...Looks like there is nothing to see..."
 msgstr "Sakra! Tady nic není!"
 
-#: .\family_acc\templates\home.html:11
+#: .\family_acc\templates\home.html:10
+msgid "Welcome to Family Accounting"
+msgstr "Vítejte v Rodinném účetnictví"
+
+#: .\family_acc\templates\home.html:14
 msgid ""
 "\n"
-"    For some time, I have been searching for a simple and free system for "
-"tracking my income and expenses.\n"
-"    As you may have guessed, the existence of this site indicates that I did "
-"not find one and decided to create it myself.\n"
-"    It has only basic functionality and nothing superfluous.\n"
-"    "
+"        A simple and secure tool to help your family manage household "
+"finances — accounts, currencies, and transactions — without unnecessary "
+"complexity.\n"
+"        "
 msgstr ""
-"Nějakou dobu jsem hledal jednoduchý a bezplatný systém pro evidenci "
-"vlastních příjmů a výdajů. Jak jste asi již uhodli, existence této stránky "
-"svědčí o tom, že jsem jej nenašel a rozhodl se jej vytvořit sám. Najdete zde "
-"pouze základní funkce a nic zbytečného."
+"\n"
+"Jednoduchý a bezpečný nástroj, který vaší rodině pomůže spravovat rodinné "
+"finance - účty, měny a transakce bez zbytečné složitosti        "
 
-#: .\family_acc\templates\home.html:18
+#: .\family_acc\templates\home.html:20
 msgid ""
 "\n"
-"\tThe main idea is that users are grouped into families and keep financial "
-"records that are accessible to members of a specific family.\n"
-"    The first family member registers independently, after which they can "
-"create accounts for other members of their family.\n"
-"    Please fill in your email address carefully — a link will be sent to it "
-"to restore access if you forget your password.\n"
-"    "
+"        If you need guidance, use the built‑in AI assistant in the app — it "
+"can help with setup, imports, troubleshooting, and answering any questions "
+"about features.\n"
+"        "
 msgstr ""
-"Hlavní myšlenka spočívá v tom, že uživatelé jsou sdruženi do rodin a vedou "
-"finanční záznamy, které jsou přístupné členům konkrétní rodiny. První člen "
-"rodiny se registruje samostatně, poté může vytvářet účty pro ostatní členy "
-"své rodiny. Pečlivě vyplňte svou e-mailovou adresu – na ni vám bude zaslán "
-"odkaz pro obnovení přístupu v případě, že zapomenete heslo."
+"\n"
+"Pokud potřebujete pomoc, využijte vestavěného AI asistenta v aplikaci – "
+"pomůže vám s nastavením, importem, řešením problémů a zodpoví jakékoli "
+"dotazy týkající se funkcí.        "
 
-#: .\family_acc\templates\home.html:24
-msgid "So how do you record income or expenses?"
-msgstr "Jak tedy zaznamenáváte příjmy a výdaje?"
-
-#: .\family_acc\templates\home.html:25
+#: .\family_acc\templates\home.html:26
 msgid ""
 "\n"
-"    First, create currencies.\n"
-"    Then create accounts and specify which currency a particular account "
-"uses.\n"
-"    Accounts with different currencies can have the same names, for example, "
-"there can be accounts called “My cash (USD)” and “My cash (EUR)”.\n"
-"    Create an income or expense category.\n"
-"    Each category can be used only for income (Salary), only for expenses "
-"(Food), or for both income and expenses (Transfer between accounts).\n"
-"    Check the appropriate boxes “Use it for income” and “Use it for expense” "
-"when creating a category.\n"
-"    "
+"        Your data is private to your family group. We recommend exporting "
+"backups regularly to keep your records safe.\n"
+"        "
 msgstr ""
-"Nejprve vytvořte měny. Poté vytvořte účty a uveďte, jakou měnu konkrétní "
-"účet používá. Účty s různými měnami mohou mít stejné názvy, například mohou "
-"existovat účty „Moje hotovost (UDS)“ a „Moje hotovost (EUR)“. Vytvořte "
-"kategorii příjmů nebo výdajů. Každá kategorie může být použita pouze pro "
-"příjmy (Plat), pouze pro výdaje (Potraviny) nebo pro příjmy i výdaje (Převod "
-"mezi účty). Při vytváření kategorie zaškrtněte příslušná políčka „použít pro "
-"příjmy“ a „použít pro výdaje“."
-
-#: .\family_acc\templates\home.html:34
-msgid ""
 "\n"
-"    Once you have an Account (and Currency) and Category, you can create a "
-"new financial transaction - new income or new expense.\n"
-"    When transferring money from one account to another, you need to create "
-"2 transactions with the same amounts.\n"
-"    When transferring money from one account to another, you need to create "
-"two transactions with the same amounts.\n"
-"    For example, if you withdraw cash from an ATM, the first transaction "
-"will be an expense on the “Card” account and the second will be income on "
-"the “Cash” account.\n"
-"    All income is displayed with a positive amount, all expenses with a "
-"negative amount.\n"
-"    You don't need to think about the sign — the system will add it itself "
-"depending on whether you chose to create an expense or income.\n"
-"    "
-msgstr ""
-"Jakmile máte účet (a odpovídající měnu) a kategorii, můžete vytvořit novou "
-"finanční transakci – nový příjem nebo nový výdaj. Při převodu peněz z "
-"jednoho účtu na druhý je třeba vytvořit 2 transakce se stejnými částkami. "
-"Například pokud vybíráte hotovost z bankomatu, první transakce bude výdaj na "
-"účtu „Karta“ a druhá příjem na účtu „Hotovost“. Všechny příjmy se zobrazují "
-"s kladnou částkou, všechny výdaje se zápornou. Nemusíte přemýšlet o znaménku "
-"– systém jej sám přidá podle toho, zda jste zvolili vytvoření výdaje nebo "
-"příjmu."
+"Vaše data jsou přístupná pouze vaší rodinné skupině. Doporučujeme pravidelně "
+"exportovat zálohy, abyste zajistili bezpečnost svých záznamů.        "
 
-#: .\family_acc\templates\home.html:43
-msgid "Uploading and downloading data."
-msgstr "Nahrávání a stahování dat."
-
-#: .\family_acc\templates\home.html:44
-msgid ""
-"\n"
-"    You will notice that on the relevant pages you have the option to upload "
-"or download data in csv format.\n"
-"    Although this option exists, you do not need to upload currencies, "
-"accounts, and categories before uploading transactions, as currencies, "
-"accounts,\n"
-"    and categories that are missing when uploading transactions will be "
-"created automatically.\n"
-"    The only thing you need to do after that is to enter the correct balance "
-"amounts in the accounts.\n"
-"    You can also go to the categories and uncheck “use for income” or “use "
-"for expenses” so that this category is not offered when entering income/"
-"loss\n"
-"    if it is not for that purpose.\n"
-"    "
-msgstr ""
-"Zjistíte, že na příslušných stránkách máte možnost stáhnout nebo nahrát data "
-"ve formátu csv. I když tato možnost existuje, nemusíte před nahráním "
-"transakcí stahovat měny, účty a kategorie, protože při nahrávání transakcí "
-"se měny, účty a kategorie vytvoří automaticky. Jediné, co poté budete muset "
-"udělat, je zadat správné částky zůstatků na účtech. Můžete také přejít do "
-"kategorií a zrušit zaškrtnutí políčka „použít pro příjmy“ nebo „použít pro "
-"výdaje“, aby se tato kategorie nenabízela při zadávání příjmů/výdajů, pokud "
-"k tomu neslouží."
-
-#: .\family_acc\templates\home.html:53
-msgid "Attention!"
-msgstr "Pozor!"
-
-#: .\family_acc\templates\home.html:54
-msgid ""
-"This is a non-commercial product. You are free to use it for your own needs, "
-"but as the developer,\n"
-"    I am not responsible for data storage, the stability of this product, or "
-"its availability at different times of the day.\n"
-"    If you decide to use this product, I recommend that you remember to "
-"regularly back up your data using the corresponding csv file export "
-"function.\n"
-"    "
-msgstr ""
-"Toto je nekomerční produkt. Můžete jej volně používat pro své vlastní "
-"potřeby, ale já jako vývojář nenesu odpovědnost za uchování dat, stabilitu "
-"fungování tohoto produktu ani jeho dostupnost v různých časech dne. Pokud "
-"jste se rozhodli tento produkt používat, doporučuji nezapomínat pravidelně "
-"zálohovat vaše data pomocí příslušné funkce exportu csv souboru."
-
-#: .\family_acc\templates\home.html:61
-msgid "Source code on GitHub."
+#: .\family_acc\templates\home.html:32
+msgid "Source code on GitHub"
 msgstr "Zdrojový kód na GitHubu."
 
-#: .\family_acc\templates\home.html:62
-msgid "You can send your suggestions to my email address:"
-msgstr "Své návrhy můžete zasílat na mou e-mailovou adresu:"
+#: .\family_acc\templates\home.html:33
+msgid "report issues or contribute on GitHub."
+msgstr "nahlásit problémy nebo přispět na GitHubu."
 
-#: .\family_acc\templates\home.html:64
-msgid "Best regards, Dmytro!"
-msgstr "S pozdravem, Dmytro!"
+#: .\family_acc\templates\home.html:37
+msgid ""
+"\n"
+"        Questions or feedback? Email:\n"
+"        "
+msgstr ""
+"\n"
+"Máte dotazy nebo připomínky? E-mail:        "
 
-#: .\family_acc\templates\layout.html:23
+#: .\family_acc\templates\home.html:44
+msgid "Best regards,"
+msgstr "S pozdravem,"
+
+#: .\family_acc\templates\home.html:44
+msgid "Dmytro"
+msgstr "Dmytro"
+
+#: .\family_acc\templates\layout.html:25
 msgid "You authorized as"
 msgstr "Autorizovali jste jako"
 
-#: .\family_acc\templates\layout.html:25
+#: .\family_acc\templates\layout.html:27
 msgid ", you can"
 msgstr ", můžete"
 
-#: .\family_acc\templates\layout.html:30
+#: .\family_acc\templates\layout.html:32
 msgid "Login"
 msgstr "Přihlášení"
 
-#: .\family_acc\templates\layout.html:35
+#: .\family_acc\templates\layout.html:37
 msgid "language:"
 msgstr "jazyk:"
 
-#: .\family_acc\templates\layout.html:47
+#: .\family_acc\templates\layout.html:49
 msgid "Go"
 msgstr "Přejít"
 
-#: .\family_acc\templates\layout.html:58
+#: .\family_acc\templates\layout.html:60
 msgid "TRANSACTIONS"
 msgstr "TRANSAKCE"
 
-#: .\family_acc\templates\layout.html:60 .\family_acc\templates\layout.html:68
-#: .\family_acc\templates\layout.html:75 .\family_acc\templates\layout.html:82
+#: .\family_acc\templates\layout.html:62 .\family_acc\templates\layout.html:70
+#: .\family_acc\templates\layout.html:77 .\family_acc\templates\layout.html:84
 msgid "List"
 msgstr "Seznam"
 
-#: .\family_acc\templates\layout.html:61
+#: .\family_acc\templates\layout.html:63
 msgid "New expense"
 msgstr "Nové výdaje"
 
-#: .\family_acc\templates\layout.html:62
+#: .\family_acc\templates\layout.html:64
 msgid "New income"
 msgstr "Nový příjem"
 
-#: .\family_acc\templates\layout.html:66
+#: .\family_acc\templates\layout.html:68
 msgid "CURRENCY"
 msgstr "MĚNA"
 
-#: .\family_acc\templates\layout.html:69 .\family_acc\templates\layout.html:76
-#: .\family_acc\templates\layout.html:83 .\family_acc\templates\layout.html:90
+#: .\family_acc\templates\layout.html:71 .\family_acc\templates\layout.html:78
+#: .\family_acc\templates\layout.html:85 .\family_acc\templates\layout.html:92
 msgid "New"
 msgstr "Nový"
 
-#: .\family_acc\templates\layout.html:73
+#: .\family_acc\templates\layout.html:75
 msgid "ACCOUNTS"
 msgstr "ÚČTY"
 
-#: .\family_acc\templates\layout.html:80
+#: .\family_acc\templates\layout.html:82
 msgid "CATEGORIES"
 msgstr "KATEGORIE"
 
-#: .\family_acc\templates\layout.html:87
+#: .\family_acc\templates\layout.html:89
 msgid "MY_FAMILY"
 msgstr "MOJE RODINA"
 
-#: .\family_acc\templates\layout.html:89
+#: .\family_acc\templates\layout.html:91
 msgid "Members"
 msgstr "Členové"
 
-#: .\family_acc\templates\layout.html:107
+#: .\family_acc\templates\layout.html:109
 msgid "All running smooth"
 msgstr "Vše běží hladce"
 
-#: .\family_acc\templates\layout.html:112
-msgid "Dmytro Yakovenko. 2025."
+#: .\family_acc\templates\layout.html:114
+#, fuzzy
+#| msgid "Dmytro Yakovenko. 2025."
+msgid "Dmytro Yakovenko. 2026."
 msgstr "Dmytro Yakovenko. 2025."
+
+#: .\family_acc\templates\layout.html:120
+msgid "AI Assistant"
+msgstr ""
+
+#: .\family_acc\templates\layout.html:127
+msgid "Ask about your transactions..."
+msgstr ""
+
+#: .\family_acc\templates\layout.html:128
+msgid "Send"
+msgstr ""
+
+#: .\family_acc\templates\layout.html:134
+msgid "Chat with AI"
+msgstr ""
 
 #: .\family_acc\templates\test.html:26
 msgid ""
 "\n"
 "    my friend, \n"
 "    "
-msgstr "můj příteli,"
+msgstr ""
+"\n"
+"můj příteli,    "
 
 #: .\family_acc\templates\test.html:30
 msgid "how are you?"
 msgstr "jak se máte?"
-
-#: .\family_acc\transactions\forms.py:24
-msgid "code"
-msgstr "kód"
-
-#: .\family_acc\transactions\forms.py:24
-#| msgid "Description"
-msgid "description"
-msgstr "Popis"
 
 #: .\family_acc\transactions\templates\account_create.html:9
 msgid "Create new account"
@@ -338,6 +272,7 @@ msgid "or upload by csv"
 msgstr "nebo nahrát pomocí souboru CSV"
 
 #: .\family_acc\transactions\templates\account_create.html:15
+#: .\family_acc\transactions\templates\account_edit.html:15
 msgid "Account name"
 msgstr "Název účtu"
 
@@ -346,8 +281,12 @@ msgid "Initial balance"
 msgstr "Počáteční bilanční zůstatek"
 
 #: .\family_acc\transactions\templates\account_create.html:17
+#: .\family_acc\transactions\templates\account_edit.html:17
 #: .\family_acc\transactions\templates\account_list.html:14
 #: .\family_acc\transactions\templates\account_list.html:33
+#: .\family_acc\transactions\templates\transaction_create_expense.html:15
+#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_edit.html:15
 #: .\family_acc\transactions\templates\transaction_list.html:29
 msgid "Currency"
 msgstr "Měna"
@@ -357,17 +296,15 @@ msgstr "Měna"
 msgid "Edit account"
 msgstr "Upravit účet"
 
-#: .\family_acc\transactions\templates\account_edit.html:15
-#: .\family_acc\transactions\templates\category_edit.html:15
-#: .\family_acc\transactions\templates\currency_edit.html:15
-#: .\family_acc\transactions\templates\transaction_edit.html:15
-msgid "Delete"
-msgstr "Smazat"
-
 #: .\family_acc\transactions\templates\account_edit.html:16
-#: .\family_acc\transactions\templates\category_edit.html:16
-#: .\family_acc\transactions\templates\currency_edit.html:16
-#: .\family_acc\transactions\templates\transaction_edit.html:16
+#: .\family_acc\transactions\templates\account_list.html:32
+msgid "Balance"
+msgstr "Bilanční zůstatek"
+
+#: .\family_acc\transactions\templates\account_edit.html:20
+#: .\family_acc\transactions\templates\category_edit.html:18
+#: .\family_acc\transactions\templates\currency_edit.html:18
+#: .\family_acc\transactions\templates\transaction_edit.html:23
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -382,15 +319,12 @@ msgid "Filter"
 msgstr "Filtrovat"
 
 #: .\family_acc\transactions\templates\account_list.html:31
-#: .\family_acc\transactions\templates\transaction_create_expense.html:15
-#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_create_expense.html:16
+#: .\family_acc\transactions\templates\transaction_create_income.html:16
+#: .\family_acc\transactions\templates\transaction_edit.html:16
 #: .\family_acc\transactions\templates\transaction_list.html:27
 msgid "Account"
 msgstr "Účet"
-
-#: .\family_acc\transactions\templates\account_list.html:32
-msgid "Balance"
-msgstr "Bilanční zůstatek"
 
 #: .\family_acc\transactions\templates\account_upload.html:5
 #: .\family_acc\transactions\templates\account_upload.html:10
@@ -416,14 +350,17 @@ msgid "Create category"
 msgstr "Vytvořit kategorii"
 
 #: .\family_acc\transactions\templates\category_create.html:15
+#: .\family_acc\transactions\templates\category_edit.html:13
 msgid "Category name"
 msgstr "Název kategorie"
 
 #: .\family_acc\transactions\templates\category_create.html:16
+#: .\family_acc\transactions\templates\category_edit.html:14
 msgid "Use it for income?"
 msgstr "Použít to pro příjem?"
 
 #: .\family_acc\transactions\templates\category_create.html:17
+#: .\family_acc\transactions\templates\category_edit.html:15
 msgid "Use it for expense?"
 msgstr "Použít to na výdaje?"
 
@@ -460,10 +397,12 @@ msgid "Create currency"
 msgstr "Vytvořit měnu"
 
 #: .\family_acc\transactions\templates\currency_create.html:16
+#: .\family_acc\transactions\templates\currency_edit.html:14
 msgid "Currency code"
 msgstr "Kód měny"
 
 #: .\family_acc\transactions\templates\currency_create.html:17
+#: .\family_acc\transactions\templates\currency_edit.html:15
 msgid "Currency description"
 msgstr "Popis měny"
 
@@ -492,34 +431,38 @@ msgstr "Vytvořit výdaj"
 
 #: .\family_acc\transactions\templates\transaction_create_expense.html:14
 #: .\family_acc\transactions\templates\transaction_create_income.html:14
+#: .\family_acc\transactions\templates\transaction_edit.html:14
 #: .\family_acc\transactions\templates\transaction_list.html:26
 msgid "Date"
 msgstr "Datum"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:15
-#: .\family_acc\transactions\templates\transaction_create_income.html:15
+#: .\family_acc\transactions\templates\transaction_create_expense.html:16
+#: .\family_acc\transactions\templates\transaction_create_income.html:16
 msgid "add account"
 msgstr "přidat účet"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:16
-#: .\family_acc\transactions\templates\transaction_create_income.html:16
+#: .\family_acc\transactions\templates\transaction_create_expense.html:17
+#: .\family_acc\transactions\templates\transaction_create_income.html:17
+#: .\family_acc\transactions\templates\transaction_edit.html:17
 #: .\family_acc\transactions\templates\transaction_list.html:28
 msgid "Amount"
 msgstr "Částka"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:19
-#: .\family_acc\transactions\templates\transaction_create_income.html:19
+#: .\family_acc\transactions\templates\transaction_create_expense.html:20
+#: .\family_acc\transactions\templates\transaction_create_income.html:20
+#: .\family_acc\transactions\templates\transaction_edit.html:18
 #: .\family_acc\transactions\templates\transaction_list.html:30
 msgid "Category"
 msgstr "Kategorie"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:19
-#: .\family_acc\transactions\templates\transaction_create_income.html:19
+#: .\family_acc\transactions\templates\transaction_create_expense.html:20
+#: .\family_acc\transactions\templates\transaction_create_income.html:20
 msgid "add category"
 msgstr "přidat kategorii"
 
-#: .\family_acc\transactions\templates\transaction_create_expense.html:20
-#: .\family_acc\transactions\templates\transaction_create_income.html:20
+#: .\family_acc\transactions\templates\transaction_create_expense.html:21
+#: .\family_acc\transactions\templates\transaction_create_income.html:21
+#: .\family_acc\transactions\templates\transaction_edit.html:19
 msgid "Remark"
 msgstr "Poznámka"
 
@@ -561,3 +504,157 @@ msgstr "Odstranit vybrané"
 #: .\family_acc\transactions\templates\transaction_upload.html:10
 msgid "Transactions upload"
 msgstr "Nahrávání transakcí"
+
+#: .\family_acc\transactions\views.py:90
+msgid "Transaction deleted."
+msgstr "Transakce byla smazána."
+
+#: .\family_acc\transactions\views.py:106
+msgid "Transaction edited."
+msgstr "Transakce byla upravena."
+
+#: .\family_acc\transactions\views.py:139
+msgid "transaction created"
+msgstr "transakce byla vytvořena"
+
+#~ msgid ""
+#~ "\n"
+#~ "    For some time, I have been searching for a simple and free system for "
+#~ "tracking my income and expenses.\n"
+#~ "    As you may have guessed, the existence of this site indicates that I "
+#~ "did not find one and decided to create it myself.\n"
+#~ "    It has only basic functionality and nothing superfluous.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Nějakou dobu jsem hledal jednoduchý a bezplatný systém pro evidenci "
+#~ "vlastních příjmů a výdajů. Jak jste asi již uhodli, existence této "
+#~ "stránky svědčí o tom, že jsem jej nenašel a rozhodl se jej vytvořit sám. "
+#~ "Najdete zde pouze základní funkce a nic zbytečného."
+
+#~ msgid ""
+#~ "\n"
+#~ "\tThe main idea is that users are grouped into families and keep "
+#~ "financial records that are accessible to members of a specific family.\n"
+#~ "    The first family member registers independently, after which they can "
+#~ "create accounts for other members of their family.\n"
+#~ "    Please fill in your email address carefully — a link will be sent to "
+#~ "it to restore access if you forget your password.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Hlavní myšlenka spočívá v tom, že uživatelé jsou sdruženi do rodin a "
+#~ "vedou finanční záznamy, které jsou přístupné členům konkrétní rodiny. "
+#~ "První člen rodiny se registruje samostatně, poté může vytvářet účty pro "
+#~ "ostatní členy své rodiny. Pečlivě vyplňte svou e-mailovou adresu – na ni "
+#~ "vám bude zaslán odkaz pro obnovení přístupu v případě, že zapomenete "
+#~ "heslo."
+
+#~ msgid "So how do you record income or expenses?"
+#~ msgstr "Jak tedy zaznamenáváte příjmy a výdaje?"
+
+#~ msgid ""
+#~ "\n"
+#~ "    First, create currencies.\n"
+#~ "    Then create accounts and specify which currency a particular account "
+#~ "uses.\n"
+#~ "    Accounts with different currencies can have the same names, for "
+#~ "example, there can be accounts called “My cash (USD)” and “My cash "
+#~ "(EUR)”.\n"
+#~ "    Create an income or expense category.\n"
+#~ "    Each category can be used only for income (Salary), only for expenses "
+#~ "(Food), or for both income and expenses (Transfer between accounts).\n"
+#~ "    Check the appropriate boxes “Use it for income” and “Use it for "
+#~ "expense” when creating a category.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Nejprve vytvořte měny. Poté vytvořte účty a uveďte, jakou měnu konkrétní "
+#~ "účet používá. Účty s různými měnami mohou mít stejné názvy, například "
+#~ "mohou existovat účty „Moje hotovost (UDS)“ a „Moje hotovost (EUR)“. "
+#~ "Vytvořte kategorii příjmů nebo výdajů. Každá kategorie může být použita "
+#~ "pouze pro příjmy (Plat), pouze pro výdaje (Potraviny) nebo pro příjmy i "
+#~ "výdaje (Převod mezi účty). Při vytváření kategorie zaškrtněte příslušná "
+#~ "políčka „použít pro příjmy“ a „použít pro výdaje“."
+
+#~ msgid ""
+#~ "\n"
+#~ "    Once you have an Account (and Currency) and Category, you can create "
+#~ "a new financial transaction - new income or new expense.\n"
+#~ "    When transferring money from one account to another, you need to "
+#~ "create 2 transactions with the same amounts.\n"
+#~ "    When transferring money from one account to another, you need to "
+#~ "create two transactions with the same amounts.\n"
+#~ "    For example, if you withdraw cash from an ATM, the first transaction "
+#~ "will be an expense on the “Card” account and the second will be income on "
+#~ "the “Cash” account.\n"
+#~ "    All income is displayed with a positive amount, all expenses with a "
+#~ "negative amount.\n"
+#~ "    You don't need to think about the sign — the system will add it "
+#~ "itself depending on whether you chose to create an expense or income.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Jakmile máte účet (a odpovídající měnu) a kategorii, můžete vytvořit "
+#~ "novou finanční transakci – nový příjem nebo nový výdaj. Při převodu peněz "
+#~ "z jednoho účtu na druhý je třeba vytvořit 2 transakce se stejnými "
+#~ "částkami. Například pokud vybíráte hotovost z bankomatu, první transakce "
+#~ "bude výdaj na účtu „Karta“ a druhá příjem na účtu „Hotovost“. Všechny "
+#~ "příjmy se zobrazují s kladnou částkou, všechny výdaje se zápornou. "
+#~ "Nemusíte přemýšlet o znaménku – systém jej sám přidá podle toho, zda jste "
+#~ "zvolili vytvoření výdaje nebo příjmu."
+
+#~ msgid "Uploading and downloading data."
+#~ msgstr "Nahrávání a stahování dat."
+
+#~ msgid ""
+#~ "\n"
+#~ "    You will notice that on the relevant pages you have the option to "
+#~ "upload or download data in csv format.\n"
+#~ "    Although this option exists, you do not need to upload currencies, "
+#~ "accounts, and categories before uploading transactions, as currencies, "
+#~ "accounts,\n"
+#~ "    and categories that are missing when uploading transactions will be "
+#~ "created automatically.\n"
+#~ "    The only thing you need to do after that is to enter the correct "
+#~ "balance amounts in the accounts.\n"
+#~ "    You can also go to the categories and uncheck “use for income” or "
+#~ "“use for expenses” so that this category is not offered when entering "
+#~ "income/loss\n"
+#~ "    if it is not for that purpose.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Zjistíte, že na příslušných stránkách máte možnost stáhnout nebo nahrát "
+#~ "data ve formátu csv. I když tato možnost existuje, nemusíte před nahráním "
+#~ "transakcí stahovat měny, účty a kategorie, protože při nahrávání "
+#~ "transakcí se měny, účty a kategorie vytvoří automaticky. Jediné, co poté "
+#~ "budete muset udělat, je zadat správné částky zůstatků na účtech. Můžete "
+#~ "také přejít do kategorií a zrušit zaškrtnutí políčka „použít pro příjmy“ "
+#~ "nebo „použít pro výdaje“, aby se tato kategorie nenabízela při zadávání "
+#~ "příjmů/výdajů, pokud k tomu neslouží."
+
+#~ msgid "Attention!"
+#~ msgstr "Pozor!"
+
+#~ msgid ""
+#~ "This is a non-commercial product. You are free to use it for your own "
+#~ "needs, but as the developer,\n"
+#~ "    I am not responsible for data storage, the stability of this product, "
+#~ "or its availability at different times of the day.\n"
+#~ "    If you decide to use this product, I recommend that you remember to "
+#~ "regularly back up your data using the corresponding csv file export "
+#~ "function.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Toto je nekomerční produkt. Můžete jej volně používat pro své vlastní "
+#~ "potřeby, ale já jako vývojář nenesu odpovědnost za uchování dat, "
+#~ "stabilitu fungování tohoto produktu ani jeho dostupnost v různých časech "
+#~ "dne. Pokud jste se rozhodli tento produkt používat, doporučuji "
+#~ "nezapomínat pravidelně zálohovat vaše data pomocí příslušné funkce "
+#~ "exportu csv souboru."
+
+#~ msgid "You can send your suggestions to my email address:"
+#~ msgstr "Své návrhy můžete zasílat na mou e-mailovou adresu:"
+
+#~ msgid "code"
+#~ msgstr "kód"
+
+#~| msgid "Description"
+#~ msgid "description"
+#~ msgstr "Popis"
