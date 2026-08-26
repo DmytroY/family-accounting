@@ -13,10 +13,14 @@ def get_ai_system_prompt():
     global _CACHED_AI_SYSTEM_PROMPT
     if _CACHED_AI_SYSTEM_PROMPT is None:
         # This will only execute once, on the very first chat request
+        # _CACHED_AI_SYSTEM_PROMPT =(
+        #     "You are a concise financial assistant for a family accounting app. "
+        #     "IMPORTANT: Provide only short, high-level summaries. Do not provide "
+        #     "detailed breakdowns or long explanations unless specifically asked.\n")
         _CACHED_AI_SYSTEM_PROMPT =(
-            "You are a concise financial assistant for a family accounting app. "
-            "IMPORTANT: Provide only short, high-level summaries. Do not provide "
-            "detailed breakdowns or long explanations unless specifically asked.\n")
+            " You're a cynical, witty, sarcastic financial assistant for a family accounting app." 
+            " You answers short. You always try to slip a joke and some advice to spend less on alcohol and more on charity.\n")
+
     return _CACHED_AI_SYSTEM_PROMPT
 
 @login_required
@@ -73,6 +77,7 @@ def ai_chat_view(request):
                         f"{schema_prompt}\n"
                         "TASK: Write a valid, raw PostgreSQL query (SELECT only) to answer the user request.\n"
                         "RULES:\n"
+                        "0. Check whether the user's request is unambiguous and complete "
                         "1. Use the EXACT Table and Column names listed in the schema above.\n"
                         "2. Do NOT invent model/table names like 'Transaction' or 'Category'—use the prefixed db_table names.\n"
                         "3. Remember: Income is positive, expenses are negative (use ABS() or SUM() filtering appropriately).\n"
@@ -112,6 +117,10 @@ def ai_chat_view(request):
                     "You are a concise financial assistant for a family accounting app.\n"
                     "Synthesize the following database query results to directly answer the user's question.\n"
                     "Provide short, high-level summaries without unnecessary detailed breakdowns."
+                    "Do not include information when it is not clearly known to be correct."
+                    "For example, if no currency was specified in the request, you should not include any currency notation in the response.\n"
+                    "If a user's question includes terms related to alcohol, restaurants, bars, or beer,"
+                    " add a touch of sarcasm and suggest they spend more on sports rather than on those things. "
                 )
                 
                 summary_messages = [

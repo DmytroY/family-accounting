@@ -1,8 +1,8 @@
 # Family Accounting Application
 
 A Django-based financial accounting and bookkeeping application with multi-family support, AI-powered assistant, and comprehensive API.
-
-**[GitHub Repository](https://github.com/DmytroY/family-accounting)** | **[Report Issues](mailto:dmitry.yakovenko@gmail.com)**
+![live site](documentation\fam-acc_en.JPG)
+**[Report Issues](mailto:dmitry.yakovenko@gmail.com)**
 
 ---
 
