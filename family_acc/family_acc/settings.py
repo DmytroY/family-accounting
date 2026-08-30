@@ -193,3 +193,27 @@ EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGOUT_REDIRECT_URL = '/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'members': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Captures DEBUG, INFO, WARNING, ERROR
+        },
+        'transactions': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'assistant': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
