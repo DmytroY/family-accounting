@@ -1,4 +1,4 @@
-import csv, io
+import csv, io, logging
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Transaction, Account, Currency, Category
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,7 @@ from django.utils.translation import gettext as _
 from collections import defaultdict
 from decimal import Decimal
 
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/accounts/login/")
 def get_account_currency(request, account_id):
@@ -214,7 +215,9 @@ def account_edit(request, id):
 
 @login_required(login_url="/accounts/login/")
 def currency_list(request):
+    logger.debug(f" -- transactions.views.currency_list: Frontend request: {request}")
     user = request.user
+    logger.debug(f" -- transactions.views.currency_list: Frontend request.user: {user}")
     data = Currency.objects.filter(family= getattr(user.profile, 'family', None)).order_by('code')
     return render(request, "currency_list.html", {"data": data})
 
@@ -259,6 +262,7 @@ def currency_edit(request, id):
 
 @login_required(login_url="/accounts/login/")
 def category_list(request):
+
     user = request.user
     data = Category.objects.filter(family= getattr(user.profile, 'family', None)).order_by('name')
     return render(request, "category_list.html", {"data": data})

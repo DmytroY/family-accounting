@@ -48,51 +48,32 @@ def get_latest_user_message(history: List[Dict[str, Any]]) -> str:
         return latest.get("content", "") or ""
     return ""
 
-def generate_ai_system_prompt() -> str:
-    # # Project's core business logic
-    # prompt = (
-    #     "Data Structure (Star-scheme): Income is positive, expenses are negative.\n"
-    #     "Current Schema:\n"
-    # )
-    
-    # # Programmatically inspect models to get actual DB table and column names
-    # app_config = apps.get_app_config('transactions')
-    # for model in app_config.get_models():
-    #     # Retrieve actual PostgreSQL table name (e.g., transactions_transaction)
-    #     prompt += f"- Table: {model._meta.db_table}\n"
-    #     for field in model._meta.fields:
-    #         # Retrieve actual column name in DB
-    #         prompt += f"  * Column: {field.column} ({field.get_internal_type()})\n"
-            
-    # return prompt
-
+def generate_ai_system_prompt(family: str) -> str:
+    # Project's core business logic
     prompt = (
         "Data Structure (Star-scheme): Income is positive, expenses are negative.\n"
         "Current Schema:\n"
     )
     
+    # Programmatically inspect models to get actual DB table and column names
     app_config = apps.get_app_config('transactions')
     for model in app_config.get_models():
+        # Retrieve actual PostgreSQL table name (e.g., transactions_transaction)
         prompt += f"- Table: {model._meta.db_table}\n"
         for field in model._meta.fields:
+            # Retrieve actual column name in DB
             prompt += f"  * Column: {field.column} ({field.get_internal_type()})\n"
 
-# Filter categories by the current user's family
+    # Filter categories by the current user's family
     category_qs = Category.objects.all()
-    if user and hasattr(user, 'profile'):
-        family = getattr(user.profile, 'family', None)
-        if family:
-            category_qs = category_qs.filter(family=family)
+    if family:
+        category_qs = category_qs.filter(family=family)
 
     raw_categories = category_qs.values_list('name', flat=True).distinct()
     categories = [str(cat) for cat in raw_categories if cat is not None]
 
     prompt += f"\nAvailable Database Categories: {', '.join(categories)}\n"
-    prompt += (
-        "CRITICAL MAPPING RULE:\n"
-        "1. Join category table when filtering by category name (category.id = transaction.category_id).\n"
-        "2. Match user request concepts to the most relevant exact category name listed above.\n"
-    )
+            
     return prompt
 
 def classify_intent(client: Groq, user_query: str) -> str:
@@ -168,12 +149,17 @@ def retrieve_documentation_context(user_query: str, top_k: int = 3) -> str:
         
     return "\n\n".join(context_blocks)
 
-def execute_read_only_sql(sql_query):
+def secure_execute_sql(sql_query, family):
     # Ensure query is strictly a SELECT statement
     clean_sql = sql_query.strip().rstrip(';')
     if not clean_sql.upper().startswith("SELECT"):
         raise ValueError("Only SELECT queries are allowed.")
+
+    # Ensure query has filtering by family
+    if f"family = \'{family}\'" not in clean_sql and f"family=\'{family}\'" not in clean_sql.lower().replace(" ", ""):
+        raise ValueError(f"Access denied: Query must contain filter 'family = {family}'.")
     
+    # Execute query, converts the resulting rows into a list of dicts
     with connection.cursor() as cursor:
         cursor.execute(clean_sql)
         columns = [col[0] for col in cursor.description]
@@ -202,18 +188,51 @@ def handle_documentation(client: Groq, conversation_history: List[Dict[str, Any]
     )
     return {"reply": completion.choices[0].message.content}
 
-def handle_data(client: Groq, conversation_history: List[Dict[str, Any]], user_query: str) -> Dict[str, Any]:
-    schema_prompt = generate_ai_system_prompt()
+def handle_data(client: Groq, conversation_history: List[Dict[str, Any]], user_query: str, user: str, family: str) -> Dict[str, Any]:
+    schema_prompt = generate_ai_system_prompt(family)
 
+    # user's request unambiguity check
+    unambiguity_check_prompt = (
+        f"{schema_prompt}\n"
+        "TASK: Check if the user query is ambiguous or missing required details to construct a valid SQL query.\n"
+        "Do not check exact match to the available categories- for example it is Ok if user say food instead of grossery.\n"
+        "CRITERIA FOR REJECTION:\n"
+        "1. Missing explicit currency specification when requesting aggregated amounts across multi-currency records.\n"
+        "2. Query is too broad, vague, or missing key parameters (e.g., 'How much I spend').\n"
+        "User allowed to use words with similar meanings for Category - skipp check for exact category."
+        "OUTPUT FORMAT:\n"
+        "Return EXACTLY 'VALID' if clear.\n"
+        "Otherwise, return an short explanation stating why the request is invalid and what specific information is missing."
+    )
+    check_messages = [
+        {"role": "system", "content": unambiguity_check_prompt},
+        {"role": "user", "content": user_query},
+    ]
+    check_completion = client.chat.completions.create(
+        messages=check_messages,
+        model="openai/gpt-oss-20b",
+        max_completion_tokens=500,
+        temperature=0.0,
+    )
+    check_result = check_completion.choices[0].message.content.strip()
+
+    if check_result != "VALID":
+        logger.debug(f"-- AI chat: unambiguity check: {check_result}")
+        return {"reply": check_result}
+    
+
+    # Generating SQL query
     sql_generation_prompt = (
         f"{schema_prompt}\n"
         "TASK: Write a valid, raw PostgreSQL query (SELECT only) to answer the user request.\n"
         "RULES:\n"
-        "0. Check whether the user's request is unambiguous and complete "
-        "1. Use the EXACT Table and Column names listed in the schema above.\n"
-        "2. Do NOT invent model/table names like 'Transaction' or 'Category'—use the prefixed db_table names.\n"
-        "3. Remember: Income is positive, expenses are negative (use ABS() or SUM() filtering appropriately).\n"
-        "4. Return ONLY the SQL query as raw text. Do NOT use markdown code blocks or quotes.\n"
+        f"1. Generated query mush contain strict condition WHERE family = {family}. "
+        "2. Use the EXACT Table and Column names listed in the schema above.\n"
+        "3. Do NOT invent model/table names like 'Transaction' or 'Category'—use the prefixed db_table names.\n"
+        "4. Join category table when filtering by category name (category.id = transaction.category_id).\n"
+        "5. Match user request concepts to the most relevant exact category name listed above.\n"
+        "6. Remember: Income is positive, expenses are negative (use ABS() or SUM() filtering appropriately).\n"
+        "7. Return ONLY the SQL query as raw text. Do NOT use markdown code blocks or quotes.\n"
     )
 
     sql_messages = [
@@ -231,7 +250,7 @@ def handle_data(client: Groq, conversation_history: List[Dict[str, Any]], user_q
     logger.debug(f"-- AI chat: Generated SQL: {generated_sql}")
 
     try:
-        query_results = execute_read_only_sql(generated_sql)
+        query_results = secure_execute_sql(generated_sql, family)
         logger.debug(f"-- AI chat: query result: {query_results}")
     except Exception as sql_err:
         # Let the dispatcher create the JsonResponse

@@ -11,15 +11,20 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def ai_chat_view(request):
+    user = request.user
+    family = getattr(user.profile, 'family', None)
+    logger.debug(f" -- transactions.views.currency_list: Frontend request.user: {user}, family: {family}")
+
     if request.method != "POST":
         return JsonResponse({"reply": "Invalid request"}, status=400)
     try:
         data = json.loads(request.body)
-        logger.debug(f"-- AI chat: request.body : {data}")
         conversation_history = data.get("history", [])
         user_query = get_latest_user_message(conversation_history)
         logger.info(f"-- AI chat: user_query = {user_query}")
+
         client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
         # classify user intent and extract command if exist
         result = classify_intent(client, user_query)
         intent = result.get("intent", "GENERAL")
@@ -31,7 +36,7 @@ def ai_chat_view(request):
             resp = handle_documentation(client, conversation_history, user_query)
         elif intent == "DATA":
             try:
-                resp = handle_data(client, conversation_history, user_query)
+                resp = handle_data(client, conversation_history, user_query, user, family)
             except RuntimeError as e:
                 return JsonResponse({"reply": str(e)})
         elif intent == "COMMAND":
