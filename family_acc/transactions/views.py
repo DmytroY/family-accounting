@@ -10,6 +10,8 @@ from django.db.models.deletion import ProtectedError
 from django.contrib import messages
 from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
+from collections import defaultdict
+from decimal import Decimal
 
 
 @login_required(login_url="/accounts/login/")
@@ -352,51 +354,92 @@ def category_upload(request):
     return render(request, "category_upload.html", {"form": form})
 
 @login_required(login_url="/accounts/login/")
-def transaction_upload(request):
+def transaction_upload(request): 
     if request.method =="POST":
         form = forms.UploadTransaction(request.POST, request.FILES)
         if form.is_valid():
             family = request.user.profile.family
             created_by = request.user
-            
-            #debuging
-            uploaded = request.FILES["file"]
-            size = uploaded.size  # bytes
-            print(f"--DY-- file for upload size:{size}")
-            # /debuging
-
             file = io.TextIOWrapper(request.FILES["file"].file, encoding="utf-8")
-            
             reader = csv.DictReader(file)
 
+            # Pre-fetch existing currencies/categories into dictionaries (In-Memory Lookup)
+            currencies = {c.code: c for c in Currency.objects.filter(family=family)}
+            categories = {c.name: c for c in Category.objects.filter(family=family)}
+            accounts = {
+                (a.name, a.currency_id): a 
+                for a in Account.objects.filter(family=family)
+            }
+
+            # Track total balance adjustment per account instance
+            account_balance_deltas = defaultdict(Decimal)
+
+            transactions_to_create = []
+
             for row in reader:
-                currency, _ = Currency.objects.get_or_create(
-                    code=row["currency_code"],
-                    family=family,
-                    defaults={"description": row.get("currency_description", "")}
+                # In-memory lookup or creation
+                code = row["currency_code"]
+                if code not in currencies:
+                    currencies[code] = Currency.objects.create(
+                        code=code,
+                        family=family,
+                        description=row.get("currency_description", ""))
+                currency = currencies[code]
+
+                cat_name = row["category_name"]
+                if cat_name not in categories:
+                    categories[cat_name] = Category.objects.create(
+                        name=cat_name,
+                        family=family,
+                        income_flag=1,
+                        expense_flag=1)
+                category = categories[cat_name]
+
+                # Composite key: (account_name, currency_id)
+                acc_name = row["account_name"]
+                acc_key = (acc_name, currency.id)
+                if acc_key not in accounts:
+                    accounts[acc_key] = Account.objects.create(
+                        name=acc_name, 
+                        family=family, 
+                        currency=currency, 
+                        balance=Decimal("0")
+                    )
+                account = accounts[acc_key]
+
+                amount = Decimal(row["amount"])
+
+                # Collect Transaction objects without saving yet
+                transactions_to_create.append(
+                    Transaction(
+                        date=row["date"],
+                        account=account,
+                        amount=row["amount"],
+                        currency=currency,
+                        category=category,
+                        remark=row["remark"],
+                        created_by=created_by,
+                        family=family,
+                    )
                 )
-                category, _ = Category.objects.get_or_create(
-                    name=row["category_name"],
-                    defaults={"income_flag": 1, "expense_flag": 1},
-                    family=family,
-                )
-                account, _ = Account.objects.get_or_create(
-                    name=row["account_name"],
-                    family=family,
-                    currency=currency,
-                    defaults={"balance": 0},
-                )
-                Transaction.objects.get_or_create(
-                    date=row["date"],
-                    account=account,
-                    amount=row["amount"],
-                    currency=currency,
-                    category=category,
-                    remark=row["remark"],
-                    created_by=created_by,
-                    family=family,
-                )
-                messages.success(request, "transaction imported")
+
+                # Aggregate balance delta for this account
+                account_balance_deltas[account] += amount
+
+                # Insert in batch chunks (e.g., 1000 at a time)
+                if len(transactions_to_create) >= 1000:
+                    Transaction.objects.bulk_create(transactions_to_create, ignore_conflicts=True)
+                    transactions_to_create.clear()
+            # Insert last chunk
+            if transactions_to_create:
+                Transaction.objects.bulk_create(transactions_to_create, ignore_conflicts=True)
+
+            # Bulk update account balances in the database
+            for account_obj, delta in account_balance_deltas.items():
+                if delta != 0:
+                    Account.objects.filter(pk=account_obj.pk).update(balance=F("balance") + delta)
+
+            messages.success(request, "Transactions imported successfully.")
             return redirect("transactions:transaction_list")
     else:
         form = forms.UploadCategory()
