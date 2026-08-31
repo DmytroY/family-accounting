@@ -5,6 +5,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-ai-message');
     const userInput = document.getElementById('ai-user-input');
     const displayChatHistory = document.getElementById('ai-chat-history');
+    const resizeHandle = document.getElementById('ai-chat-resize-handle');
+
+    let isResizing = false;
+    let startX = 0;
+    let startY = 0;
+    let startWidth = 0;
+    let startHeight = 0;
+
+    resizeHandle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isResizing = true;
+
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = chatContainer.offsetWidth;
+        startHeight = chatContainer.offsetHeight;
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+    });
+
+    function handleMouseMove(e) {
+        if (!isResizing) return;
+
+        // Moving left increases width; moving up increases height
+        const scale = window.visualViewport ? window.visualViewport.scale : 1;
+        const dx = (e.clientX - startX) / scale;
+        const dy = (e.clientY - startY) / scale;
+
+        const newWidth = startWidth - dx;
+        const newHeight = startHeight - dy;
+
+        chatContainer.style.width = `${newWidth}px`;
+        chatContainer.style.height = `${newHeight}px`;
+    }
+
+    function handleMouseUp() {
+        isResizing = false;
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+    }
+
+
+
+
 
     // Load chat history from localStorage
     const savedHistory = localStorage.getItem('ai_chat_history');
@@ -151,7 +196,7 @@ function appendMessage(sender, text) {
         const layoutWidth = window.innerWidth;
 
         /**
-         * Correct Calculation for position: fixed:
+         * Calculation for position.
          * We calculate the distance between the bottom/right of the 
          * Layout Viewport and the bottom/right of the Visual Viewport.
          */
@@ -163,7 +208,7 @@ function appendMessage(sender, text) {
             toggleButton.style.right = `${right}px`;
             
             /**
-             * Optional: Scaling Correction
+             * Scaling Correction.
              * Browsers automatically scale 'fixed' elements during zoom. 
              * This keeps the button at a consistent physical size.
              */
